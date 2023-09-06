@@ -1,0 +1,77 @@
+<!-- graph section start here -->
+<section class="graph-indicator-container d-flex align-items-center flex-wrap">
+    <div *ngIf="isShowIPGrade">
+        <div class="d-flex align-items-center mb-2 cursor-pointer " (click)="onClickgoToEmployeeListPage('IP')"
+        *ngIf="pieStatckTotalCountOfIP > 0">
+        <div class="graph-icon-indicator-container rounded-circle bg-secondary d-flex justify-content-center align-items-center">
+            <div class="icon icon-time text-white d-flex align-items-center"></div>
+        </div>
+        <div class="primary-text text-uppercase px-2 font-xs">in play</div>
+    </div>
+
+    <div class="d-flex align-items-center mb-2" *ngIf="pieStatckTotalCountOfIP <= 0">
+        <div class="graph-icon-indicator-container rounded-circle bg-secondary d-flex justify-content-center align-items-center">
+            <div class="icon icon-time text-white d-flex align-items-center"></div>
+        </div>
+        <div class="primary-text text-uppercase px-2 font-xs">in play</div>
+    </div>
+    </div>
+   
+    <div class="d-flex align-items-center mb-2 cursor-pointer" (click)="onClickgoToEmployeeListPage('A')"
+        *ngIf="pieStatckTotalCountOfA > 0">
+        <div class="graph-icon-indicator-container bg-secondary-dark rounded-circle d-flex justify-content-center align-items-center">
+            <div class="icon icon-trophy text-white d-flex align-items-center"></div>
+        </div>
+        <div class="primary-text text-uppercase px-2 font-xs">a player</div>
+    </div>
+    <div class="d-flex align-items-center mb-2" *ngIf="pieStatckTotalCountOfA <= 0">
+        <div class="graph-icon-indicator-container rounded-circle bg-secondary-dark d-flex justify-content-center align-items-center">
+            <div class="icon icon-trophy text-white d-flex align-items-center"></div>
+        </div>
+        <div class="primary-text text-uppercase px-2 font-xs">a player</div>
+    </div>
+
+    <div class="d-flex align-items-center mb-2 cursor-pointer" (click)="onClickgoToEmployeeListPage('B')"
+        *ngIf="pieStatckTotalCountOfB > 0">
+        <div
+            class="graph-icon-indicator-container rounded-circle bg-info-light d-flex justify-content-center align-items-center">
+            <div class="icon icon-reward text-white d-flex align-items-center"></div>
+        </div>
+        <div class="primary-text text-uppercase px-2 font-xs">b player</div>
+    </div>
+    <div class="d-flex align-items-center mb-2" *ngIf="pieStatckTotalCountOfB <= 0">
+        <div
+            class="graph-icon-indicator-container rounded-circle bg-info-light d-flex justify-content-center align-items-center">
+            <div class="icon icon-reward text-white d-flex align-items-center"></div>
+        </div>
+        <div class="primary-text text-uppercase px-2 font-xs">b player</div>
+    </div>
+
+    <div class="d-flex align-items-center mb-2 cursor-pointer" (click)="onClickgoToEmployeeListPage('C')"
+        *ngIf="pieStatckTotalCountOfC > 0">
+        <div class="graph-icon-indicator-container rounded-circle bg-info d-flex justify-content-center align-items-center">
+            <div class="icon icon-like text-white d-flex align-items-center"></div>
+        </div>
+        <div class="primary-text text-uppercase px-2 font-xs">c player</div>
+    </div>
+    <div class="d-flex align-items-center mb-2" *ngIf="pieStatckTotalCountOfC <= 0">
+        <div class="graph-icon-indicator-container rounded-circle bg-info d-flex justify-content-center align-items-center">
+            <div class="icon icon-like text-white d-flex align-items-center"></div>
+        </div>
+        <div class="primary-text text-uppercase px-2 font-xs">c player</div>
+    </div>
+    <div class="d-flex align-items-center mb-2 cursor-pointer" (click)="onClickgoToEmployeeListPage('RP')"
+        *ngIf="pieStatckTotalCountOfRP > 0">
+        <div class="graph-icon-indicator-container rounded-circle bg-warning d-flex justify-content-center align-items-center">
+            <div class="icon icon-turnover text-white d-flex align-items-center"></div>
+        </div>
+        <div class="primary-text text-uppercase px-2 font-xs">replacement player</div>
+    </div>
+    <div class="d-flex align-items-center mb-2" *ngIf="pieStatckTotalCountOfRP <= 0">
+        <div class="graph-icon-indicator-container rounded-circle bg-warning d-flex justify-content-center align-items-center">
+            <div class="icon icon-turnover text-white d-flex align-items-center"></div>
+        </div>
+        <div class="primary-text text-uppercase px-2 font-xs">replacement player</div>
+    </div>
+</section>
+<!-- graph section end here -->

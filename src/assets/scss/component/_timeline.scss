@@ -1,0 +1,51 @@
+.primary-rounded {
+    min-width: 60px;
+    @include size(60px, 60px);
+    color: var(--dark-text);
+    border-radius: 50%;
+    border: 2px solid $primary-light-50;
+    @include media-breakpoint-down('lg-mini') {
+        min-width: 50px;
+        @include size(50px, 50px);
+    }
+ }
+
+.round-inprogress {
+    background-color: $secondary;
+    border: 1px solid $secondary;
+    color: $white;
+}
+
+.timeline-line {
+    background-color: $primary-light-50;
+    min-width: 200px;
+    height: 3px;
+    margin-top: 27px; 
+    @include media-breakpoint-down('xl') {
+        min-width: 155px;
+    }
+    @include media-breakpoint-down('lg') {
+        min-width: 110px;
+    }
+    @include media-breakpoint-down('sm-small') {
+        min-width: 40px;
+        max-width: 40px;
+        margin: 0 auto;
+        -ms-transform: rotate(90deg); 
+        -webkit-transform: rotate(90deg); 
+        transform: rotate(90deg);
+    }
+}
+
+.round-active {
+    background-color: $success;
+    border: 2px solid $success;
+
+    &::after {
+        content: "\50";
+        color: $white;
+        font-size: 25px;
+        font-family: $icon-font-family;
+        margin: 3px 0 0 0;
+    }
+}

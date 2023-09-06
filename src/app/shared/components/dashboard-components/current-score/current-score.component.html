@@ -1,0 +1,19 @@
+<!-- widget section start here -->
+<div class="rounded white-bg shadow-sm p-3 widgets-box d-flex flex-column">
+    <div class="d-flex flex-nowrap justify-content-end align-items-center">
+        <trigger-tooltip [pageTitle]="pageTitle"></trigger-tooltip>
+    </div>
+    <div class="d-flex flex-column text-center">
+        <div class="icons">
+            <div class="icon icon-graph mx-auto"></div>
+        </div>
+        <div class="display-2 font-bold d-flex align-items-center justify-content-center box-text-height" [ngClass]="lastScoreRankClass">
+            {{lastScoreRank}}
+        </div>
+        <div class="dark-text font-semibold font-md text-center mt-auto">Current Score</div>
+        <div class="secondary-dark-text text-center">
+            ({{lastAssessedDate}})
+        </div>
+    </div>
+</div>
+<!-- widget section end here -->

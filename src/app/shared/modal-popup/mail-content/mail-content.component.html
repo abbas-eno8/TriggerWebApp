@@ -1,0 +1,26 @@
+<section class="white-bg rounded lg-dialog-container d-flex flex-column">
+  <header class="dark-text font-semibold font-lg px-3 pt-3">
+    Email Preview
+  </header>
+  <section class="overflow-auto flex-grow-1 template-container">
+    <div [innerHTML]="dynamicContent"></div>
+  </section>
+  <footer *ngIf="!isDropDown" class="d-flex justify-content-end mb-0 p-3">
+    <button type="button" class="btn secondary-light-btn rounded-pill mr-2 btn-sm text-uppercase" title="Cancel"
+      (click)="onClickCancel()">Don’t Send Email</button>
+    <button type="button" class="btn btn-secondary rounded-pill btn-sm text-uppercase" title="Send"
+      (click)="onClickSend()">Send Email</button>
+  </footer>
+  <footer *ngIf="isDropDown" class="d-flex justify-content-between mb-0 p-3">
+    <div class="md-select-dropdown mr-3">
+      <select class="rounded-pill shadow-sm cursor-pointer" [formControl]="submitType"
+        (change)="changeType($event.target.value)">
+        <option [value]="null" disabled>Select</option>
+        <option *ngFor="let item of dropDownList" [value]="item.isTriggerSent">{{item.name}}
+        </option>
+      </select>
+    </div>
+    <button type="button" class="btn btn-secondary rounded-pill btn-sm text-uppercase" title="Send"
+      (click)="onSubmit()">Submit</button>
+  </footer>
+</section>

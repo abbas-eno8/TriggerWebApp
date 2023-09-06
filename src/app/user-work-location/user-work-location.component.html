@@ -1,0 +1,31 @@
+<section class="d-flex flex-column h-100 position-relative">
+    <!-- header part start here -->
+    <header class="p-3">
+        <span class="dark-text font-semibold font-lg">Update Work Location</span>
+    </header>
+    <!-- header part end here -->
+    <section class="flex-grow-1 overflow-hidden">
+        <section class="overflow-hidden px-3 h-100">
+            <section class="d-flex justify-content-center align-items-center">
+                <section class="rounded shadow-sm white-bg md-container mw-auto p-0 d-flex text-left flex-column">
+                    <section class="pb-2 font-semibold font-md text-secondary p-3">
+                        What is your today's location?
+                    </section>
+                    <section class="flex-grow-1 overflow-auto px-2">
+                        <section class="d-flex flex-wrap pb-3 mt-1">
+                            <section class="col-lg-4 col-md-4 col-sm-4 col-xs-6 px-2 mb-3 d-flex align-items-stretch justify-content-center h-100" *ngFor="let workLocation of workLocations; let i = index">
+                                <button title="" type="button" class="btn btn-default py-3 px-2 w-100" (click)="workLocationId = workLocation.workLocationId;" [ngClass]="workLocationId === workLocation.workLocationId ? 'active' : 'btn-default'">
+                                    <div class="icon icon-location-1 pb-2"></div>
+                                    <div class="font-semibold">{{ workLocation.workLocation }}</div>
+                                </button>
+                            </section>
+                        </section>
+                    </section>
+                    <div class="d-flex justify-content-center p-3">
+                        <button type="button" title="Submit" class="btn btn-secondary text-uppercase rounded-pill" (click)="onClickSubmit()" [disabled]="!workLocationId" title="Submit">Submit</button>
+                    </div>
+                </section>
+            </section>
+        </section>
+    </section>
+</section>

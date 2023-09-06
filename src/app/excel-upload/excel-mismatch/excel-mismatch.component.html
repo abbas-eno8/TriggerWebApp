@@ -1,0 +1,113 @@
+<!-- Excel upload data mismatch table section start here -->
+<section class="my-3 h-50 overflow-hidden">
+  <section class="d-flex flex-column h-100 overflow-hidden shadow-sm rounded">
+    <section class="data-table-header position-relative" id="data-table-header">
+      <table class="w-100 font-semibold white-bg">
+        <thead>
+          <tr>
+            <th></th>
+            <th>id</th>
+            <th>name</th>
+            <th>job position</th>
+            <th>department</th>
+            <th>location</th>
+            <th>status</th>
+            <th>
+            </th>
+          </tr>
+        </thead>
+      </table>
+    </section>
+    <section class="data-table-body white-bg" id="data-table-body" (scroll)="onScroll($event)">
+      <table class="w-100">
+        <tbody>
+          <tr *ngFor="let data of excelDbData">
+            <td>
+              <table class="w-100 data-mismatch-table white-bg">
+                <tr [ngClass]="data[1].isChecked? 'strikeout' : ''">
+                  <td>
+                    <div class="d-flex justify-content-center align-items-center position-relative">
+                      <div class="icon icon-xls-file align-items-center d-flex"></div>
+                    </div>
+                  </td>
+                  <td>
+                    <span id="{{data[0].employeeId}}" class="strikeout{{data[0].employeeId}}">
+                      {{ data[0].employeeId }}
+                    </span>
+                  </td>
+                  <td>
+                    <span id="{{data[0].firstName + data[0].lastName}}">
+                      {{ data[0].firstName.charAt(0).toUpperCase() + data[0].firstName.slice(1) + " " + data[0].lastName }}
+                    </span>
+                  </td>
+                  <td>
+                    <span id="{{data[0].jobTitle}}">
+                      {{ data[0].jobTitle }}
+                    </span>
+                  </td>
+                  <td>
+                    <span id="{{data[0].department}}">
+                      {{ data[0].department }}
+                    </span>
+                  </td>
+                  <td>
+                    <span id="{{data[0].workCity}}">
+                      {{ data[0].workCity }} {{ data[0].workState}} {{data[0].workZipcode }}
+                    </span>
+                  </td>
+                  <td>
+                    <span id="{{data[0].displayEmpStatus}}">
+                      {{ data[0].displayEmpStatus }}
+                    </span>
+                  </td>
+                  <td>
+                    <div class="d-flex justify-content-center align-items-center" *ngIf="!data[1].isHideCheckbox">
+                      <mat-checkbox (change)="onCheck($event.checked, data[0], data[1])" [(ngModel)]="data[0].isChecked">
+                      </mat-checkbox>
+                    </div>
+                  </td>
+                </tr>
+                <tr [ngClass]="data[0].isChecked? 'strikeout' : ''">
+                  <td>
+                    <div class="d-flex justify-content-center align-items-center position-relative">
+                      <div class="icon icon-trigger"></div>
+                    </div>
+                  </td>
+                  <td>
+                    <span id="{{data[1].employeeId}}">
+                      {{ data[1].employeeId }}
+                    </span>
+                  </td>
+                  <td>
+                    <span>
+                      {{ data[1].firstName.charAt(0).toUpperCase() + data[1].firstName.slice(1) + " " + data[1].lastName }}
+                    </span>
+                  </td>
+                  <td>
+                    {{ data[1].jobTitle }}
+                  </td>
+                  <td>
+                    {{ data[1].department }}
+                  </td>
+                  <td>
+                    {{ data[1].workCity }} {{ data[1].workState }} {{ data[1].workZipcode }}
+                  </td>
+                  <td>
+                    {{ data[1].displayEmpStatus }}
+                  </td>
+                  <td>
+                    <div class="d-flex justify-content-center align-items-center" *ngIf="!data[1].isHideCheckbox">
+                      <mat-checkbox (change)="onCheck($event.checked, data[1], data[0])" [(ngModel)]="data[1].isChecked">
+                      </mat-checkbox>
+                    </div>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </section>
+</section>
+<!-- Excel upload data mismatch table section end here -->

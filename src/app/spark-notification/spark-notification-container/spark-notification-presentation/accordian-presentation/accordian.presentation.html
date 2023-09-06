@@ -1,0 +1,87 @@
+<section class="d-flex flex-column h-100">
+  <!-- accordion list section start here -->
+  <section class="flex-grow-1 rounded shadow-sm overflow-auto" id="mainDIV" (scroll)="scrollService.onWindowScroll()">
+    <mat-accordion displayMode="flat" multi="false" class="mat-table">
+      <section matSort class="mat-elevation-z2 mat-header-row" matSortDisableClear>
+        <div class="mat-header-cell text-uppercase">Spark For
+          <div class="icon icon-top-bottom cursor-pointer ml-1" (click)="sort('lastName')"
+            [ngClass]="getDirecionIcon('lastName')">
+          </div>
+        </div>
+        <div class="mat-header-cell text-uppercase">Givent By
+          <div class="icon icon-top-bottom cursor-pointer ml-1" (click)="sort('sparkByLastName')"
+            [ngClass]="getDirecionIcon('sparkByLastName')">
+          </div>
+        </div>
+        <div class="mat-header-cell text-uppercase">Action</div>
+        <div class="mat-header-cell"></div>
+      </section>
+      <mat-expansion-panel [disabled]="isExpand" hideToggle="true"
+        *ngFor="let spark of displayedRows$ | async; let index = index" #example>
+        <mat-expansion-panel-header class="mat-row">
+          <div class="mat-cell text-ellipsis" title="{{spark.employeeName}}" (click)="expansionPanel(true)">
+            {{ spark.employeeName }}
+          </div>
+          <div class="mat-cell text-ellipsis" title="{{spark.givenBy}}" (click)="expansionPanel(true)">
+            {{ spark.givenBy }}
+          </div>
+          <div class="mat-cell text-center d-flex justify-content-center">
+            <div class="dropdown list-action-dropdown">
+              <button type="button" class="btn bg-transparent dropdown-toggle d-flex align-items-center"
+                data-toggle="dropdown">
+                <span class="icon icon-click d-flex align-items-center"></span>
+              </button>
+              <div class="dropdown-menu toggle-dropdown-menu border-0 shadow-sm">
+                <a>
+                  <button class="icon icon-spark mr-1 btn bg-transparent d-flex align-items-center position-relative"
+                    title="Approved" (click)="approvedSpark(spark)">
+                    <div class="list-rounded bg-success">
+                      <span
+                        class="icon icon-checkmark text-white d-flex align-items-center justify-content-center h-100"></span>
+                    </div>
+                  </button>
+                </a>
+                <a>
+                  <button class="icon icon-spark mr-1 btn bg-transparent d-flex align-items-center position-relative"
+                    title="Reject" (click)="rejectSpark(spark)">
+                    <div class="list-rounded bg-danger">
+                      <span
+                        class="icon icon-close text-white d-flex align-items-center justify-content-center h-100"></span>
+                    </div>
+                  </button>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="mat-cell text-center">
+            <div *ngIf="!example.expanded" (click)="expansionPanel(false)">
+              <span class="icon icon-pluse cursor-pointer text-primary"></span>
+            </div>
+            <div *ngIf="example.expanded" (click)="expansionPanel(false)">
+              <span class="icon icon-minus cursor-pointer text-primary"></span>
+            </div>
+          </div>
+        </mat-expansion-panel-header>
+        <div class="d-flex flex-wrap">
+          <section class="col-sm-12 col-md-12">
+            <div class="d-flex mb-2">
+              <div class="font-semibold text-primary font-sm text-uppercase">spark: </div>
+              <div class="ml-2 font-sm text-ellipsis w-100">
+                <read-more [text]='spark.spark' [maxLength]="150"></read-more>
+              </div>
+            </div>
+          </section>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </section>
+  <!-- accordion list section end here -->
+  <!-- accordion list section footer start here -->
+  <footer class="footer d-flex justify-content-end align-items-center w-100 py-2">
+    <div class="text-right pagination-container" (click)="onClickPaginationPanel()">
+      <mat-paginator panelClass="textClass1" #paginator [length]="totalRows$ | async" [pageIndex]="0" [pageSize]="50"
+        [pageSizeOptions]="[50,100,150]" (page)="pageChanged($event)" showFirstLastButtons></mat-paginator>
+    </div>
+  </footer>
+  <!-- accordion list section footer end here -->
+</section>

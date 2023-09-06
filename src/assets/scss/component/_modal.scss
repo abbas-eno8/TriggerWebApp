@@ -1,0 +1,156 @@
+.mat-dialog-title {
+    margin-bottom: 0 !important;
+    font-family: $font-family-base;
+}
+
+.custom-dialog-container {
+    & .mat-dialog-container {
+        margin: 30px auto;
+        position: relative;
+        display: -ms-flexbox;
+        display: -webkit-box;
+        display: flex;
+        -ms-flex-direction: column;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        flex-direction: column;
+        width: 100%;
+        pointer-events: auto;
+        background-color: $white;
+        border: 1px solid $border;
+        border-radius: .3rem !important;
+        padding: 1rem !important;
+
+    }
+}
+
+h1 {
+    font-size: 20px !important;
+    font-weight: $font-weight-bold !important;
+
+    @include media-breakpoint-down('lg-mini') {
+        font-size: 18px !important;
+    }
+}
+
+.width-200px {
+    width: 200px;
+}
+
+.cdk-global-overlay-wrapper {
+    background-color: $spinner-bg;
+}
+
+.mat-dialog-container {
+    padding: 0 !important;
+    overflow: hidden !important;
+    background: none;
+    color: inherit;
+}
+
+//popupbox container
+.xl-dialog-container {
+    width: 900px !important;
+    height: 800px !important;
+
+    & .mat-dialog-container {
+        padding: 1rem !important;
+    }
+
+    @include media-breakpoint-down('xxl') {
+        width: 900px !important;
+        height: 600px !important;
+    }
+
+    @include media-breakpoint-down('xl') {
+        width: 900px !important;
+        height: 600px !important;
+    }
+
+    @include media-breakpoint-down('sm-small') {
+        width: 300px !important;
+        height: 550px !important;
+    }
+}
+
+.lg-dialog-container {
+    width: 527px !important;
+
+    & .mat-dialog-container {
+        padding: 1rem !important;
+    }
+
+    @include media-breakpoint-down('sm-small') {
+        width: 300px !important;
+    }
+}
+
+.md-dialog-container {
+    width: 450px !important;
+
+    & .mat-dialog-container {
+        padding: 1rem !important;
+    }
+
+    @include media-breakpoint-down('sm-small') {
+        width: 300px !important;
+    }
+}
+
+.xs-dialog-container {
+    width: 340px;
+
+    @include media-breakpoint-down('sm-small') {
+        width: 315px;
+    }
+}
+
+.team-member-dialog-container {
+    max-width: 500px;
+    max-height: 90vh;
+    height: 100%;
+    @include media-breakpoint-down('sm-small') {
+       max-width: 315px;
+    }
+    .btn-primary{
+        @include media-breakpoint-down('sm-small') {
+            min-width: 146px;
+         } 
+    }
+}
+
+.darg-modal-box {
+    .modal.left .modal-dialog {
+        position: fixed;
+        right: 1rem;
+        margin-top: 2px;
+        width: 250px;
+        z-index: 9;
+    }
+
+    & .btn-primary {
+        height: 40px;
+        line-height: 17px;
+        border: 2px solid $primary;
+    }
+
+    & .mat-icon {
+        color: $primary-light-60;
+
+        &:hover {
+            color: $primary;
+        }
+    }
+}
+
+.dark-theme-mat-select {
+    background: #455270 !important;
+    color: $white !important;
+    ;
+}
+
+.light-theme-mat-select {
+    background: $white !important;
+    color: $primary !important;
+    ;
+}

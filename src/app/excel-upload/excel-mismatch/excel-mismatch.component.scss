@@ -1,0 +1,90 @@
+@import "~assets/scss/base/variables";
+@import "~assets/scss/base/colors";
+@import "~assets/scss/base/mixins";
+
+.data-table-header {
+  & table thead tr {
+    & th:nth-child(1) {
+      min-width: 60px;
+      max-width: 60px;
+    }
+
+    & th:nth-child(7) {
+      min-width: 110px;
+      max-width: 110px;
+    }
+
+    & th:nth-child(8) {
+      min-width: 80px;
+      max-width: 80px;
+    }
+  }
+}
+
+.data-table-body {
+  overflow-y: auto;
+  height: calc(100% - 40px);
+
+  & table tbody tr {
+    & td:nth-child(1) {
+      min-width: 60px;
+      max-width: 60px;
+    }
+
+    & td:nth-child(7) {
+      min-width: 110px;
+      max-width: 110px;
+    }
+
+    & td:nth-child(8) {
+      min-width: 80px;
+      max-width: 80px;
+    }
+    & tr:nth-child(even) {
+      background-color: $transparent;
+    }
+  }
+
+  & tr:hover {
+    background-color: $transparent;
+  }
+}
+
+.icon-csv,
+.icon-trigger {
+  position: static;
+  top: 0;
+}
+
+.data-mismatch-table {
+  border: 1px solid $danger;
+  & tr:nth-child(even) {
+    // background-color: $body-bg;
+    background-color: var(--bg-list-even);
+  }
+  & tr:nth-child(odd) {
+    // background-color: $white;
+    background-color: var(--bg-list-odd);
+  }
+  & tr td {
+    position: relative;
+
+    &:hover {
+      background-color: $transparent;
+    }
+  }
+
+  & tr.strikeout td {
+    &:before {
+      content: "";
+      @include position(absolute, 47%, auto, auto, 0);
+      border-bottom: 1px solid $danger;
+      width: 100%;
+    }
+
+    &:after {
+      content: "";
+      font-size: 1px;
+    }
+  }
+}

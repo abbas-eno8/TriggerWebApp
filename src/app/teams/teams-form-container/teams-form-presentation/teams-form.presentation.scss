@@ -1,0 +1,9 @@
+@import "~assets/scss/base/variables";
+@import "~assets/scss/base/colors";
+@import "~assets/scss/base/mixins";
+.example-chip-list {
+    max-height: 100px;
+    min-height: 100px;
+    border: 2px solid $border;
+    overflow-y: auto;
+}

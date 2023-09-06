@@ -1,0 +1,19 @@
+::ng-deep .mat-dialog-container {
+    background: none;
+    color: inherit;
+}
+select {
+    font-family: "font-icons", "Montserrat";
+}
+.font-icon-Up {
+    color: #a1ddaa;
+}
+.font-icon-Down {
+    color: #fe9198;
+}
+.font-icon-Steady {
+    color: #f8db8f;
+}
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-marked {
+    background-color: red !important;
+}

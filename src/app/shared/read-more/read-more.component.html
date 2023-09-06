@@ -1,0 +1,6 @@
+<span class="dark-text" [innerHTML]="currentText | linkify"></span>
+<a class="justify-content-end font-semibold cursor-pointer flex-shrink-0 text-secondary text-decoration"
+ [ngClass]="{'d-flex ' : !hideToggle}"
+    [class.hidden]="hideToggle" (click)="toggleView()">
+    Read {{isCollapsed? 'more':'less'}} 
+</a>

@@ -1,0 +1,24 @@
+@import "~assets/scss/base/variables";
+@import "~assets/scss/base/mixins";
+@import "~bootstrap/scss/mixins/breakpoints";
+@import "~assets/scss/base/colors";
+
+.no-records-container {
+    top: 58px;
+    height: calc(100% - 75px);
+}
+.mat-cell:nth-child(3),
+.mat-header-cell:nth-child(3) {
+    flex: 0 0 15%;
+    @include media-breakpoint-down('xxl') {
+        flex: 0 0 20%;
+    }
+}
+.mat-cell:nth-child(8),
+.mat-header-cell:nth-child(8) {
+    flex: 0 0 7%;
+    justify-content: center;
+}
+.mat-cell, .mat-footer-cell, .mat-header-cell {
+    min-height: 100%;
+}

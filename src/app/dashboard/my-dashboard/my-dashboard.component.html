@@ -1,0 +1,103 @@
+<section class="d-flex flex-column dashboard-container position-relative">
+    <!-- header part start here -->
+    <header class="p-3 d-flex justify-content-sm-small-center flex-wrap dashboard-header xs-d-none">
+        <div class="position-absolute head-tooltip ">
+            <trigger-tooltip [pageTitle]="58"></trigger-tooltip>
+        </div>
+    </header>
+    <!-- header part end here -->
+    <section class="h-100 position-relative flex-grow-1 overflow-hidden" *ngIf="isMyDashboardApiCalled">
+        <!--graph widget main container section start here -->
+        <section class="h-100 overflow-auto px-3 pb-3">
+            <section class="grid w-100 employee-widget-grid-container">
+                <div class="d-flex flex-column h-100">
+                    <mat-accordion multi="true">
+                        <mat-expansion-panel class="rounded" [expanded]="myDashboardPermission.canViewScore" #score *ngIf="myDashboardPermission.canViewScore">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Score Reporting
+                                </mat-panel-title>
+                                <mat-icon class="icon icon-pluse text-primary d-flex align-items-center justify-content-end" *ngIf="!score.expanded"></mat-icon>
+                                <mat-icon class="icon icon-minus text-primary d-flex align-items-center justify-content-end" *ngIf="score.expanded"></mat-icon>
+                            </mat-expansion-panel-header>
+                            <ng-container #summaryReportingcontainerRef></ng-container>
+                        </mat-expansion-panel>
+
+                        <mat-expansion-panel class="rounded" [expanded]="!myDashboardPermission.canViewScore && myDashboardPermission.canViewSummary" #summary *ngIf="myDashboardPermission.canViewSummary">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Summary Reporting
+                                </mat-panel-title>
+                                <mat-icon class="icon icon-pluse text-primary d-flex align-items-center justify-content-end" *ngIf="!summary.expanded"></mat-icon>
+                                <mat-icon class="icon icon-minus text-primary d-flex align-items-center justify-content-end" *ngIf="summary.expanded"></mat-icon>
+                            </mat-expansion-panel-header>
+                            <ng-container #managerActioncontainerRef></ng-container>
+                        </mat-expansion-panel>
+
+                        <mat-expansion-panel class="rounded" [expanded]="!myDashboardPermission.canViewScore && !myDashboardPermission.canViewSummary && myDashboardPermission.canViewDetail" #detailed *ngIf=" myDashboardPermission.canViewDetail">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Detailed Reporting
+                                </mat-panel-title>
+                                <mat-icon class="icon icon-pluse text-primary d-flex align-items-center justify-content-end" *ngIf="!detailed.expanded"></mat-icon>
+                                <mat-icon class="icon icon-minus text-primary d-flex align-items-center justify-content-end" *ngIf="detailed.expanded"></mat-icon>
+                            </mat-expansion-panel-header>
+                            <ng-container #detailedReportingcontainerRef></ng-container>
+                        </mat-expansion-panel>
+
+                        <mat-expansion-panel class="rounded" [expanded]="!myDashboardPermission.canViewScore && !myDashboardPermission.canViewSummary && !myDashboardPermission.canViewDetail && myDashboardPermission.canViewContextual" #contexual *ngIf="myDashboardPermission.canViewContextual">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Contextual Reporting
+                                </mat-panel-title>
+                                <mat-icon class="icon icon-pluse text-primary d-flex align-items-center justify-content-end" *ngIf="!contexual.expanded"></mat-icon>
+                                <mat-icon class="icon icon-minus text-primary d-flex align-items-center justify-content-end" *ngIf="contexual.expanded"></mat-icon>
+                            </mat-expansion-panel-header>
+                            <section class="px-2 w-100">
+                                <section class="my-dashboard-list-tab h-100 flex-grow-1 overflow-hidden">
+                                    <ul class="nav nav-tabs" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link font-semibold active" data-toggle="tab" href="#sparks" (click)="createSparkWidget()">Sparks</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link font-semibold" data-toggle="tab" href="#comments">Comments</a>
+                                        </li>
+                                    </ul>
+                                    <section class="tab-content white-bg mb-3">
+                                        <section id="sparks" class="tab-pane h-100 rounded-bottom active">
+                                            <ng-container #sparkcontainerRef></ng-container>
+                                        </section>
+                                        <section id="comments" class="tab-pane h-100 rounded-bottom fade">
+                                            <ng-container #contextualReportingcontainerRef></ng-container>
+                                        </section>
+                                    </section>
+                                </section>
+                            </section>
+                        </mat-expansion-panel>
+                        <mat-expansion-panel class="rounded" [expanded]="(myDashboardPermission.requestForSpark || myDashboardPermission.requestForTrigger) && ! myDashboardPermission.canViewDetail && !myDashboardPermission.canViewContextual && !myDashboardPermission.canViewSummary && !myDashboardPermission.canViewScore"
+                            #request *ngIf="myDashboardPermission.requestForSpark || myDashboardPermission.requestForTrigger">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Request
+                                </mat-panel-title>
+                                <mat-icon class="icon icon-pluse text-primary d-flex align-items-center justify-content-end" *ngIf="!request.expanded"></mat-icon>
+                                <mat-icon class="icon icon-minus text-primary d-flex align-items-center justify-content-end" *ngIf="request.expanded"></mat-icon>
+                            </mat-expansion-panel-header>
+                            <section class="h-100 flex-grow-1 overflow-hidden">
+                                <section class="h-100 flex-grow-1">
+                                    <section class="pb-3">
+                                        <ng-container #requestForSpakTriggerWidget></ng-container>
+                                    </section>
+                                    <section class="px-2 h-100">
+                                        <ng-container #requestListContainerRef></ng-container>
+                                    </section>
+                                </section>
+                            </section>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                </div>
+            </section>
+        </section>
+        <!--graph widget main container section end here -->
+    </section>
+</section>

@@ -1,0 +1,108 @@
+<section class="d-flex flex-column h-100">
+<!-- table container section start here -->
+<section class="flex-grow-1 rounded shadow-sm overflow-auto" id="mainDIV" (scroll)="scrollService.onWindowScroll()">
+  <ng-container>
+    <mat-table [dataSource]="dataSource" matSort matSortDisableClear>
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef>
+          <div class="text-uppercase">Team Name</div>
+          <div class="icon icon-top-bottom cursor-pointer ml-1" (click)="sort('team')" [ngClass]="getDirecionIcon('team')"></div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let teams">
+          <span class="text-ellipsis"> {{ teams.team }} </span>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="startDate">
+        <mat-header-cell *matHeaderCellDef>
+          <div class="text-uppercase">Start Date</div>
+          <div class="icon icon-top-bottom cursor-pointer ml-1" (click)="sort('startDate')" [ngClass]="getDirecionIcon('startDate')"></div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let teams">
+          <span class="text-ellipsis"> {{ teams.startDate | date: 'MM/dd/yyyy' }} </span>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="endDate">
+        <mat-header-cell *matHeaderCellDef>
+          <div class="text-uppercase">End Date</div>
+          <div class="icon icon-top-bottom cursor-pointer ml-1" (click)="sort('endDate')" [ngClass]="getDirecionIcon('endDate')"></div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let team">
+          <span class="text-ellipsis"> {{ team.endDate | date: 'MM/dd/yyyy' }} </span>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="createdBy">
+        <mat-header-cell *matHeaderCellDef>
+          <div class="text-uppercase">created By</div>
+          <div class="icon icon-top-bottom cursor-pointer ml-1" (click)="sort('createdByLastName')" [ngClass]="getDirecionIcon('createdByLastName')"></div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let team">
+          <span class="text-ellipsis"> {{ team.createdBy }} </span>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="managers">
+        <mat-header-cell *matHeaderCellDef>
+          <div class="text-uppercase">Manager(s)</div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let team">
+          <read-more [text]='team.managers' [maxLength]="115"></read-more>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="activityDays">
+        <mat-header-cell *matHeaderCellDef>
+          <div class="text-uppercase">Evaluation Activity</div>
+          <div class="icon icon-top-bottom cursor-pointer ml-1" (click)="sort('activityDays')" [ngClass]="getDirecionIcon('activityDays')"></div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let team">
+          <span class="text-ellipsis"> {{ team.activityDays }} </span>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <mat-header-cell *matHeaderCellDef>
+          <div class="text-uppercase">status</div>
+          <div class="icon icon-top-bottom cursor-pointer ml-1" (click)="sort('status')" [ngClass]="getDirecionIcon('status')"></div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let team">
+          <span class="text-ellipsis"> {{ team.status }} </span>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <mat-header-cell *matHeaderCellDef>
+          <div class="text-uppercase text-center">Action</div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let team">
+          <section class="text-center d-flex justify-content-center align-items-center">
+            <div class="dropdown list-action-dropdown">
+              <button type="button" class="btn bg-transparent dropdown-toggle d-flex align-items-center" data-toggle="dropdown" [disabled]="(!team.isActive || !team.isDeletable) && !team.isEditable">
+                <span class="icon icon-click d-flex align-items-center"></span>
+              </button>
+              <div id="action-dropdown" class="dropdown-menu toggle-dropdown-menu border-0 shadow-sm">
+                <a>
+                  <button class="icon icon-edit-1 mr-1 btn bg-transparent d-flex align-items-center" title="Edit" [disabled]="!team.isEditable"
+                    (click)="edit(team.teamId)"></button>
+                </a>
+                <a>
+                  <button class="icon icon-bin mr-1 btn bg-transparent" title="Delete" [disabled]="!team.isActive || !team.isDeletable" (click)="delete(team.teamId)"></button>
+                </a>
+              </div>
+            </div>
+          </section>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="desktopViewColumn"></mat-header-row>
+      <mat-row [ngClass]="{'highlight': index%2 == 1}" *matRowDef="let teams; columns: desktopViewColumn;let index = index">
+      </mat-row>
+    </mat-table>
+  </ng-container>
+</section>
+<!-- table container section end here -->
+<!-- footer section start here -->
+<footer class="d-flex justify-content-end align-items-center w-100 flex-wrap py-2">
+  <section class="text-right p-0 col-xl-9 col-sm-12 col-xs-12 pagination-container" (click)="onClickPaginationPanel()">
+    <mat-paginator fixed [pageSizeOptions]="[50, 100, 150]" (page)="pageChanged($event)" showFirstLastButtons>
+    </mat-paginator>
+  </section>
+</footer>
+<!-- footer section end here -->
+</section>

@@ -1,0 +1,129 @@
+<section class="white-bg team-member-dialog-container rounded d-flex flex-column overflow-hidden h-100">
+  <section class="d-flex align-items-center justify-content-between px-3 pt-3 flex-shrink-0 py-3">
+    <div class="dark-text font-semibold font-md">Team Member Filter</div>
+    <div (click)="cancelSelection()" class="icon icon-close cursor-pointer" title="Close"></div>
+  </section>
+  <section class="flex-grow-1 overflow-auto py-3">
+    <form class="px-4 py-3" [formGroup]="filterForm" *ngIf="!isTriggerAdmin">
+      <div class="dark-text font-semibold font-md pb-3">Dimension Filter</div>
+      <section class="d-flex align-items-center mb-3" *ngIf="relationArray.length > 0">
+        <div class="font-semibold col-4 p-0">Relation</div>
+        <div class="form-select ml-2 w-100">
+          <select class="w-100 rounded" name="relation" formControlName="relationSelect"
+            (change)="changeFilter(this.filterForm.value.relationSelect,2)">
+            <option value="" selected disabled>Select</option>
+            <option *ngFor="let relation of relationArray" [value]="relation.elementId">
+              {{relation.elementName}}
+            </option>
+          </select>
+        </div>
+      </section>
+      <section class="d-flex align-items-center mb-3" *ngIf="departmentArray.length > 0">
+        <div class="font-semibold col-4 p-0">Department</div>
+        <div class="form-select ml-2 w-100">
+          <select class="w-100 rounded" name="department" formControlName="departmentSelect"
+            (change)="changeFilter(this.filterForm.value.departmentSelect,3)">
+            <option value="" selected disabled>Select</option>
+            <option *ngFor="let department of departmentArray" [value]="department.elementId">
+              {{department.elementName}}
+            </option>
+          </select>
+        </div>
+      </section>
+      <section class="d-flex align-items-center" *ngIf="teamsArray.length > 0">
+        <div class="font-semibold col-4 p-0">Team</div>
+        <div class="form-select ml-2 w-100">
+          <select class="w-100 rounded" name="team" formControlName="teamSelect"
+            (change)="changeFilter(this.filterForm.value.teamSelect,4)">
+            <option value="" selected disabled>Select</option>
+            <option *ngFor="let team of teamsArray" [value]="team.elementId">{{team.elementName}}
+            </option>
+          </select>
+        </div>
+      </section>
+    </form>
+    <div class="field-border-bottom mb-3" *ngIf="!isTriggerAdmin"></div>
+    <section class="px-4 pb-3">
+      <div class="dark-text pb-3 mb-0 font-semibold font-md">Department Filter</div>
+      <section class="d-flex align-items-center">
+        <div class="font-semibold col-4 p-0">Department</div>
+        <div class="form-select ml-2 w-100">
+          <select class="w-100 rounded" name="" [(ngModel)]="selectedDept" (change)="onChangeDepartment(selectedDept)">
+            <option value="0" selected disabled>Select Department</option>
+            <option *ngFor="let type of departmentData" value={{type.id}}>{{ type.department }}</option>
+          </select>
+        </div>
+      </section>
+    </section>
+    <div *ngIf="isAdditionalFilter">
+      <div class="field-border-bottom mb-3" *ngIf="isTriggerAdminOrAdmin"></div>
+      <section class="px-4 pb-3" *ngIf="isTriggerAdminOrAdmin">
+        <div class="dark-text pb-3 mb-0 font-semibold font-md">Team Member Status Filter</div>
+        <section class="d-flex align-items-center">
+          <div class="font-semibold col-4 p-0">Team Member Status</div>
+          <div class="form-select ml-2 w-100">
+            <select class="w-100 rounded" name="" [(ngModel)]="empStatus" (change)="onSelectStatus(empStatus)">
+              <option value="0" selected disabled>Select Team Member Status</option>
+              <option *ngFor="let item of statusList" [value]='item.id'>{{ item.label }}</option>
+            </select>
+          </div>
+        </section>
+      </section>
+      <div class="field-border-bottom mb-3"></div>
+      <section class="px-4 pb-3">
+        <div class="dark-text pb-3 mb-0 font-semibold font-md">Manager Action Filter</div>
+        <section class="d-flex align-items-center">
+          <div class="font-semibold col-4 p-0">Manager Action</div>
+          <div class="form-select ml-2 w-100">
+            <select class="w-100 rounded" name="" [(ngModel)]="managerAction"
+              (change)="changeManagerAction(managerAction)">
+              <option value="" selected disabled>Select Manager Action</option>
+              <option *ngFor="let item of managerActionList" [value]='item.managerAction'>{{ item.managerAction }}
+              </option>
+            </select>
+          </div>
+        </section>
+      </section>
+      <div class="field-border-bottom mb-3"></div>
+      <section class="px-4 pb-3">
+        <div class="dark-text pb-3 mb-0 font-semibold font-md">Score Filter</div>
+        <section class="d-flex align-items-center">
+          <div class="font-semibold col-4 p-0">Score</div>
+          <div class="form-select ml-2 w-100">
+            <select class="w-100 rounded" name="" [(ngModel)]="scoreTitle" (change)="changeScoreTitle(scoreTitle)">
+              <option value="" selected disabled>Select Score</option>
+              <option *ngFor="let item of scoreTitleList" [value]='item.scoreSummary'>{{ item.scoreSummary }}</option>
+            </select>
+          </div>
+        </section>
+      </section>
+      <div class="field-border-bottom mb-3"></div>
+      <section class="px-4 pb-3">
+        <div class="dark-text pb-3 mb-0 font-semibold font-md">Trending Filter</div>
+        <section class="d-flex align-items-center">
+          <div class="font-semibold col-4 p-0">Trending</div>
+          <div class="form-select ml-2 w-100">
+            <ng-select class="trending-ng-select"  (change)="onSelectTrending(trendingStatus)"
+              [searchable]="false" [clearable]="false" appendTo="body" [(ngModel)]="trendingStatus">
+              <ng-option value="0" disabled>
+                <div class="trending-ng-select-header"> Select Trending </div>
+              </ng-option>
+              <ng-option class="p-2 options" *ngFor="let item of updatedTrendingList" [value]="item.id">
+                <div class="trending-ng-select-body" [ngClass]="isDarkTheme ? 'ng-select-option-dark' : 'ng-select-option-light'">
+                  <span [class]="item.iconName"></span>
+                  {{item.status}}
+                </div>
+              </ng-option>
+            </ng-select>
+          </div>
+        </section>
+      </section>
+    </div>
+  </section>
+  <footer class="d-flex flex-shrink-0 pt-3 pb-2">
+    <button type="button" class="btn btn-primary cursor-pointer flex-fill mx-1" title="Reset All"
+      (click)="resetFilter()">Reset All</button>
+    <button type="button" class="btn btn-primary cursor-pointer flex-fill mx-1" title="Apply"
+      (click)="onApplyFilter()">Apply</button>
+  </footer>
+</section>

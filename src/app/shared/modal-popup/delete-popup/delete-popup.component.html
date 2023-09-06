@@ -1,0 +1,11 @@
+<!-- delete modal start here -->
+<section class="p-3">
+  <div mat-dialog-content class="text-center">
+    <p> {{ deleteContent }} </p>
+  </div>
+  <div mat-dialog-actions class="d-flex justify-content-center">
+    <button type="button" class="btn btn-secondary rounded-pill mr-2 btn-sm text-uppercase mb-3" (click)="onClickYes()" cdkFocusInitial>Yes</button>
+    <button type="button" class="btn secondary-light-btn rounded-pill btn-sm text-uppercase mb-3" [mat-dialog-close]>No</button>
+  </div>
+</section>
+<!-- delete modal end here -->

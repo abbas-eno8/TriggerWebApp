@@ -1,0 +1,115 @@
+<section class="d-flex flex-column h-100">
+  <!-- header section start here -->
+  <header class="d-flex justify-content-between p-3 flex-shrink-0 flex-wrap">
+    <section class="d-flex">
+      <div class="dark-text font-xl font-semibold">
+        Permissions
+      </div>
+    </section>
+    <section class="d-flex align-items-center justify-content-end ml-auto">
+      <div class="dark-text font-semibold text-left">Dimension</div>
+      <div class="d-flex flex-nowrap align-items-center">
+        <div class="mr-3">
+          <form class="form" [formGroup]="dimensionForm">
+            <div class="d-flex ml-3">
+              <div class="sm-select-dropdown">
+                <select class="cursor-pointer shadow-sm white-bg rounded-pill" formControlName="dimensionControl"
+                  (change)="onChangeDimension(dimensionForm.value.dimensionControl)">
+                  <option *ngFor="let dimension of allDimensions" [ngValue]="dimension.id">{{dimension.dimensionType}}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </form>
+        </div>
+        <trigger-tooltip [pageTitle]="pageTitle"></trigger-tooltip>
+      </div>
+    </section>
+  </header>
+  <!-- header section end here -->
+  <!-- main body section start here -->
+  <section class="h-100 position-relative flex-grow-1 overflow-hidden">
+    <section class="d-flex flex-column overflow-auto px-3 pb-3 h-100">
+      <!-- accordion section start here -->
+      <section *ngIf="!isDisplayRecordsNotFound">
+        <section id="accordion">
+          <div *ngFor="let data of selectedDimensionElementArray; let idx = index">
+            <div class="card shadow-sm mb-3" *ngIf="data.isShowDimensionElement">
+              <div class="card-header d-flex justify-content-between align-items-center cursor-pointer" id="headingOne"
+                data-toggle="collapse" [attr.data-target]="'#collapse' + idx" [attr.aria-expanded]="!data.isCollapsed"
+                [attr.aria-controls]="'collapse' + idx" (click)="data.isCollapsed = !data.isCollapsed"
+                (click)="collapse(data)">
+                <div class="text-info font-semibold">
+                  {{data.dimensionValues}}
+                </div>
+                <button type="button" class="btn bg-transparent border-0 p-0">
+                  <div [ngClass]="data.accrodianIconClass"></div>
+                </button>
+              </div>
+
+              <div [id]="'collapse' + idx" class="collapse" [ngClass]="data.collapseClass" aria-labelledby="headingOne"
+                data-parent="#accordion">
+                <div class="card-body px-3">
+                  <div class="position-relative">
+                    <div class="system-config-scroller">
+                      <table class="w-100 system-config-table">
+                        <thead>
+                          <tr>
+                            <th class="system-config-sticky-col">action</th>
+                            <th class="system-config-width">view</th>
+                            <th class="system-config-width">add</th>
+                            <th class="system-config-width">edit</th>
+                            <th class="system-config-width">delete</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let action of data.actionwisePermissionModel">
+                            <td class="system-config-sticky-col">
+                              {{ action.actions }}
+                            </td>
+                            <td class="system-config-width">
+                              <mat-checkbox [checked]="action.canView" [disabled]="!action.isViewable"
+                                (change)="onActionCheck(action,$event,'canView', data.actionwisePermissionModel)">
+                              </mat-checkbox>
+                            </td>
+                            <td class="system-config-width">
+                              <mat-checkbox [checked]="action.canAdd" [disabled]="!action.isAddable"
+                                (change)="onActionCheck(action,$event,'canAdd')">
+                              </mat-checkbox>
+                            </td>
+                            <td class="system-config-width">
+                              <mat-checkbox [checked]="action.canEdit" [disabled]="!action.isEditable"
+                                (change)="onActionCheck(action,$event,'canEdit')">
+                              </mat-checkbox>
+                            </td>
+                            <td class="system-config-width">
+                              <mat-checkbox [checked]="action.canDelete" [disabled]="!action.isDeletabled"
+                                (change)="onActionCheck(action,$event,'canDelete')">
+                              </mat-checkbox>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- accordion section end here -->
+        <section class="text-right">
+          <button title="Submit" class="btn btn-secondary text-uppercase rounded-pill" [disabled]="!isSubmitEnable"
+            [ngClass]="{'primary-disabled':!isSubmitEnable}" (click)="submitConfiguration()">Submit</button>
+        </section>
+      </section>
+      <!-- no record section start here -->
+      <section class="no-records-container h-100 px-3 pb-3" *ngIf="isDisplayRecordsNotFound">
+        <trigger-no-records-found></trigger-no-records-found>
+      </section>
+      <!-- no record section end here -->
+    </section>
+  </section>
+
+  <!-- main body section end here -->
+</section>

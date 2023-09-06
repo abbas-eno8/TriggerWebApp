@@ -1,0 +1,23 @@
+<section class="py-3 d-flex justify-content-end w-100 flex-shrink-0">
+  <section class="d-flex wrap-block align-items-center">
+    <div class="pr-2 secondary-dark-text">
+      <span class="d-md-inline-flex d-none">Records per page: </span>
+      <span class="mb-1 d-none xs-d-block">Records:</span>
+    </div>
+    <div class="pagination-form-select mr-2">
+      <select class="rounded" (change)="pageChanged()" [(ngModel)]="selectedPageSize">
+        <option *ngFor="let page of pageSizeOptions" [value]="page"> {{ page }} </option>
+      </select>
+    </div>
+  </section>
+  <section class="d-flex wrap-block justify-content-end align-items-center">
+    <div class="pr-2 secondary-dark-text"> {{ firstPageIndex }} - {{ lastPageIndex }} of {{ length }} </div>
+    <div class="d-flex">
+      <button title="First page" class="bg-transparent border-0 icon icon-first pr-2 py-1" (click)="onClickFirstPage()" [attr.disabled]="isDisabledInitialIcon"></button>
+      <button title="Previous page" class="bg-transparent border-0 icon icon-previous pr-2 py-1" (click)="onClickPreviousPage()"
+        [attr.disabled]="isDisabledInitialIcon"></button>
+      <button title="Next page" class="bg-transparent border-0 icon icon-next pr-2 py-1" (click)="onClickNextPage()" [attr.disabled]="isDisabledLastIcon"></button>
+      <button title="Last page" class="bg-transparent border-0 icon icon-last py-1" (click)="onClickLastPage()" [attr.disabled]="isDisabledLastIcon"></button>
+    </div>
+  </section>
+</section>

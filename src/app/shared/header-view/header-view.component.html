@@ -1,0 +1,17 @@
+<!-- header part start here -->
+<header class="d-flex justify-content-between p-3 flex-shrink-0">
+  <section class="d-flex align-items-center">
+    <div class="dark-text font-xl font-semibold">
+      {{ pageTitle }}
+    </div>
+  </section>
+  <section class="d-flex align-items-center" *ngFor="let data of HeaderViewParameter">
+    <button type="button" (click)="onClick(data.redirectTo)" [title]="data.title"
+      class="btn btn-primary xs-btn text-uppercase rounded-pill mr-3 d-flex align-items-center justify-content-center">
+      <div [class]="data.icon"></div>
+      <div class="pl-2 d-md-inline-flex d-none"> {{ data.title }} </div>
+    </button>
+    <trigger-tooltip [pageTitle]="pageTitle"></trigger-tooltip>
+  </section>
+</header>
+<!-- header part end here -->

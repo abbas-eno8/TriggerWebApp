@@ -1,0 +1,52 @@
+<!-- Excel upload data import section start here -->
+<section class="mt-3 flex-grow-1 overflow-hidden table-container">
+  <section class="d-flex flex-column h-100 overflow-hidden shadow-sm rounded">
+    <section class="data-table-header position-relative" id="data-table-header">
+      <table class="w-100 font-semibold white-bg">
+        <thead>
+          <tr>
+            <th></th>
+            <th>id</th>
+            <th>name</th>
+            <th>job position</th>
+            <th>department</th>
+            <th>location</th>
+            <th>status</th>
+            <th class="text-center" *ngIf="!isClickOnNext">
+              <div class="text-center d-flex justify-content-center align-items-center">
+                <mat-checkbox (change)="onCheckMaster($event.checked)" [(ngModel)]="checkedMaster"></mat-checkbox>
+              </div>
+            </th>
+          </tr>
+        </thead>
+      </table>
+    </section>
+    <section class="data-table-body" id="data-table-body" (scroll)="onScroll($event)">
+      <table class="w-100 white-bg">
+        <tbody>
+          <tr *ngFor="let data of listOfNewInsertedData">
+            <td class="text-center position-relative">
+              <div class="d-flex justify-content-center align-items-center">
+                <div class="icon icon-xls-file align-items-center d-flex">
+                  <div class="icon icon-plus"></div>
+                </div>
+              </div>
+            </td>
+            <td>{{ data.employeeId }}</td>
+            <td>{{ data.firstName.charAt(0).toUpperCase() + data.firstName.slice(1) + " " + data.lastName }}</td>
+            <td>{{ data.jobTitle }}</td>
+            <td>{{ data.department }}</td>
+            <td>{{ data.workCity }} {{ data.workState }} {{ data.workZipcode }}</td>
+            <td>{{ data.displayEmpStatus }}</td>
+            <td class="text-center" *ngIf="!isClickOnNext">
+              <div class="d-flex justify-content-center align-items-center">
+                <mat-checkbox (change)="onCheck($event.checked, data)" [(ngModel)]="data.isChecked"></mat-checkbox>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </section>
+</section>
+<!-- Excel upload data import section end here -->

@@ -1,0 +1,41 @@
+@import "~assets/scss/base/variables";
+@import "~assets/scss/base/colors";
+@import "~assets/scss/base/mixins";
+@import "~bootstrap/scss/mixins/breakpoints";
+
+.icon-spark-an-employee {
+    font-size: 65px;
+    color: $primary-light-50;
+    color: var(--icon-chart);
+    &:hover {
+        color: $primary-light-50;
+    }
+    @include media-breakpoint-down('sm-small') {
+        font-size: 40px;
+    }
+}
+
+.icon-trigger-an-employee {
+    @extend .icon-spark-an-employee;
+    // font-size: 65px;
+    // color: var(--icon-chart);
+    // @include media-breakpoint-down('sm-small') {
+    //     font-size: 40px;
+    // }
+}
+
+.info-tooltip {
+    margin-right: 0;
+}
+
+.col-sm-6 {
+    @include media-breakpoint-down('sm-small') {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 50%;
+        flex: 0 0 50%;
+        max-width: 50%;
+        & .font-md {
+            font-size: 12px;
+        }
+    }
+}

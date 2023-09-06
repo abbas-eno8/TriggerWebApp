@@ -1,0 +1,17 @@
+@import "~assets/scss/base/variables";
+@import "~assets/scss/base/colors";
+@import "~bootstrap/scss/mixins/breakpoints";
+
+.xs-mb {
+    @include media-breakpoint-down('xs-wide') {
+    margin-bottom: 1rem;
+    }
+}
+
+.mat-expansion-panel {
+    overflow: hidden !important;
+
+    &.mat-expanded {
+        overflow: initial !important;
+    }
+}

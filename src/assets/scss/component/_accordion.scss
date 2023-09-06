@@ -1,0 +1,79 @@
+.card-header-item {
+    width: 24%;
+    @include media-breakpoint-down('sm-small') {
+        font-size: 12px;
+    }
+}
+.card-container {
+    padding: 1rem 1rem;
+    @include media-breakpoint-down('sm-small') {
+        padding: 0.5rem 0.5rem;
+    }
+}
+.card-accordion-container {
+    & .card-body {
+        &:nth-child(odd) {
+            background-color: $body-bg;
+        }
+    
+        &:nth-child(even) {
+            background-color: $body-bg;
+        }
+    }
+    & .card {
+        &:nth-child(odd) {
+            background-color: var(--bg-list-odd);
+        }
+    
+        &:nth-child(even) {
+            background-color: var(--bg-list-even);
+        }
+    }
+}
+//for accordion design
+.card {
+    border: 2px solid var(--brand-border2);
+    & .card-header {
+        border-bottom: 0;
+        background-color: var(--bg-accordion-header);
+        @include transition();
+    }
+
+    & .card-body {
+        padding: 0;
+        @include transition();
+        &:nth-child(odd) {
+            background-color: var(--bg-list-odd);
+        }
+
+        &:nth-child(even) {
+            background-color: var(--bg-list-even);
+        }
+    }
+
+    & .icon-pluse,
+    .icon-minus {
+        font-size: 15px;
+        color: $primary;
+    }
+}
+
+.accordion {
+    & .card {
+        overflow: visible;
+    }
+    & .card-header {
+        width: 40px;
+        &::after {
+            font-family: $icon-font-family;
+            content: "\2e";
+            color: $primary;
+        }
+
+        &.collapsed {
+            &::after {
+                content: "\40";
+            }
+        }
+    }
+}

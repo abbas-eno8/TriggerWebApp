@@ -1,0 +1,62 @@
+@import "~assets/scss/base/variables";
+@import "~assets/scss/base/colors";
+@import "~bootstrap/scss/mixins/breakpoints";
+@import "~assets/scss/base/mixins";
+
+.my-wall-modal-box {
+    & .nav-tabs {
+        // border-bottom: 1px solid $border;
+        // border-bottom: 1px solid var(--brand-border);
+        width: 100%;
+        & .nav-item {
+            margin-bottom: 0;
+        }
+
+        & .nav-link {
+            padding: 10px 8px;
+            border: 0;
+            color: $secondary-dark;
+            border-radius: 0;
+            &:hover {
+                border-color: $transparent;
+            }
+
+            & img {
+                @include size(25px, 25px)
+            }
+
+            &.active-all {
+                border-bottom: 2px solid $info-light;
+                color: $info-light;
+            }
+
+            &.active-like {
+                border-bottom: 2px solid $info;
+                color: $info;
+            }
+
+            &.active-heart {
+                border-bottom: 2px solid $danger-light;
+                color: $danger-light;
+            }
+
+            &.active-smiles {
+                border-bottom: 2px solid $warning;
+                color: $warning;
+            }
+      
+        }
+    }
+
+    .status-bottom-border {
+        // border-bottom: 1px solid $border;
+        padding-bottom: 18px;
+    }
+
+    .status-icons-container {
+        @include position(absolute, 25px, -4px, auto, auto);
+        & img {
+            width: 22px;
+        }
+    }
+}

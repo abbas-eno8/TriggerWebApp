@@ -1,0 +1,9 @@
+.form-select {
+    & select {
+        line-height: normal;
+    }
+}
+// ::ng-deep .mat-dialog-container {
+//     background: none;
+//     color:inherit;
+// }

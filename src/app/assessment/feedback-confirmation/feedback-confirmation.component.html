@@ -1,0 +1,11 @@
+<section class="white-bg p-3 rounded lg-dialog-container">
+  <div class="text-center">
+    <p>Does the Evaluation Score of  <strong>{{ trggerScoreDetail.empScoreRank }}</strong> accurately depict your interaction with <strong>{{ trggerScoreDetail.empName }}</strong>? </p>
+  </div>
+  <div class="d-flex justify-content-center">
+    <button #positiveButton type="button" class="btn btn-secondary rounded-pill mr-2 btn-sm text-uppercase" (click)="submitScore()"  title="Yes"
+    triggerFocusInit="true">Yes</button>
+    <button type="button" class="btn secondary-light-btn rounded-pill btn-sm text-uppercase"
+      (click)="rejectScore()"  title="No">No</button>
+  </div>
+</section>

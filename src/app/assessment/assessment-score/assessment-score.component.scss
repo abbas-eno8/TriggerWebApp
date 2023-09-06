@@ -1,0 +1,19 @@
+@import "~assets/scss/base/variables";
+@import "~assets/scss/base/colors";
+@import "~bootstrap/scss/mixins/breakpoints";
+@import "~assets/scss/base/mixins";
+.score-img-container {
+    background-image: url('/assets/images/dashboard/Triger_circle.gif');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: contain;
+    @include size(330px, 330px);
+    @include media-breakpoint-down('sm-small') {
+        @include size(260px, 260px);
+    }
+}
+.btn-secondary {
+    @include media-breakpoint-down('sm-small') {
+        min-width: auto;
+    }
+}

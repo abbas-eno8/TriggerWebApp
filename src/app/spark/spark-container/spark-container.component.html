@@ -1,0 +1,11 @@
+<trigger-spark-presentation-ui
+    [baseResponse]="baseResponse$ | async"
+    [teamMember]="teamMember$ | async"
+    [emailContent]="emailContent"
+    [sparkFilterData]="sparkFilterData"
+    [teamMemberList]="allTeamMemberList$ |async "
+    (saveSpark)="saveSpark($event)"
+    (sendMail)="sendMail($event)"
+    (getTeamMemberList)="getTeamMemberList($event)"
+>
+</trigger-spark-presentation-ui>

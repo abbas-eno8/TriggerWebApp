@@ -1,0 +1,14 @@
+@import "~assets/scss/base/variables";
+@import "~assets/scss/base/colors";
+@import "~bootstrap/scss/mixins/breakpoints";
+@import "~assets/scss/base/mixins";
+.question-type {
+    padding: 0 0 0 25px;
+}
+.freefrom-textbox {
+    border: 2px solid $border;
+}
+// ::ng-deep .mat-dialog-container {
+//     background: none;
+//     color:inherit;
+// }

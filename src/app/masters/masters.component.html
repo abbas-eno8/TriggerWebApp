@@ -1,0 +1,78 @@
+<section class="d-flex flex-column h-100">
+  <!-- header section start here -->
+  <header class="d-flex justify-content-between p-3 flex-shrink-0">
+    <section class="d-flex align-items-center">
+      <div class="dark-text font-xl font-semibold">
+        {{ pageTitle }}
+      </div>
+    </section>
+    <section class="d-flex align-items-center">
+      <button type="button" (click)="onclickAdd()"
+        class="btn btn-primary xs-btn text-uppercase d-flex align-items-center rounded-pill mr-3" [title]="addAttribute">
+        <div class="icon icon-add d-flex align-items-center text-white"></div>
+        <div class="pl-2 d-md-inline-flex d-none"> {{ addAttribute }} </div>
+      </button>
+      <trigger-tooltip [pageTitle]="pageTitle"></trigger-tooltip>
+    </section>
+  </header>
+  <!-- header section end here -->
+  <!-- main body section start here -->
+  <section class="h-100 position-relative flex-grow-1 overflow-hidden">
+    <section class="d-flex flex-column overflow-auto px-3 pb-3 h-100" (scroll)="scrollService.onWindowScroll()">
+      <!-- accordion section start here -->
+      <section id="accordion">
+        <div class="card shadow-sm mb-3" *ngFor="let data of masterDimension; let idx = index">
+          <div class="card-header d-flex justify-content-between align-items-center cursor-pointer" id="headingOne"
+            data-toggle="collapse" [attr.data-target]="'#collapse' + idx" [attr.aria-expanded]="!data.isCollapsed"
+            [attr.aria-controls]="'collapse' + idx" (click)="data.isCollapsed = !data.isCollapsed; collapse(data)">
+            <div class="text-info font-semibold">
+              {{ data.dimension }}
+            </div>
+            <button type="button" class="btn bg-transparent border-0 p-0">
+              <div [ngClass]="data.accrodianIconClass"></div>
+            </button>
+          </div>
+          <div [id]="'collapse' + idx" class="collapse" [ngClass]="data.collapseClass" aria-labelledby="headingOne"
+            data-parent="#accordion">
+            <div *ngIf="data.attributeModel.length > 0">
+              <div class="card-body" *ngFor="let atr of data.attributeModel">
+                <div class="d-flex justify-content-between align-items-center p-3">
+                  <div> {{ atr.dimensionValues }}</div>
+                  <!-- Actions dropdown start here -->
+                  <div class="dropdown list-action-dropdown" *ngIf="!atr.isDefault">
+                    <button type="button" class="btn border-0 bg-transparent dropdown-toggle d-flex align-items-center"
+                      data-toggle="dropdown">
+                      <span class="icon icon-click d-flex align-items-center"></span>
+                    </button>
+                    <div id="action-dropdown" class="dropdown-menu toggle-dropdown-menu border-0 shadow-sm">
+                      <a>
+                        <button type="button" class="btn bg-transparent icon icon-edit-1 mr-2 border-0" title="Edit"
+                          (click)=onclickUpdate(atr,data.dimension)></button>
+                      </a>
+                      <a>
+                        <button type="button" class="btn bg-transparent icon icon-bin border-0" title="Delete"
+                          (click)=onclickDelete(atr)></button>
+                      </a>
+                    </div>
+                  </div>
+                  <!-- Actions dropdown end here -->
+                </div>
+              </div>
+            </div>
+            <div *ngIf="data.attributeModel.length === 0">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center p-3">
+                  <section class="d-flex justify-content-center align-items-center white-bg p-4 flex-column w-100">
+                    <div class="dark-text font-semibold font-md">No data found</div>
+                  </section>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- accordion section end here -->
+    </section>
+  </section>
+  <!-- main body section end here -->
+</section>

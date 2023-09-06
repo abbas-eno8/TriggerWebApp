@@ -1,0 +1,27 @@
+<section class="d-flex flex-column h-100">
+    <!-- header part start here -->
+    <trigger-header-view [pageTitle]="pageTitle" [HeaderViewParameter]="HeaderViewParameter">
+    </trigger-header-view>
+    <!-- header part end here -->
+    <section class="h-100 position-relative flex-grow-1 overflow-hidden mx-3">
+        <section class="mat-elevation-z8 rounded-top w-100 h-100">
+            <div class="h-100">
+                <!-- admin table list start here -->
+                <trigger-admin-table class="d-flex flex-column h-100" [admins]="filteredData"
+                    [isArrayValue]="isArrayValue" [clientData]="clientData" [selectedClient]="selectedClient"
+                    (clientDropdownFilter)="clientDropdownFilter($event)" (goToEditEmployee)="goToEditEmployee($event)"
+                    (deleteAdminEvent)="deleteAdminEvent($event)" *ngIf="isApiCalled && !isAccordion && filteredData?.length > 0">
+                </trigger-admin-table>
+                <!-- admin table list end here -->
+                <!-- admin accordion table list start here -->
+                <trigger-admin-accordion-table class="d-flex flex-column h-100" [admins]="filteredData"
+                    [isArrayValue]="isArrayValue" [clientData]="clientData" [selectedClient]="selectedClient"
+                    (clientDropdownFilter)="clientDropdownFilter($event)" (goToEditEmployee)="goToEditEmployee($event)"
+                    (deleteAdminEvent)="deleteAdminEvent($event)" *ngIf="isApiCalled && isAccordion && filteredData?.length > 0">
+                </trigger-admin-accordion-table>
+                <!-- admin accordion table list end here -->
+                <trigger-no-records-found *ngIf="isApiCalled && filteredData?.length === 0"></trigger-no-records-found>
+            </div>
+        </section>
+    </section>
+</section>

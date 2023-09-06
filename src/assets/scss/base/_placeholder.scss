@@ -1,0 +1,29 @@
+%data-table {
+    padding: 5px;
+    @include border-radius(5px);
+    color: $secondary-dark;
+    font-size: 14px;
+    line-height: 14px;
+    text-align: center;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+%slide-hide {
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -ms-backface-visibility: hidden;
+    visibility: hidden;
+    opacity: 0;
+    @include transition();
+}
+
+%slide-show {
+    -webkit-backface-visibility: visible;
+    -moz-backface-visibility: visible;
+    -ms-backface-visibility: visible;
+    visibility: visible;
+    opacity: 1;
+    @include transition();
+}
+

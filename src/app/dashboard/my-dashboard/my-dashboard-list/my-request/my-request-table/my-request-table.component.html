@@ -1,0 +1,89 @@
+<!-- table container section start here -->
+<section class="flex-grow-1 rounded shadow-sm overflow-auto" id="mainDIV" (scroll)="scrollService.onWindowScroll()">
+  <ng-container>
+    <mat-table [dataSource]="dataSource" matSort matSortDisableClear>
+      <ng-container matColumnDef="status">
+        <mat-header-cell *matHeaderCellDef>
+          <div class="text-uppercase">Status</div>
+          <div class="icon icon-top-bottom cursor-pointer ml-1" (click)="sortData('status','asc')"
+            [ngClass]="isSortingDirecion('status')"></div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let myRequestList">
+          <div class="text-ellipsis d-flex justify-content-center align-items-center">
+            <div class=" p-1 rounded text-white text-center" [ngClass]="(myRequestList.status=='Completed')?'bg-success-light':'bg-danger-light'">{{ myRequestList.status }}</div>
+          </div>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="action">
+        <mat-header-cell *matHeaderCellDef>
+          <div class="text-uppercase">Request Type</div>
+          <div class="icon icon-top-bottom cursor-pointer ml-1" (click)="sortData('action','asc')"
+            [ngClass]="isSortingDirecion('action')"></div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let myRequestList">
+          <span class="text-ellipsis"> {{ myRequestList.action }}</span>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="requesterName">
+        <mat-header-cell *matHeaderCellDef>
+          <div class="text-uppercase">Request By</div>
+          <div class="icon icon-top-bottom cursor-pointer ml-1" (click)="sortData('requesterName','asc')"
+            [ngClass]="isSortingDirecion('requesterName')"></div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let myRequestList">
+          <span class="text-ellipsis"> {{ myRequestList.requesterName }}</span>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="remarks">
+        <mat-header-cell *matHeaderCellDef>
+          <div class="text-uppercase">Purpose of Request</div>
+          <div class="icon icon-top-bottom cursor-pointer ml-1" (click)="sortData('remarks','asc')"
+            [ngClass]="isSortingDirecion('remarks')">
+          </div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let myRequestList">
+          <read-more [text]='myRequestList.remarks' [maxLength]="115"></read-more>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="createdDate">
+        <mat-header-cell *matHeaderCellDef>
+          <div class="text-uppercase">created Date</div>
+          <div class="icon icon-top-bottom cursor-pointer ml-1" (click)="sortData('createdDate','asc')"
+            [ngClass]="isSortingDirecion('createdDate')"></div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let myRequestList">
+          <span class="text-ellipsis">{{ myRequestList.createdDate | date: 'MM/dd/yyyy h:mm:ss aaa' }}</span>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="button">
+        <mat-header-cell *matHeaderCellDef>
+          <div class="text-uppercase mx-auto">Action</div>
+        </mat-header-cell>
+        <mat-cell class="d-flex justify-content-center align-items-center" *matCellDef="let myRequestList">
+          <button type="button" class="text-ellipsis btn icon icon-trigger-an-employee cursor-pointer text-primary"
+            title="Evaluation" *ngIf="myRequestList.actionId === 1" (click)="clickOnAction(myRequestList)" [disabled]="isDisabledIcon(myRequestList)"></button>
+          <button type="button" class="text-ellipsis btn icon icon-spark cursor-pointer text-primary" title="Spark"
+            *ngIf="myRequestList.actionId === 2" (click)="clickOnAction(myRequestList)" [disabled]="isDisabledIcon(myRequestList)"></button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="desktopViewColumn"></mat-header-row>
+      <mat-row [ngClass]="{'highlight': index%2 == 1}"
+        *matRowDef="let spark; columns: desktopViewColumn;let index = index">
+      </mat-row>
+    </mat-table>
+  </ng-container>
+</section>
+<!-- table container section end here -->
+<!-- footer section start here -->
+<footer class="d-flex justify-content-end align-items-center w-100 flex-wrap py-2">
+  <section class="text-right p-0 col-xl-9 col-sm-12 col-xs-12 pagination-container" (click)="onClickPaginationPanel()">
+    <mat-paginator fixed [pageSizeOptions]="[50, 100, 150]" (page)="pageChanged($event)" showFirstLastButtons>
+    </mat-paginator>
+  </section>
+</footer>
+<!-- footer section end here -->

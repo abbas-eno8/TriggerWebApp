@@ -1,0 +1,88 @@
+<section class="d-flex flex-column h-100">
+  <!-- table container section start here -->
+  <section class="flex-grow-1 rounded shadow-sm overflow-auto" id="mainDIV" (scroll)="scrollService.onWindowScroll()">
+    <ng-container>
+      <mat-table [dataSource]="dataSource" matSort matSortDisableClear>
+        <ng-container matColumnDef="spark">
+          <mat-header-cell *matHeaderCellDef>
+            <div class="text-uppercase">spark</div>
+            <div class="icon icon-top-bottom cursor-pointer ml-1" (click)="sort('spark')"
+              [ngClass]="getDirecionIcon('spark')"></div>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let spark">
+            <read-more [text]='spark.spark' [maxLength]="150"></read-more>
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="employeeName">
+          <mat-header-cell *matHeaderCellDef>
+            <div class="text-uppercase">Spark For</div>
+            <div class="icon icon-top-bottom cursor-pointer ml-1" (click)="sort('lastName')"
+              [ngClass]="getDirecionIcon('lastName')"></div>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let spark">
+            <span class="text-ellipsis"> {{ spark.employeeName }}</span>
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="givenBy">
+          <mat-header-cell *matHeaderCellDef>
+            <div class="text-uppercase">given By</div>
+            <div class="icon icon-top-bottom cursor-pointer ml-1" (click)="sort('sparkByLastName')"
+              [ngClass]="getDirecionIcon('sparkByLastName')"></div>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let spark">
+            <span class="text-ellipsis"> {{ spark.givenBy }}</span>
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="action">
+          <mat-header-cell *matHeaderCellDef>
+            <div class="text-uppercase text-center">Action</div>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let spark">
+            <section class="text-center d-flex justify-content-center align-items-center">
+              <div class="dropdown list-action-dropdown">
+                <button type="button" class="btn bg-transparent dropdown-toggle d-flex align-items-center"
+                  data-toggle="dropdown">
+                  <span class="icon icon-click d-flex align-items-center"></span>
+                </button>
+                <div id="action-dropdown" class="dropdown-menu toggle-dropdown-menu border-0 shadow-sm">
+                  <a>
+                    <button class="icon icon-spark mr-1 btn bg-transparent d-flex align-items-center position-relative"
+                      title="Approved" (click)="approvedSpark(spark)">
+                      <div class="list-rounded bg-success">
+                        <span
+                          class="icon icon-checkmark text-white d-flex align-items-center justify-content-center h-100"></span>
+                      </div>
+                    </button>
+                  </a>
+                  <a>
+                    <button class="icon icon-spark mr-1 btn bg-transparent d-flex align-items-center position-relative"
+                      title="Reject" (click)="rejectSpark(spark)">
+                      <div class="list-rounded bg-danger">
+                        <span
+                          class="icon icon-close text-white d-flex align-items-center justify-content-center h-100"></span>
+                      </div>
+                    </button>
+                  </a>
+                </div>
+              </div>
+            </section>
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="desktopViewColumn"></mat-header-row>
+        <mat-row [ngClass]="{'highlight': index%2 == 1}"
+          *matRowDef="let spark; columns: desktopViewColumn;let index = index">
+        </mat-row>
+      </mat-table>
+    </ng-container>
+  </section>
+  <!-- table container section end here -->
+  <!-- footer section start here -->
+  <footer class="d-flex justify-content-end align-items-center w-100 flex-wrap py-2">
+    <section class="text-right p-0 col-xl-9 col-sm-12 col-xs-12 pagination-container"
+      (click)="onClickPaginationDropdown()">
+      <mat-paginator fixed [pageSizeOptions]="[50, 100, 150]" (page)="pageChanged()" showFirstLastButtons>
+      </mat-paginator>
+    </section>
+  </footer>
+  <!-- footer section end here -->
+</section>

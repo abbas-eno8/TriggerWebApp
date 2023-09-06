@@ -1,0 +1,96 @@
+<section class="list-accordion-conatiner d-flex flex-column h-100 overflow-hidden">
+    <header class="list-header d-flex justify-content-between align-items-center rounded-top flex-shrink-0">
+        <div class="card-header-item font-semibold text-uppercase d-flex align-items-center">
+            {{accordionHeader[0].name}}
+            <div (click)="presenter.sort(accordionHeader[0].property)"
+                [ngClass]="presenter.getDirecionIcon(accordionHeader[0].property)"></div>
+        </div>
+
+        <div *ngIf="isSurvey" class="card-header-item font-semibold text-uppercase text-center">action</div>
+        <div class="w-40px text-uppercase mr-3"></div>
+    </header>
+    <section class="overflow-auto rounded-bottom h-100 shadow-sm card-accordion-container"
+        (scroll)="presenter.onWindowScroll()">
+        <section id="accordion" class="accordion">
+            <section class="card mb-0 border-0" *ngFor="let survey of filterSurvey; let i = index">
+                <div class="d-flex justify-content-between align-items-center card-container">
+                    <div class="card-header-item text-ellipsis d-flex align-items-center">
+                        <div>{{survey.surveyName}}</div>
+                    </div>
+                    <div *ngIf="isSurvey" class="card-header-item">
+                        <section class="d-flex justify-content-center align-items-center">
+                            <div class="dropdown list-action-dropdown">
+                                <button type="button"
+                                    class="btn border-0 bg-transparent dropdown-toggle d-flex align-items-center"
+                                    data-toggle="dropdown">
+                                    <span class="icon icon-click d-flex align-items-center"></span>
+                                </button>
+                                <div id="action-dropdown"
+                                    class="dropdown-menu toggle-dropdown-menu border-0 shadow-sm">
+                                    <a>
+                                        <button [disabled]="survey.isPublished"
+                                            class="icon icon-edit-1 mr-1 btn bg-transparent d-flex align-items-center"
+                                            title="Edit" (click)="presenter.redirectedToEditSurvey(survey.id)"></button>
+                                    </a>
+                                    <a>
+                                        <button class="icon icon-bin mr-1 btn bg-transparent" title="Delete"
+                                            (click)="presenter.deleteTeam(survey.id)"></button>
+                                    </a>
+                                    <a>
+                                        <button class="icon icon-eye-1 mr-1 btn bg-transparent" title="Preview"
+                                            (click)="presenter.redirectedToPreviewSurvey(survey.id)"></button>
+                                    </a>
+                                    <a>
+                                        <button class="icon icon-info mr-1 btn bg-transparent" title="Survey Details"
+                                            *ngIf="survey.isSurveySubmitted"
+                                            (click)="presenter.redirectedToSurveyDetails(survey.id)"></button>
+                                    </a>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="card-header collapsed p-0 text-center cursor-pointer bg-transparent"
+                        data-toggle="collapse" href="#collapseOne" [attr.data-target]="'#collapse' + survey.id"
+                        [attr.aria-controls]="'collapse' + survey.id">
+                    </div>
+                </div>
+
+                <div [id]="'collapse' + survey.id" class="collapse" data-parent="#accordion">
+                    <div class="card-body font-sm px-3 py-2">
+                        <div *ngIf="!isSurvey" class="mb-2">
+                            <span class="text-primary font-semibold text-uppercase">Create By</span> :
+                            {{survey.createdByName}}
+                        </div>
+                        <div class="mb-2">
+                            <span class="text-primary font-semibold text-uppercase">From date</span> :
+                            {{survey.fromDate}}
+                        </div>
+                        <div class="mb-2">
+                            <span class="text-primary font-semibold text-uppercase">To date</span> : {{survey.toDate}}
+                        </div>
+                        <div class="mb-2">
+                            <span class="text-primary font-semibold text-uppercase">Survey Type Name</span> :
+                            {{survey.surveyTypeName}}
+                        </div>
+                        <div *ngIf="isSurvey" class="mb-2">
+                            <span class="text-primary font-semibold text-uppercase">Status</span> :
+                            <label class="sm-switch ml-1">
+                                <input type="checkbox" [(ngModel)]="survey.isActive"
+                                    (change)="ischangeStatus($event,survey.id,survey.surveyName)"
+                                    [disabled]="isCheckAndDisableToggle(survey)">
+                                <span class="sm-slider round"></span>
+                            </label>
+                        </div>
+                        <div *ngIf="!isSurvey" class="mb-2">
+                            <button type="button" style="min-width: 105px;"
+                                class="btn btn-secondary rounded-pill text-uppercase px-2 py-1 font-sm"
+                                (click)="presenter.redirectToGlobalAssessment(survey.surveyId)" title="Participate">
+                                Participate
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </section>
+</section>

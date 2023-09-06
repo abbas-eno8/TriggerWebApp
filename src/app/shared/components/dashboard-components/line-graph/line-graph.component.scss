@@ -1,0 +1,26 @@
+@import "~assets/scss/base/variables";
+@import "~assets/scss/base/colors";
+@import "~bootstrap/scss/mixins/breakpoints";
+@import "~assets/scss/base/mixins";
+
+.graph-status {
+    color: $primary;
+    padding: 10px 5px;
+
+    @include media-breakpoint-down('sm-small') {
+        font-size: 12px;
+        padding: 5px 5px;
+    }
+
+    &.status-active {
+        background-color: $primary;
+        color: $white;
+        height: 35px;
+        line-height: 16px;
+
+        @include media-breakpoint-down('sm-small') {
+            height: 30px;
+            line-height: 20px;
+        }
+    }
+}

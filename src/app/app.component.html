@@ -1,0 +1,31 @@
+<section app-theme class="h-100 main-app-wrapper">
+  <section class="d-flex h-100 w-100">
+    <!-- toster container start here -->
+    <toaster-container [toasterconfig]="toasterConfig"></toaster-container>
+    <!-- toster container end here -->
+    <!-- sidebar start here -->
+    <trigger-side-bar [selectedRoute]="isSelectedRoute" *ngIf="showNavBar"></trigger-side-bar>
+    <!-- sidebar end here -->
+    <section class="d-flex flex-column w-100">
+      <!-- header tobar start here -->
+      <trigger-top-bar *ngIf="showNavBar"></trigger-top-bar>
+      <!-- header tobar end here -->
+      <!--main container section start here -->
+
+      <main class="w-100 h-100 flex-grow-1 overflow-hidden">
+        <div class="d-flex flex-column h-100">
+          <div class="h-100 position-relative">         
+            <trigger-dashboard-select-overlay *ngIf="selectedRoute === 'dashboard'"></trigger-dashboard-select-overlay>   
+            <router-outlet></router-outlet>
+          </div>
+        </div>
+      </main>
+      <!--main container section end here -->
+    </section>
+  </section>
+</section>
+<!-- spinner section start here -->
+<div *ngIf="showLoader" class="d-flex justify-content-center align-items-center">
+  <ng4-loading-spinner [template]="template" [timeout]="300000"> </ng4-loading-spinner>
+</div>
+<!-- spinner section end here -->

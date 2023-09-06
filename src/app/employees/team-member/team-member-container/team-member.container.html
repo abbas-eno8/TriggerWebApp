@@ -1,0 +1,9 @@
+<trigger-member-ui 
+[customColumn]="customColumn$ | async" 
+[employees]="employees$ | async" 
+[departments]="departments" 
+[apiCalledSuccess]="apiCalledSuccess"
+(delete)="deleteTeamMember($event)" 
+(sendMail)="sendMail($event)" 
+(columnConfiguration)="columnConfiguration($event)">
+</trigger-member-ui>

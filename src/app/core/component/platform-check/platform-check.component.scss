@@ -1,0 +1,30 @@
+@import "~assets/scss/base/variables";
+@import "~assets/scss/base/colors";
+@import "~bootstrap/scss/mixins/breakpoints";
+@import "~assets/scss/base/mixins";
+.right-top-img {
+    background-image: url('/assets/images/top_wave.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: top right;
+    height: 240px;
+    @include media-breakpoint-down('sm') {
+        height: 140px;
+    }
+}
+.left-bottom-img {
+    @extend .right-top-img;
+    background-image: url('/assets/images/bottom_circle.svg');
+    background-position: bottom left;
+    @include position(absolute, auto, auto, 0, auto);
+    @include size(120px, 100px);
+}
+.box-container {
+    max-width: 260px;
+    & .font-sm {
+        font-size: 13px;
+    }
+    & img {
+        width: 60px;
+    }
+}

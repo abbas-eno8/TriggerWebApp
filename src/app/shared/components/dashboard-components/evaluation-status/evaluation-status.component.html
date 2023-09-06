@@ -1,0 +1,43 @@
+<!-- widget section start here -->
+<section class="rounded white-bg shadow-sm widgets-box d-flex flex-column flex-grow-1">
+  <header class="d-flex flex-nowrap justify-content-between align-items-center p-3">
+    <div class="dark-text font-semibold font-md">
+      {{ pageTitle }}
+    </div>
+    <div class="d-flex">
+      <!-- <div *ngIf="xAxis === -1" class="status-rounded mr-2 bg-danger"></div> -->
+      <div class="xs-d-none">
+        <trigger-tooltip [pageTitle]="tooltipId" [bulbTootlip]="bulbTootlip"></trigger-tooltip>
+      </div>
+    </div>
+  </header>
+  <section class="overflow-auto mb-3 h-100 px-3 pb-3">
+    <!-- <div class="h-100" [innerHTML]="contentView"></div> -->
+    <div *ngIf="qualityDescription || status">
+      <section class="mb-2">
+        <span class="text-secondary font-sm font-semibold pr-2">
+          Quality Description:-
+        </span>
+        {{ qualityDescription }}
+      </section>
+      <section class="mb-2">
+        <span class="text-secondary font-sm font-semibold pr-2"> 
+          Date:-
+        </span>
+        {{ date | date: 'MM/dd/yyyy' }}
+      </section>
+      <section class="mb-2">
+        <span class="text-secondary font-sm font-semibold pr-2">
+          Status:-
+        </span> 
+        {{ status }}
+      </section>
+    </div>
+    <div class="h-100" *ngIf="!qualityDescription && !status">
+      <section class="d-flex justify-content-center align-items-center h-100 text-center"> 
+        No current evaluation status for the day.
+      </section>
+    </div>
+  </section>
+</section>
+<!-- widget section end here -->

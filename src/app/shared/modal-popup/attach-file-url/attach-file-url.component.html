@@ -1,0 +1,31 @@
+<section class="white-bg p-3 rounded lg-dialog-container">
+  <div class="text-center mt-1">
+    <div class="upload-file d-flex align-items-center justify-content-center">
+      <span class="text-secondary mr-3" type="file" 
+        accept=".csv, .xls, .xlsx, .rtf, .x-rtf , .doc, .docx, .ppt, .pptx, text/richtext, text/plain, application/pdf, .txt">
+        Drag and Drop your file here
+      </span>
+      <label for="file-upload"
+        class="btn btn-primary shadow-sm text-uppercase p-2 rounded-pill text-white cursor-pointer"
+        title="Choose from Local Storage">
+        Select File
+      </label>
+      <input class="browse-file" id="file-upload" type="file" (change)="addAttachment($event)"
+        accept=".csv, .xls, .xlsx, .rtf, .x-rtf , .doc, .docx, .ppt, .pptx, text/richtext, text/plain, application/pdf, .txt">
+    </div>
+
+  </div>
+  <div class="text-uppercase pb-3 pt-2 text-secondary font-semibold text-center display-4">
+    or
+  </div>
+  <form (ngSubmit)="submitSelection()" [formGroup]="cloudUrlForm">
+    <input triggerFocusInit="true" type="text" class="form-control rounded mb-3" formControlName="cloudUrl"
+      (keypress)="ignoreSpace($event)" placeholder="Cloud URL..."
+      [ngClass]="{'border-danger': (cloudUrlForm.get('cloudUrl').dirty) && !cloudUrlForm.get('cloudUrl').valid }">
+    <div class="d-flex justify-content-end mb-0">
+      <button type="button" class="btn secondary-light-btn rounded-pill mr-2 btn-sm text-uppercase" title="Cancel"
+        (click)="cancelSelection()">Cancel</button>
+      <button type="submit" class="btn btn-secondary rounded-pill btn-sm text-uppercase" title="Submit">submit</button>
+    </div>
+  </form>
+</section>

@@ -1,0 +1,13 @@
+<trigger-survey-form-presentation 
+    [surveyIdAfterAddSurvey]="surveyIdAfterAddSurvey" 
+    [isAddSurvey]="isAddSurvey" 
+    [surveyMaster]="surveyMaster$ | async" 
+    [getEmployeesByDimension]="getEmployeesByDimension$ | async" 
+    (add)="addSurvey($event)" 
+    (update)="updateSurvey($event)" 
+    (publish)="publishNotification($event)" 
+    (getEmployees)="getEmployeeList($event)" 
+    [getSurveyById]="getSurveyById$ | async" 
+    [surveyId]="surveyId" 
+    [copySurvey]="copySurvey">
+</trigger-survey-form-presentation>

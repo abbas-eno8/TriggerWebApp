@@ -1,0 +1,2 @@
+<trigger-teams-form-ui [teamManagers]="teamManagers$ | async" [teamMembers]="teamMembers$ | async" [getTeamById]="getTeamById$ | async"
+    (add)="addTeam($event)" (update)="updateTeam($event)"></trigger-teams-form-ui>

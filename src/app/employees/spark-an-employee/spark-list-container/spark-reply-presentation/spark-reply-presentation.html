@@ -1,0 +1,201 @@
+<section class="d-flex align-items-center flex-shrink-0 px-3 pt-3">
+    <div class="position-relative w-100" *ngIf="isShowSearch">
+        <div class="d-flex align-items-center" *ngIf="isSparkViewable">
+            <div class="d-flex w-100 position-relative input-search">
+                <input type="search" class="w-100 form-control" [(ngModel)]="searchText" placeholder="Search Sparks...">
+                <div class="icon icon-search-1 text-primary p-2"></div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="overflow-auto flex-grow-1 px-3 my-3 tab-content-container rounded-bottom" *ngIf="isSparkViewable">
+    <section class="d-flex flex-column mb-2 p-3 spark-container shadow-sm rounded mb-3"
+        *ngFor="let spark of filterSparks;let last = last" [ngClass]="{'field-border-bottom': !last}">
+        <section class="d-flex">
+            <section class="rounded-circle rounded-container mr-2 flex-shrink-0">
+                <img class="rounded-circle" *ngIf="isImageValid && !!spark.sparkByImgPath"
+                    src="{{spark.sparkByImgPath}}" alt="avatar" (error)="onError()">
+                <div class="d-flex justify-content-center align-items-center h-100 font-bold text-info-dark font-lg"
+                    *ngIf="(!isImageValid && !!spark.sparkByImgPath) || !spark.sparkByImgPath">
+                    {{ spark.profileName }}
+                </div>
+            </section>
+            <section class="d-flex flex-column flex-grow-1">
+                <header class="d-flex align-items-center flex-grow-1 mt-1">
+                    <div class="d-flex flex-column">
+                        <div class="dark-text font-semibold">
+                            {{ spark.givenBy }} <span *ngIf="spark.isSparkSent"
+                                class="pl-2 icon icon-denote text-primary"></span>
+                            <span *ngIf="spark.sparkPrivacy === 1" class="icon icon-star-1 font-md text-warning ml-2">
+                            </span>
+                        </div>
+                        <div class="secondary-dark-text small">
+                            {{ spark.sparkDate | date: 'MM/dd/yyyy h:mm:ss aaa' }}
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center flex-shrink-0 ml-auto">
+                        <button [disabled]="!spark.isPreviewFile"
+                            *ngIf="!sparkDetailBySelectedRoute.isRedirectFromNotification"
+                            class="icon icon-eye-1 mr-1 btn bg-transparent d-flex align-items-center" title="Preview"
+                            (click)="preview(spark)"></button>
+                        <button [disabled]="!isAdminOrSuperAdmin && !spark.isEditable"
+                            *ngIf="(isAdminOrSuperAdmin || sparkDetailBySelectedRoute.routeType === 'empDashboard' || sparkDetailBySelectedRoute.routeType === 'sparkList') && !sparkDetailBySelectedRoute.isRedirectFromNotification"
+                            class="icon icon-edit-1 mr-1 btn bg-transparent d-flex align-items-center" title="Edit"
+                            (click)="editModal(spark)"></button>
+                        <button [disabled]="!isAdminOrSuperAdmin && !spark.isDeletable"
+                            *ngIf="(isAdminOrSuperAdmin || sparkDetailBySelectedRoute.routeType === 'empDashboard' || sparkDetailBySelectedRoute.routeType === 'sparkList') && !sparkDetailBySelectedRoute.isRedirectFromNotification"
+                            class="icon icon-bin mr-1 btn bg-transparent d-flex align-items-center" title="Delete"
+                            (click)="deleteModal(spark)"></button>
+                    </div>
+                </header>
+                <section class="mt-2">
+                    <section class="d-flex align-items-center flex-wrap mb-1">
+                        <div>
+                            <span class="font-sm font-semibold pr-2">
+                                Category -
+                            </span>
+                            <span class="text-secondary font-sm font-semibold">
+                                {{ spark.category }}
+                            </span>
+                        </div>
+                        <div class="separator-border"></div>
+                        <div>
+                            <span class="font-sm font-semibold pr-2">
+                                Classification -
+                            </span>
+                            <span class="text-secondary font-sm font-semibold">
+                                {{ spark.classification }}
+                            </span>
+                        </div>
+                    </section>
+                    <div>
+                        <span class="font-sm font-semibold pr-2">
+                            Spark -
+                        </span>
+                        <trigger-read-more [text]='spark.spark' [maxLength]="150"></trigger-read-more>
+                    </div>
+                    <div class="d-flex justify-content-end font-semibold pt-2 pb-3"
+                        *ngIf="(sparkDetailBySelectedRoute.routeType === 'dashboard' || sparkDetailBySelectedRoute.routeType === 'empDashboard' || sparkDetailBySelectedRoute.routeType === 'sparkList') && spark.sparkPrivacy !== 1 && spark.isSparkSent">
+                        <span class="icon icon-comment cursor-pointer" (click)="onClickReplyCount(spark)"></span>
+                        <span class="font-semibold pl-2 font-md" *ngIf="spark.replyCount > 0">
+                            {{ spark.replyCount}}
+                        </span>
+                    </div>
+                    <!-- <div class="d-flex justify-content-end font-semibold pt-2 pb-3" *ngIf="sparkDetailBySelectedRoute.routeType === 'empDashboard' && spark.sparkPrivacy !== 1 && spark.isSparkSent">
+                        <span class="icon icon-comment-read cursor-pointer" (click)="onClickReplyCount(spark)"></span>
+                        <span class="font-semibold pl-2 font-md cursor-pointer" *ngIf="spark.replyCount > 0">{{ spark.replyCount }}</span>
+                    </div> -->
+                </section>
+            </section>
+        </section>
+        <section class="" *ngIf="spark.isDisplayCommentSection">
+            <section *ngFor="let reply of spark.sparkReplys;let last = last">
+                <section class="mb-3 col-xl-6 col-md-6 col-sm-12 px-0" *ngIf="reply.replyBy !== userData.empId">
+                    <section class="d-flex align-items-end">
+                        <section
+                            class="user-profile-img text-secondary d-flex align-items-center justify-content-center rounded-circle font-semibold">
+                            <img class="rounded-circle" *ngIf="isImageValid && !!reply.replyByImgPath"
+                                src="{{reply.replyByImgPath}}" alt="avatar" (error)="onError()">
+                            <div class="d-flex justify-content-center align-items-center h-100 font-bold text-info-dark font-lg"
+                                *ngIf="(!isImageValid && !!reply.replyByImgPath) || !reply.replyByImgPath">
+                                {{ reply.replyByShortName }}
+                            </div>
+                        </section>
+                        <section class="d-flex position-relative">
+                            <div class="wall-comment-box p-3 h-auto w-auto">
+                                <div class="text-info font-semibold font-md mb-1">{{reply.replyByFullName}}</div>
+                                <div class="dark-text" *ngIf="!!reply.reply" [innerHTML]="reply.reply | linkify"></div>
+                                <div class="d-flex align-items-center justify-content-start" *ngIf="reply.isPreview">
+                                    <button
+                                        class="icon icon-paper-clip replay-attachment btn bg-transparent text-primary mt-1 d-flex align-items-center pl-0"
+                                        title="Attachment Preview" (click)="previewAttachment(reply)">
+                                    </button>
+                                    <span>{{reply.fileName | ellipsis : 30}}</span>
+                                </div>
+                            </div>
+                            <div class="chatbox-curve-left">
+                            </div>
+                        </section>
+                    </section>
+                    <div class="secondary-dark-text font-sm pl-5 pt-2">{{ reply.replyDate | date: 'd MMM h:mm a' }}
+                    </div>
+                </section>
+                <section class="mb-3" *ngIf="reply.replyBy === userData.empId">
+                    <section
+                        class="d-flex align-items-end justify-content-end ml-auto col-xl-6 col-md-6 col-sm-12 px-0">
+                        <section class="d-flex position-relative chatbox-right-container">
+                            <div class="wall-comment-box-right p-3 h-auto w-auto">
+                                <div class="text-info font-semibold font-md mb-1">{{reply.replyByFullName}}</div>
+                                <div class="dark-text" *ngIf="!!reply.reply" [innerHTML]="reply.reply | linkify"></div>
+                                <div class="d-flex align-items-center justify-content-start" *ngIf="reply.isPreview">
+                                    <button
+                                        class="icon icon-paper-clip replay-attachment btn bg-transparent text-primary mt-1 d-flex align-items-center pl-0"
+                                        title="Attachment Preview" (click)="previewAttachment(reply)">
+                                    </button>
+                                    <span>{{reply.fileName | ellipsis : 30}}</span>
+                                </div>
+                            </div>
+                            <div class="chatbox-curve-right">
+                            </div>
+                        </section>
+                        <section
+                            class="user-profile-img text-secondary d-flex align-items-center justify-content-center rounded-circle font-semibold">
+                            <img *ngIf="isImageValid && !!reply.replyByImgPath" src="{{reply.replyByImgPath}}"
+                                alt="avatar" (error)="onError()">
+                            <div class="d-flex justify-content-center align-items-center h-100 font-bold text-info-dark font-lg"
+                                *ngIf="(!isImageValid && !!reply.replyByImgPath) || !reply.replyByImgPath">
+                                {{ reply.replyByShortName }}
+                            </div>
+                        </section>
+                    </section>
+                    <div class="secondary-dark-text font-sm text-right pr-5">
+                        {{ reply.replyDate | date: 'd MMM h:mm a' }}
+                    </div>
+                </section>
+            </section>
+            <section class="position-relative w-100"
+                *ngIf="(sparkDetailBySelectedRoute.routeType === 'dashboard' || sparkDetailBySelectedRoute.routeType === 'sparkList' || sparkDetailBySelectedRoute.routeType === 'empDashboard') && spark.sparkPrivacy !== 1 && spark.isSparkSent">
+                <section class="d-flex align-items-center">
+                    <section class="flex-grow-1 pr-2 position-relative">
+                        <textarea [autofocus]="isAutoFocus"
+                            class="reply-textarea form-control from-textarea pl-3 pt-3 pb-1 w-100"
+                            placeholder="Reply..." matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize"
+                            cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5" [(ngModel)]="spark.reply"
+                            (keydown.enter)="onEnterReply($event, spark.sparkId, spark)">
+                        </textarea>
+                        <section class="attachment d-flex justify-content-between align-items-center mt-2 pl-2 pr-3">
+                            <div class="d-flex align-items-center">
+                                <div class="position-relative upload-btn-wrapper w-auto">
+                                    <button
+                                        class="btn bg-transparant icon icon-paper-clip text-primary d-flex align-items-center"
+                                        title="Attachment" (click)="openCustomFileChooser(spark.sparkId)" #attachment>
+                                    </button>
+                                </div>
+
+                            </div>
+
+                        </section>
+                    </section>
+                    <button (click)="onEnterReply($event, spark.sparkId, spark)" title="Send"
+                        [disabled]="!spark.reply && !spark.sparkReplyFileName"
+                        class="pr-2 pt-2 icon font-icon-send btn bg-transparent text-primary">
+                    </button>
+                </section>
+                <section class="spark-attached-file-wrapper d-flex align-items-center justify-content-end">
+                    <div *ngIf="spark.sparkReplyFileName" class="text-primary font-sm pr-2 cursor-defult"
+                        [title]="spark.sparkReplyFileName">
+                        {{ spark.sparkReplyFileName | ellipsis : 20 }}
+                    </div>
+                    <button *ngIf="spark.sparkReplyFileName" type="button"
+                        class="icon icon-bin mr-1 btn bg-transparent d-flex align-items-center cursor-pointer"
+                        title="Delete" (click)="deleteAttachment(spark.sparkId)">
+                    </button>
+                </section>
+            </section>
+        </section>
+    </section>
+    <section *ngIf="isGetResponse && filterSparks && filterSparks.length === 0"
+        class="d-flex justify-content-center align-items-center h-100 font-semibold dark-text font-lg text-center">
+        No spark available for selected tab
+    </section>
+</section>

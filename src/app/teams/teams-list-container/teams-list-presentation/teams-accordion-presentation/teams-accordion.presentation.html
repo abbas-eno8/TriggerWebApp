@@ -1,0 +1,99 @@
+<section class="d-flex flex-column h-100">
+  <!-- table container section start here -->
+  <section class="flex-grow-1 rounded shadow-sm overflow-auto" id="mainDIV" (scroll)="scrollService.onWindowScroll()">
+    <mat-accordion displayMode="flat" multi="false" class="mat-table">
+      <section matSort class="mat-elevation-z2 mat-header-row" matSortDisableClear>
+        <div class="mat-header-cell text-uppercase">Team Name
+          <div class="icon icon-top-bottom cursor-pointer ml-1" (click)="sort('team')"
+            [ngClass]="getDirecionIcon('team')">
+          </div>
+        </div>
+        <div class="mat-header-cell text-uppercase">created By
+          <div class="icon icon-top-bottom cursor-pointer ml-1" (click)="sort('createdByLastName')"
+            [ngClass]="getDirecionIcon('createdByLastName')">
+          </div>
+        </div>
+        <div class="mat-header-cell text-uppercase">Action</div>
+        <div class="mat-header-cell"></div>
+      </section>
+      <mat-expansion-panel [disabled]="isExpand" hideToggle="true"
+        *ngFor="let team of displayedRows$ | async; let index = index" #example>
+        <mat-expansion-panel-header class="mat-row">
+          <div class="mat-cell text-ellipsis" title="{{team.team}}" (click)="expansionPanel(true)">
+            {{ team.team }}
+          </div>
+          <div class="mat-cell text-ellipsis" title="{{team.createdBy}}" (click)="expansionPanel(true)">
+            {{ team.createdBy }}
+          </div>
+          <div class="mat-cell text-center d-flex justify-content-center" (click)="expansionPanel(true)">
+            <div class="dropdown list-action-dropdown">
+              <button type="button" class="btn bg-transparent dropdown-toggle d-flex align-items-center"
+                data-toggle="dropdown" [disabled]="(!team.isActive || !team.isDeletable) && !team.isEditable">
+                <span class="icon icon-click d-flex align-items-center"></span>
+              </button>
+              <div class="dropdown-menu toggle-dropdown-menu border-0 shadow-sm">
+                <a>
+                  <button class="icon icon-edit-1 mr-1 btn bg-transparent d-flex align-items-center" title="Edit"
+                    [disabled]="!team.isEditable" (click)="edit(team.teamId)"></button>
+                </a>
+                <a>
+                  <button class="icon icon-bin mr-1 btn bg-transparent" title="Delete"
+                    [disabled]="!team.isActive || !team.isDeletable" (click)="delete(team.teamId)"></button>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="mat-cell text-center">
+            <div *ngIf="!example.expanded" (click)="expansionPanel(false)">
+              <span class="icon icon-pluse cursor-pointer text-primary"></span>
+            </div>
+            <div *ngIf="example.expanded" (click)="expansionPanel(false)">
+              <span class="icon icon-minus cursor-pointer text-primary"></span>
+            </div>
+          </div>
+        </mat-expansion-panel-header>
+        <div class="d-flex flex-wrap">
+          <section class="col-sm-12 col-md-12">
+            <div class="d-flex mb-2">
+              <div class="font-semibold text-primary font-sm text-uppercase">Start Date: </div>
+              <div class="ml-2 font-sm text-ellipsis">{{ team.startDate | date: 'MM/dd/yyyy' }}</div>
+            </div>
+
+            <div class="d-flex mb-2">
+              <div class="font-semibold text-primary font-sm text-uppercase">end date: </div>
+              <div class="ml-2 font-sm text-ellipsis">{{ team.endDate | date: 'MM/dd/yyyy' }} </div>
+            </div>
+
+            <div class="d-flex mb-2">
+              <div class="font-semibold text-primary font-sm text-uppercase">Manager(s): </div>
+              <div class="ml-2 font-sm text-ellipsis">
+                <read-more [text]='team.managers' [maxLength]="115"></read-more>
+              </div>
+
+            </div>
+
+            <div class="d-flex mb-2">
+              <div class="font-semibold text-primary font-sm text-uppercase">Evaluation Activity</div>
+              <div class="ml-2 font-sm text-ellipsis">{{ team.activityDays }}</div>
+            </div>
+
+
+            <div class="d-flex mb-2">
+              <div class="font-semibold text-primary font-sm text-uppercase">Status</div>
+              <div class="ml-2 font-sm text-ellipsis">{{ team.status }}</div>
+            </div>
+          </section>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </section>
+  <!-- table container section end here -->
+  <!-- table container footer section start here -->
+  <footer class="d-flex justify-content-end align-items-center w-100 py-2">
+    <div class="text-right pagination-container" (click)="onClickPaginationPanel()">
+      <mat-paginator panelClass="textClass1" #paginator [length]="totalRows$ | async" [pageIndex]="0" [pageSize]="50"
+        [pageSizeOptions]="[50,100,150]" (page)="pageChanged($event)" showFirstLastButtons></mat-paginator>
+    </div>
+  </footer>
+  <!-- table container footer section end here -->
+</section>

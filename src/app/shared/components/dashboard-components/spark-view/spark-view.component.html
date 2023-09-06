@@ -1,0 +1,78 @@
+<!-- widget section start here -->
+<div class="rounded white-bg shadow-sm widgets-box d-flex flex-column flex-grow-1">
+  <section class="p-3">
+    <div class="d-flex flex-nowrap justify-content-between">
+      <div class="dark-text font-semibold font-md">
+        Sparks
+      </div>
+      <div class="d-flex align-items-center xs-d-none">
+        <trigger-tooltip [pageTitle]="55"></trigger-tooltip>
+      </div>
+    </div>
+    <div class="mt-3 d-flex align-items-center">
+      <div class="d-flex w-100 position-relative input-search">
+        <input type="search" class="w-100 form-control" [(ngModel)]="searchText"
+          placeholder="Search Sparks...">
+        <div class="icon icon-search-1 text-primary p-2"></div>
+      </div>
+    </div>
+  </section>
+  <section class="overflow-auto mb-3 h-100">
+    <section class="d-flex mb-2 px-3" *ngFor="let spark of sparkList;let last = last"
+      [ngClass]="{'field-border-bottom': !last}">
+      <div class="rounded-circle rounded-container mr-2 flex-shrink-0">
+        <img class="rounded-circle" *ngIf="isImageValid && !!spark.sparkByImgPath" src="{{spark.sparkByImgPath}}" alt="avatar"
+          (error)="onError()">
+        <div class="d-flex justify-content-center align-items-center h-100 font-bold text-info-dark font-lg"
+          *ngIf="(!isImageValid && !!spark.sparkByImgPath) || !spark.sparkByImgPath">
+          {{ spark.profileName }}
+        </div>
+      </div>
+
+      <div class="flex-grow-1">
+        <section class="d-flex justify-content-between align-items-center">
+          <header class="d-flex align-items-center flex-grow-1 mt-1">
+            <div class="d-flex flex-column">
+              <div class="dark-text font-semibold">
+                {{ spark.givenBy }} <span class="pl-2 icon icon-denote text-primary"></span>
+              </div>
+              <div class="secondary-dark-text small">
+                {{ spark.sparkDate | date: 'MM/dd/yyyy h:mm:ss aaa' }}
+              </div>
+            </div>
+          </header>
+          <button [disabled]="!spark.isPreviewFile"
+            class="icon icon-eye-1 mr-1 btn bg-transparent d-flex align-items-center" title="Preview"
+            (click)="previewModal(spark)"></button>
+        </section>
+        <div class="content mt-2">
+          <div class="mb-1">
+            <span class="font-sm font-semibold pr-2">
+              Category -
+            </span>
+            <span class="text-secondary font-sm font-semibold">
+              {{ spark.category }}
+            </span>
+          </div>
+
+          <div class="mb-1">
+            <span class="font-sm font-semibold pr-2">
+              Classification -
+            </span>
+            <span class="text-secondary font-sm font-semibold">
+              {{ spark.classification }}
+            </span>
+          </div>
+
+          <div class="mb-1">
+            <span class="font-sm font-semibold pr-2">
+              Spark -
+            </span>
+            <trigger-read-more [text]='spark.remarks' [maxLength]="150"></trigger-read-more>
+          </div>
+        </div>
+      </div>
+    </section>
+  </section>
+</div>
+<!-- widget section end here -->

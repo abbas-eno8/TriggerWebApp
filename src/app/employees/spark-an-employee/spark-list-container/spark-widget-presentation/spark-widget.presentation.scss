@@ -1,0 +1,54 @@
+@import "~assets/scss/base/variables";
+@import "~assets/scss/base/colors";
+@import "~bootstrap/scss/mixins/breakpoints";
+@import "~assets/scss/base/mixins";
+
+// .spark-container {
+//     background-color: var(--brand-lightContainer);
+//     border: 2px solid var(--brand-border);
+// }
+
+// .wall-comment-box {
+//     background-color: var(--bg-select-dropdown);
+// }
+
+// .reply-textarea.form-control {
+//     margin-left: 0;
+// }
+
+.widgets-tab {
+    
+    & .nav-tabs {
+        border-bottom: 4px solid $primary;
+
+        & .nav-item {
+            margin-bottom: 0;
+        }
+        & .nav-link {
+            @include media-breakpoint-down('xs-wide') {
+                font-size: 13px;
+                min-height: 55px;
+            }
+        }
+        & .nav-link.active {
+            background-color: $primary;
+            border: 0;
+            color: $white;
+            position: relative;
+
+            &:after {
+                border-top: 0;
+                width: 0;
+                height: 0;
+                border-left: 12px solid $transparent;
+                border-right: 12px solid $transparent;
+                border-top: 12px solid $primary;
+                content: '';
+                @include position(absolute, auto, 45%, -16px, auto);
+                @include media-breakpoint-down('xs-wide') {
+                    right: 38%;
+                }
+            }
+        }
+    }
+}

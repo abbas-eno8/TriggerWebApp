@@ -1,0 +1,52 @@
+<section class="d-flex flex-column h-100">
+  <!-- header section start here -->
+  <header class="d-flex justify-content-between p-3 flex-shrink-0">
+    <section class="d-flex align-items-center">
+      <div class="dark-text font-xl font-semibold">
+        Departments
+      </div>
+    </section>
+    <!-- button section start here -->
+    <section class="d-flex align-items-center">
+      <button type="button" title="New Department"
+        class="btn btn-primary xs-btn text-uppercase mr-3 d-flex align-items-center rounded-pill"
+        (click)="addDepartment(0)">
+        <div class="icon icon-add d-flex align-items-center text-white"></div>
+        <div class="pl-2 d-md-inline-flex d-none">new Department</div>
+      </button>
+      <!-- tooltip start here -->
+      <trigger-tooltip [pageTitle]="pageTitle"></trigger-tooltip>
+    </section>
+  </header>
+  <!-- header section end here -->
+  <!-- search view section start here -->
+  <section class="px-3 pb-3">
+    <trigger-search-view [searchFields]="searchFields" [list]="departments" [placeHolder]="searchPlaceHolder"
+      (bindRecords)="bindRecords($event)">
+    </trigger-search-view>
+  </section>
+  <!-- search view section end here -->
+  <section class="h-100 position-relative mx-3 overflow-hidden flex-grow-1" *ngIf="!isDisplayRecordsNotFound">
+    <section class="mat-elevation-z8 w-100 h-100">
+      <div class="h-100">
+        <!-- list normal list table section start here -->
+        <trigger-department-table class="d-flex flex-column h-100" (editDepartment)="editDepartment($event, $event)"
+          [departments]="filteredDepartments" [isDepartmentArray]="isDepartmentArray" (refreshData)="refreshData()"
+          *ngIf="isApiCalled && !isAccordianTable">
+        </trigger-department-table>
+        <!-- list normal list section end here -->
+        <!-- list accordion table section start here -->
+        <trigger-department-accordion-table class="d-flex flex-column h-100"
+          (editDepartment)="editDepartment($event, $event)" [departments]="filteredDepartments"
+          [isDepartmentArray]="isDepartmentArray" (refreshData)="refreshData()" *ngIf="isApiCalled && isAccordianTable">
+        </trigger-department-accordion-table>
+        <!-- list accordion table section end here -->
+      </div>
+    </section>
+  </section>
+  <!-- No recored section start here -->
+  <section class="h-100 position-relative mx-3 mb-3" *ngIf="isDisplayRecordsNotFound && isMethodCalled">
+    <trigger-no-records-found></trigger-no-records-found>
+  </section>
+  <!-- No recored section end here -->
+</section>

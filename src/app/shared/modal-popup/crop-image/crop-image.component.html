@@ -1,0 +1,47 @@
+<!-- image upload modal start here -->
+<section class="p-3">
+  <h1 class="dark-text d-flex align-items-center justify-content-between" mat-dialog-title>
+    <span>Select Logo</span>
+  </h1>
+  <div mat-dialog-content>
+    <div *ngIf="!isSetClientLogoBtnDisabled">
+      <div class="d-flex justify-content-center align-items-center my-3">
+        <img src="/assets/images/dashboard/image_upload.png" alt="image upload">
+      </div>
+      <div class="position-relative d-flex justify-content-center align-items-center upload-btn-wrapper">
+        <input type="file" class="inputfile" id="file-upload" (change)="fileChangeEvent($event)" accept="image/*"
+          title="Select a logo from your computer" />
+        <label for="file-upload" class="cursor-pointer text-secondary text-decoration">Select a logo from your
+          computer</label>
+        <div id="file-upload-filename"></div>
+      </div>
+    </div>
+    <div class="file-container" *ngIf="isSetClientLogoBtnDisabled">
+      <div class="d-flex align-items-center">
+        <div class="yellow-box text-center ml-2 mb-3 d-flex">
+          <div>Do you have a better one?</div>
+          <div (click)=clear() class="text-secondary pl-1 cursor-pointer ">Upload a different logo</div>
+        </div>
+      </div>
+      <div class="img-crop-container">
+        <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="false" [aspectRatio]="16/9"
+          [resizeToWidth]="128" [onlyScaleDown]="true" [roundCropper]="false" [autoCrop]="true" format="png"
+          (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()" (loadImageFailed)="loadImageFailed()">
+        </image-cropper>
+      </div>
+      <div class="upload-img-container">
+        <img src="{{croppedImage}}" alt="avatar" *ngIf="croppedImage">
+      </div>
+    </div>
+  </div>
+  <footer mat-dialog-actions class="d-flex justify-content-center mt-3 mb-0 p-0">
+    <button title="Cancel" type="button" class="btn btn-secondary rounded-pill mr-2 text-uppercase" [mat-dialog-close]
+      (click)="onClickCancel()" cdkFocusInitial>
+      Cancel</button>
+    <button type="button" title="Set as Client Logo" class="btn btn-secondary rounded-pill text-uppercase"
+      (click)="setAsClientLogo()" [disabled]="!isSetClientLogoBtnDisabled"
+      [ngClass]="{'disabled-item':!isSetClientLogoBtnDisabled}">
+      Set as Client Logo</button>
+  </footer>
+</section>
+<!-- image upload modal end here -->

@@ -1,0 +1,11 @@
+<div class="px-3 py-2">
+    <canvas #signaturePad width="320" height="140" (mousedown)="onMouseDown($event)" (mousemove)="onMouseMove($event)"
+    style="border: 1 px solid black;">
+</canvas>
+<br />
+<div class="d-flex align-items-center border-top border-secondary-light">
+    <button class="btn secondary-light-btn rounded-pill btn-sm mr-2 text-uppercase mt-2 ml-auto"
+        (click)="clear()">clear</button>
+    <button class="btn btn-secondary rounded-pill btn-sm text-uppercase mt-2" (click)="save()">save</button>
+</div>
+</div>

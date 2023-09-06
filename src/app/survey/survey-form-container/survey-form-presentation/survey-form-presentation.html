@@ -1,0 +1,455 @@
+<section class="d-flex flex-column h-100">
+    <!-- header part start here -->
+    <header class="d-flex justify-content-between align-items-center p-3">
+        <div class="dark-text font-xl font-semibold">{{ pageTitle }}</div>
+        <section *ngIf="tooltipId === 65">
+            <trigger-tooltip [pageTitle]="tooltipId"></trigger-tooltip>
+        </section>
+        <section *ngIf="tooltipId === 66">
+            <trigger-tooltip [pageTitle]="tooltipId"></trigger-tooltip>
+        </section>
+    </header>
+
+    <!-- header part end here -->
+    <section class="h-100 position-relative flex-grow-1 overflow-hidden">
+        <!-- main container section start here -->
+        <section class="overflow-auto px-3 pb-3 h-100">
+            <section class="white-bg rounded shadow-sm" *ngIf="isLoadData">
+                <form class="" [formGroup]="surveyForm" (ngSubmit)="onSubmit()">
+                    <div class="text-secondary font-semibold px-3 pt-3 font-lg">General Details:</div>
+                    <section class="row mx-0 pt-2 px-2">
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">
+                                name
+                                <span class="text-danger">*</span>
+                            </label>
+                            <input type="text" formControlName="surveyName" class="rounded form-control"
+                                [ngClass]="isInputValid('surveyName')" triggerKeyEvent
+                                [pattern]="getPattern('surveyName')">
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">
+                                from date
+                                <span class="text-danger">*</span>
+                            </label>
+                            <div class="calendar-input" *ngIf="surveyId > 0">
+                                <input type="text" class="rounded form-control cursor-pointer" onDrop="return false"
+                                    onPaste="return false" maxlength="10" formControlName="fromDate"
+                                    [bsConfig]="{ dateInputFormat: 'MM-DD-YYYY' , rangeInputFormat : 'MM-DD-YYYY' , containerClass: themeClass , showWeekNumbers: false}"
+                                    placeholder="MM-DD-YYYY" (bsValueChange)="onChangeStartDate($event)"
+                                    (keypress)="inputDateValidation($event)" bsDatepicker
+                                    [ngClass]="isInputValid('fromDate')" triggerKeyEvent>
+                            </div>
+                            <div class="calendar-input" *ngIf="surveyId === 0">
+                                <!-- [minDate]="minStartDate" -->
+                                <input type="text" class="rounded form-control cursor-pointer" onDrop="return false"
+                                    onPaste="return false" maxlength="10" formControlName="fromDate"
+                                    [minDate]="minDate"
+                                    [bsConfig]="{ dateInputFormat: 'MM-DD-YYYY' , rangeInputFormat : 'MM-DD-YYYY' , containerClass: themeClass , showWeekNumbers: false}"
+                                    placeholder="MM-DD-YYYY" (bsValueChange)="onChangeStartDate($event)"
+                                    (keypress)="inputDateValidation($event)" bsDatepicker
+                                    [ngClass]="isInputValid('fromDate')" triggerKeyEvent>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">
+                                to date
+                                <span class="text-danger">*</span>
+                            </label>
+                            <div class="calendar-input">
+                                <!-- [minDate]="minEndDate" -->
+                                <input type="text" class="rounded form-control cursor-pointer" formControlName="toDate"
+                                    onDrop="return false" onPaste="return false" maxlength="10"
+                                    [minDate]="minDate"
+                                    [bsConfig]="{ dateInputFormat: 'MM-DD-YYYY' , rangeInputFormat : 'MM-DD-YYYY' , containerClass: themeClass , showWeekNumbers: false}"
+                                    placeholder="MM-DD-YYYY" bsDatepicker [ngClass]="isInputValid('toDate')"
+                                    triggerKeyEvent>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">survey type</label>
+                            <section class="d-flex align-items-center justify-content-between w-100">
+                                <div class="form-select w-100">
+                                    <select class="w-100 rounded" *ngIf="!isEditForm" formControlName="surveyType"
+                                        (change)="selectSurveyType()" [ngClass]="isInputValid('surveyType')">
+                                        <option value="" selected>Select Survey type</option>
+                                        <option *ngFor="let surveyMaster of surveyMasterData.surveyType"
+                                            [value]="surveyMaster.id">{{surveyMaster.name}}</option>
+                                    </select>
+                                    <select class="w-100 rounded" *ngIf="isEditForm" [attr.disabled]="true"
+                                        formControlName="surveyType" (change)="selectSurveyType()"
+                                        [ngClass]="isInputValid('surveyType')">
+                                        <option value="" selected>Select Survey type</option>
+                                        <option *ngFor="let surveyMaster of surveyMasterData.surveyType"
+                                            [value]="surveyMaster.id">{{surveyMaster.name}}</option>
+                                    </select>
+                                </div>
+                                <button type="button" class="btn btn-primary p-2 btn-xs ml-2"
+                                    *ngIf="surveyForm.controls.surveyType.value == 3"
+                                    (click)="openDimensinSelectForEdit()" title="Dimensional Configuration">
+                                    <span class="icon icon-user text-white"></span>
+                                </button>
+                            </section>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">
+                                Is this survey anonymous?
+                                <!-- <span class="text-danger">*</span> -->
+                            </label>
+                            <div class="d-flex align-items-center">
+                                <label class="switch">
+                                    <input type="checkbox" (change)="isSelectAnonymousSurvey($event)"
+                                        [checked]="surveyForm.controls.isSurveyAnonymous.value"
+                                        formControlName="isSurveyAnonymous">
+                                    <span class="slider round cursor-pointer"></span>
+                                </label>
+                                <!-- <div class="ml-3 dark-text font-semibold">Yes / No</div> -->
+                                <div class="ml-3 dark-text font-semibold">No / Yes</div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">
+                                Is this survey mandatory?
+                                <!-- <span class="text-danger">*</span> -->
+                            </label>
+                            <div class="d-flex align-items-center">
+                                <label class="switch">
+                                    <input type="checkbox" (change)="isSelectMandatorySurvey($event)"
+                                        [checked]="surveyForm.controls.isSurveyMandatory.value"
+                                        formControlName="isSurveyMandatory">
+                                    <span class="slider round cursor-pointer"></span>
+                                </label>
+                                <!-- <div class="ml-3 dark-text font-semibold">Yes / No</div> -->
+                                <div class="ml-3 dark-text font-semibold">No / Yes</div>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">
+                                Description
+                            </label>
+                            <section class="d-flex flex-column position-relative textarea-container rounded">
+                                <div class="right-date-time-container secondary-dark-text text-right">
+                                    <DateTimeStamp #dateTimeStamp></DateTimeStamp>
+                                </div>
+                                <textarea class="spark-form-textarea form-textarea form-control border-0 w-100"
+                                    placeholder="Enter description" formControlName="description"></textarea>
+                            </section>
+                        </div>
+                    </section>
+
+                    <section>
+                        <div class="field-border-bottom"></div>
+                        <section class="p-3">
+                            <div class="text-secondary font-semibold font-lg">Survey Details:</div>
+
+                        </section>
+                        <section>
+                            <section class="questions-container px-3 d-flex flex-wrap" formArrayName="surveyQuestions">
+                                <section cdkDropList class="example-list w-100"
+                                    (cdkDropListDropped)="drop($event,'Question',0)">
+                                    <section
+                                        class="w-100 questions-card-container light-bg shadow-sm rounded px-1 pt-2 mb-3"
+                                        *ngFor="let questionCtrl of surveyForm.get('surveyQuestions')['controls']; let i = index"
+                                        cdkDrag>
+                                        <section>
+                                            <section [formGroupName]="i">
+                                                <section class="w-100">
+                                                    <section class="d-flex justify-content-between w-100">
+                                                        <div
+                                                            class="dark-text text-center font-semibold font-md num-field">
+                                                            {{i + 1}}.
+
+                                                        </div>
+                                                        <section class="d-flex flex-wrap flex-grow-1">
+                                                            <div class="col-lg-8 col-md-6 col-sm-12 px-2 mb-3">
+                                                                <label cdkDragHandle
+                                                                    class="mb-2 text-uppercase secondary-dark-text font-xs cursor-move">
+                                                                    Question<span
+                                                                        class="text-danger pl-1 font-md">*</span>
+                                                                </label>
+                                                                <input
+                                                                    placeholder="What question would you like to ask?"
+                                                                    type="text" class="rounded form-control"
+                                                                    formControlName="question" maxlength="200"
+                                                                    [required]="true"
+                                                                    [ngClass]="{'border-danger': (surveyForm.get('surveyQuestions')['controls'][i].get('question').touched || surveyForm.get('surveyQuestions')['controls'][i].get('question').dirty) && !surveyForm.get('surveyQuestions')['controls'][i].get('question').valid }">
+                                                            </div>
+                                                            <div class="col-lg-4 col-md-6 col-sm-12 px-2 mb-3">
+                                                                <label
+                                                                    class="mb-2 text-uppercase secondary-dark-text font-xs">
+                                                                    Answer Type<span
+                                                                        class="text-danger pl-1 font-md">*</span>
+                                                                </label>
+                                                                <ng-select class="rounded" [searchable]="false"
+                                                                    [items]="questionType" bindLabel="name"
+                                                                    bindValue="id" placeholder="Answer Type"
+                                                                    formControlName="questionType"
+                                                                    (change)="selectQuestionType(selectedOption[i], i)"
+                                                                    [required]="true" [(ngModel)]="selectedOption[i]"
+                                                                    [ngClass]="{'border-danger': (surveyForm.get('surveyQuestions')['controls'][i].get('questionType').touched || surveyForm.get('surveyQuestions')['controls'][i].get('questionType').dirty) && !surveyForm.get('surveyQuestions')['controls'][i].get('questionType').valid }">
+                                                                    <ng-template ng-label-tmp let-item="item">
+                                                                        <img height="15" width="15"
+                                                                            [src]="item.avatar" />
+                                                                        <span
+                                                                            class="font-medium pl-2 dark-text">{{item.name}}</span>
+                                                                    </ng-template>
+                                                                    <ng-template ng-option-tmp let-item="item"
+                                                                        let-index="index">
+                                                                        <img height="15" width="15"
+                                                                            [src]="item.avatar" />
+                                                                        <span
+                                                                            class="font-medium pl-2 dark-text">{{item.name}}</span>
+                                                                    </ng-template>
+                                                                </ng-select>
+                                                            </div>
+                                                        </section>
+                                                    </section>
+
+                                                    <section formGroupName="questionGroup"
+                                                        [ngSwitch]="selectedOption[i]">
+                                                        <!-- FOr checkbox -->
+                                                        <section *ngSwitchCase="2">
+                                                            <section
+                                                                *ngIf="questionCtrl.controls.questionGroup.controls.options">
+                                                                <section class="question-type d-flex flex-wrap">
+                                                                    <section class="w-100" formArrayName="options">
+                                                                        <section cdkDropList
+                                                                            class="w-100 d-flex flex-wrap"
+                                                                            (cdkDropListDropped)="drop($event,'Option',i)">
+                                                                            <section
+                                                                                class="col-lg-3 col-md-6 col-sm-12 px-2"
+                                                                                *ngFor="let optionCtrl of questionCtrl.controls.questionGroup.controls.options.controls let j = index"
+                                                                                cdkDrag>
+                                                                                <section>
+                                                                                    <section [formGroupName]="j">
+                                                                                        <section
+                                                                                            class="form-data-container position-relative w-100 rounded d-flex align-items-center mb-3">
+                                                                                            <div cdkDragHandle
+                                                                                                class="icon-box d-flex align-items-center justify-content-center p-2 cursor-move">
+                                                                                                <img src="/assets/images/dashboard/checkbox.png"
+                                                                                                    alt="checkbox">
+                                                                                            </div>
+                                                                                            <input type="text"
+                                                                                                maxlength="50"
+                                                                                                formControlName="answers"
+                                                                                                class="form-control px-5"
+                                                                                                [ngClass]="{'pr-2': 1>= j , 'border-danger': (surveyForm.get('surveyQuestions')['controls'][i].get('questionGroup').controls.options.controls[j].controls.answers.touched || surveyForm.get('surveyQuestions')['controls'][i].get('questionGroup').controls.options.controls[j].controls.answers.dirty) && !surveyForm.get('surveyQuestions')['controls'][i].get('questionGroup').controls.options.controls[j].controls.answers.valid }">
+                                                                                            <div *ngIf="j>=2"
+                                                                                                (click)="removeOption(i,j)"
+                                                                                                class="overlay cursor-pointer bg-primary">
+                                                                                                <div class="icon icon-bin text-white d-flex align-items-center justify-content-center p-2"
+                                                                                                    title="Delete">
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </section>
+                                                                                    </section>
+                                                                                </section>
+
+                                                                            </section>
+                                                                        </section>
+                                                                    </section>
+
+
+                                                                    <!-- footer data start here -->
+                                                                    <section class="d-flex align-items-center w-100">
+                                                                        <div class="d-flex align-items-center">
+                                                                            <div class="d-flex align-items-center">
+                                                                                <div class="switch-container">
+                                                                                    <label class="sm-switch">
+                                                                                        <input type="checkbox"
+                                                                                            (change)="isSelectMandatory($event,i)"
+                                                                                            [checked]="questionCtrl.controls.isMandatory.value"
+                                                                                            formControlName="isMandatory">
+                                                                                        <span
+                                                                                            class="sm-slider round"></span>
+                                                                                    </label>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="dark-text font-xs pl-2 font-semibold">
+                                                                                    Mandatory</div>
+                                                                            </div>
+                                                                            <div class="mx-2 secondary-dark-text">|
+                                                                            </div>
+                                                                            <div
+                                                                                class="dark-text font-xs font-semibold">
+                                                                                Add
+                                                                                Option
+                                                                                or <a (click)="addOption(i)"
+                                                                                    class="text-secondary text-decoration white-space cursor-pointer"
+                                                                                    title="Add Other">'Add Other'</a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </section>
+                                                                </section>
+                                                            </section>
+                                                        </section>
+                                                        <!-- For radio button -->
+                                                        <section *ngSwitchCase="1">
+                                                            <section
+                                                                *ngIf="questionCtrl.controls.questionGroup.controls.options">
+                                                                <section class="question-type d-flex flex-wrap">
+                                                                    <section class="w-100" formArrayName="options">
+                                                                        <section class="w-100 d-flex flex-wrap"
+                                                                            cdkDropList
+                                                                            (cdkDropListDropped)="drop($event,'Option',i)">
+                                                                            <section
+                                                                                class="col-lg-3 col-md-6 col-sm-12 px-2"
+                                                                                *ngFor="let optionCtrl of questionCtrl.controls.questionGroup.controls.options.controls let j = index"
+                                                                                cdkDrag>
+                                                                                <section>
+                                                                                    <section [formGroupName]="j">
+                                                                                        <section
+                                                                                            class="form-data-container position-relative w-100 rounded d-flex align-items-center mb-3">
+                                                                                            <div cdkDragHandle
+                                                                                                class="icon-box d-flex align-items-center justify-content-center p-2 cursor-move">
+                                                                                                <img src="/assets/images/dashboard/radio-button.png"
+                                                                                                    alt="radio">
+                                                                                            </div>
+                                                                                            <input type="text"
+                                                                                                maxlength="50"
+                                                                                                formControlName="answers"
+                                                                                                class="form-control px-5"
+                                                                                                [ngClass]="{'pr-2': 1>= j , 'border-danger': (surveyForm.get('surveyQuestions')['controls'][i].get('questionGroup').controls.options.controls[j].controls.answers.touched || surveyForm.get('surveyQuestions')['controls'][i].get('questionGroup').controls.options.controls[j].controls.answers.dirty) && !surveyForm.get('surveyQuestions')['controls'][i].get('questionGroup').controls.options.controls[j].controls.answers.valid }">
+                                                                                            <div class="overlay cursor-pointer bg-primary"
+                                                                                                *ngIf="j>=2"
+                                                                                                (click)="removeOption(i,j)">
+                                                                                                <div class="icon icon-bin text-white d-flex align-items-center justify-content-center p-2"
+                                                                                                    title="Delete">
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </section>
+                                                                                    </section>
+                                                                                </section>
+                                                                            </section>
+                                                                        </section>
+                                                                    </section>
+
+                                                                    <!-- footer data start here -->
+                                                                    <section
+                                                                        class="d-flex justify-content-between align-items-center w-100">
+                                                                        <div class="d-flex align-items-center">
+                                                                            <div class="d-flex align-items-center">
+                                                                                <div class="switch-container">
+                                                                                    <label class="sm-switch">
+                                                                                        <input type="checkbox"
+                                                                                            (change)="isSelectMandatory($event,i)"
+                                                                                            [checked]="questionCtrl.controls.isMandatory.value"
+                                                                                            formControlName="isMandatory">
+                                                                                        <span
+                                                                                            class="sm-slider round"></span>
+                                                                                    </label>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="dark-text font-xs pl-2 font-semibold">
+                                                                                    Mandatory</div>
+                                                                            </div>
+                                                                            <div class="mx-2 secondary-dark-text">|
+                                                                            </div>
+                                                                            <div
+                                                                                class="dark-text font-xs font-semibold">
+                                                                                Add
+                                                                                Option
+                                                                                or <a (click)="addOption(i)"
+                                                                                    class="text-secondary text-decoration white-space cursor-pointer"
+                                                                                    title="Add Other">'Add Other'</a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </section>
+                                                                </section>
+                                                            </section>
+                                                        </section>
+                                                        <!-- For Label -->
+                                                        <section *ngSwitchCase="3">
+                                                            <section class="question-type px-2">
+                                                                <section
+                                                                    class="form-data-container position-relative w-100 rounded d-flex align-items-center mb-3">
+                                                                    <section
+                                                                        class="free-from-textbox rounded w-100 p-2 border-0">
+                                                                    </section>
+                                                                </section>
+                                                                <!-- footer data start here -->
+                                                                <section
+                                                                    class="d-flex justify-content-between align-items-center w-100 mt-3">
+                                                                    <div class="d-flex align-items-center">
+                                                                        <div class="d-flex align-items-center">
+                                                                            <div class="switch-container">
+                                                                                <label class="sm-switch">
+                                                                                    <input type="checkbox"
+                                                                                        (change)="isSelectMandatory($event,i)"
+                                                                                        [checked]="questionCtrl.controls.isMandatory.value"
+                                                                                        formControlName="isMandatory">
+                                                                                    <span
+                                                                                        class="sm-slider round"></span>
+                                                                                </label>
+                                                                            </div>
+                                                                            <div
+                                                                                class="dark-text font-xs pl-2 font-semibold">
+                                                                                Mandatory
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </section>
+                                                            </section>
+                                                        </section>
+                                                    </section>
+                                                    <section
+                                                        class="d-flex justify-content-end align-items-center pr-2 pb-3">
+                                                        <button type="button"
+                                                            class="btn btn-danger-light d-flex align-items-center xs-btn border-0 rounded-pill text-uppercase p-2"
+                                                            title="Delete Question" *ngIf="i>0"
+                                                            (click)="removeQuestion(i)">
+                                                            <div
+                                                                class="icon icon-bin text-white d-none xs-d-block mx-auto">
+                                                            </div>
+                                                            <div class="xs-d-none pl-2">Delete question</div>
+                                                        </button>
+                                                    </section>
+                                                </section>
+                                            </section>
+                                        </section>
+
+                                    </section>
+                                </section>
+
+                            </section>
+                            <!-- <section class="d-flex justify-content-end pr-3">
+                                <button type="button"
+                                class="btn btn-success px-3 py-2 xs-btn text-uppercase d-flex align-items-center rounded-pill"
+                                title="Add Question" (click)="onAddQuestion()">
+                                <div class="icon icon-add d-flex align-items-center text-white"></div>
+                                <div class="d-md-inline-flex d-none pl-2">Add Question</div>
+                            </button>
+                            </section> -->
+                        </section>
+
+                    </section>
+                    <footer class="d-flex justify-content-between align-items-center flex-wrap w-100 p-3">
+                        <div class="d-flex align-items-center xs-mb-3">
+                            <button type="button"
+                                class="btn btn-success mr-2 px-3 py-2  word-break text-uppercase d-flex align-items-center rounded-pill"
+                                title="Add Question" (click)="onAddQuestion()">
+                                <div class="icon icon-add d-flex align-items-center text-white"></div>
+                                <div>Add Question</div>
+                            </button>
+                            <button type="button" class="btn btn-primary text-uppercase rounded-pill" title="Preview"
+                                (click)="redirectToPreviewSurvey()">Preview</button>
+
+                        </div>
+                        <div class="d-flex align-items-center flex-wrap">
+                            <button type="button"
+                                class="btn secondary-light-btn text-uppercase rounded-pill mr-2 btn-xs" title="Cancel"
+                                (click)="goToListPage()">cancel</button>
+
+                            <button type="submit" [disabled]="isAddSurvey"
+                                class="btn btn-secondary text-uppercase rounded-pill btn-xs" title="Save">save</button>
+                            <button type="button" *ngIf="isShowPublishButon"
+                                class="btn btn-primary text-uppercase rounded-pill ml-2" title="Publish"
+                                [disabled]="!isEnablePublish" (click)="publishNotification()">publish</button>
+                        </div>
+                    </footer>
+                </form>
+            </section>
+        </section>
+        <!-- main container section end  here -->
+    </section>
+</section>

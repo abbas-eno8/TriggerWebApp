@@ -1,0 +1,107 @@
+<section class="h-100">
+    <input class="toggle-sidebar" id="toggle-sidebar" type="checkbox" role="button" />
+    <section class="side-bar shadow-sm d-flex flex-grow-1 flex-column">
+        <div class="main-logo-section p-1 d-flex align-items-center flex-shrink-0">
+            <div class="mx-auto">
+                <img [src]="iconUrl" alt="{{ iconUrlName }}" title="{{ iconUrlName }}" class="logo-img img-fluid"
+                    *ngIf="!!iconUrl" (error)="onError()">
+            </div>
+        </div>
+        <div class="mt-3 overflow-auto" id="accordionExample">
+            <ul class="sidebar-list accordion"
+                [ngClass]="{'sidebar-notification': menu.name === 'Recognition Wall' && isUpdatedNotificaion}"
+                *ngFor="let menu of menuBar; let i = index">
+                <li class="sidebar-item mx-2 rounded d-flex flex-column flex-shrink-0 align-items-center"
+                    (click)="onSideBarMenu(menu.name)" *ngIf="menu.isAccess" title="{{ menu.name }}">
+                    <a role="button" data-toggle="collapse" [attr.data-target]="'#AccordionMenu-' + i"
+                        [attr.aria-controls]="'AccordionMenu-'+i" 
+                        class="d-flex sidebar-list-item align-items-center w-100"
+                        [ngClass]="{'collapsed' : current !== i,'active-menu': selectedRoute ===  menu.url , 'beta-version' : menu.isBeta}">
+                        <label *ngIf="!isMobileView" class="d-flex align-items-center cursor-pointer"
+                            (click)="current = i; redirectToRoute(menu.route, menu.id)">
+                            <span class=" {{ menu.icon }}"></span>
+                            <span style="max-width: 150px; overflow: hidden; text-overflow: ellipsis; padding: 4px 0;"
+                                class="sidebar-item-label">{{ menu.name }}</span>
+                            <span class="submenu-collapse-icon icon icon-down-arrow-1 ml-auto"
+                            *ngIf="!!menu.subMenu"></span>
+
+                            <img class="beta-version-img "
+                                [ngClass]="{'ml-1': !!menu.subMenu, 'ml-auto': !menu.subMenu}"
+                                src="./../../../../assets/images/Group 2.png" alt="beta-img">
+                        </label>
+                        <label *ngIf="isMobileView" for="toggle-sidebar" class="d-flex align-items-center"
+                            (click)="current = i; redirectToRoute(menu.route, menu.id)">
+                            <span class=" {{ menu.icon }}"></span>
+                            <span class="sidebar-item-label"> {{ menu.name }} </span>
+                        </label>
+                        <div *ngIf="menu.name === 'Recognition Wall' && isUpdatedNotificaion"
+                            class="notification-icon icon icon-star-1 text-warning"></div>
+                    </a>
+                    
+                    <ul class="sidebar-list submenu list-unstyled w-100 pl-3" 
+                    [ngClass]="{'collapse': current !== i, 'show' : current === 0}"
+                         id="AccordionMenu-{{i}}" data-parent="#accordionExample"
+                        *ngFor="let subMenu of menu.subMenu">
+                        <li class="mt-3 mb-2" *ngIf="subMenu.isAccess" title="{{ subMenu.name }}">
+                            <div [ngClass]="{'active-menu': selectedRoute ===  subMenu.url, 'beta-version' : subMenu.isBeta}"
+                                class="d-flex sidebar-list-item align-items-center w-100 ">
+                                <label *ngIf="!isMobileView" class="d-flex align-items-center cursor-pointer"
+                                    (click)="redirectToSubRoute(subMenu.route, subMenu.id)">
+                                    <span class="{{ subMenu.icon }}"></span>
+                                    <span
+                                        style="max-width: 150px; overflow: hidden; text-overflow: ellipsis; padding: 4px 0;"
+                                        class="sidebar-item-label"> {{subMenu.name}} </span>
+                                    <img class="beta-version-img ml-auto" src="./../../../../assets/images/Group 2.png"
+                                        alt="beta-img">
+                                </label>
+                                <label *ngIf="isMobileView" for="toggle-sidebar" class="d-flex align-items-center"
+                                    (click)="redirectToSubRoute(subMenu.route, subMenu.id)">
+                                    <span class=" {{ subMenu.icon }}"></span>
+                                    <span class="sidebar-item-label"> {{subMenu.name}}</span>
+                                </label>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+            <!-- <p>
+                <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                  Link with href
+                </a>
+               
+              </p>
+              <div class="collapse" id="collapseExample">
+                <div class="card card-body">
+                  Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+                </div>
+              </div> -->
+            <!-- <ul class="sidebar-list">
+                  <li class="sidebar-item">
+                    <label>text</label>
+                    <ul class="submenu">
+                        <li><a href="">Tops</a></li>
+                        <li><a href="">Bottoms</a></li>
+                        <li><a href="">Footwear</a></li>
+                    </ul>
+                </li>
+                <li class="sidebar-item">
+                    <label>text</label>
+                </li>
+                <li class="sidebar-item">
+                    <label>text</label>
+                </li>
+            </ul> -->
+        </div>
+        <div class="p-3 mt-auto text-center d-flex flex-shrink-0">
+            <a class="mx-auto">
+                <div>
+                    <img src="/assets/images/dashboard/trigger_small.png" alt="Trigger" class="small-logo-b">
+                </div>
+                <div>
+                    <img src="/assets/images/trigger-sign-in-logo.png" alt="Trigger" class="large-logo-b">
+                </div>
+            </a>
+        </div>
+    </section>
+</section>

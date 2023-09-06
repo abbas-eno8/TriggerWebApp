@@ -1,0 +1,42 @@
+@import "~assets/scss/base/variables";
+@import "~assets/scss/base/colors";
+@import "~bootstrap/scss/mixins/breakpoints";
+@import "~assets/scss/base/mixins";
+
+//for custom dropdwn
+.button-group-container {
+    @include position(absolute, 0, 0, auto, 0);
+    background-color: $body-bg;
+}
+.mat-raised-button {
+    padding: 0 10px !important;
+    box-shadow: none !important;
+    border: 1px solid $secondary-dark;
+    color: $secondary-dark;
+    line-height: 27px !important;
+    @include media-breakpoint-down('sm-small') {
+        font-size: 10px;
+    }
+}
+.custom-overflow {
+    overflow-y: scroll;
+    height: calc(300px - 128px);
+}
+.select-label-text {
+    @include position(absolute, 11px, auto, auto, 20px);
+    pointer-events: none;
+}
+.box-height {
+    min-height: 300px;
+}
+.dark-theme-mat-select {
+    background: #455270 !important;
+    color: white !important;;
+}
+.light-theme-mat-select {
+    color: $primary !important;;
+}
+::ng-deep .mat-datepicker-content {
+    background: none !important;;
+    color: inherit !important;
+}

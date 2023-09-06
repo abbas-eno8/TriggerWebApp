@@ -1,0 +1,10 @@
+<button type="button" class="close pull-right btn bg-transparent mb-2" aria-label="Close" [mat-dialog-close]>
+    <span class="font-xl" aria-hidden="true">&times;</span>
+</button>
+<section class="iframe-container">
+    <iframe [src]="content" width="100%" height="100%" class="border-0" title="content"></iframe>
+</section>
+<footer class="d-flex align-items-center justify-content-end footer-section">
+    <button [disabled]="!remark.isDeletable" class="icon icon-bin mr-1 btn bg-transparent d-flex align-items-center"
+        title="Delete" (click)="delete()"></button>
+</footer>

@@ -1,0 +1,22 @@
+<!-- widget graph section start here -->
+<div class="rounded white-bg shadow-sm p-3 widgets-box d-flex flex-column flex-grow-1">
+  <div class="d-flex justify-content-between flex-nowrap">
+    <div class="dark-text font-semibold font-md">
+      Team Member’s <span class="text-decoration">Average</span> Evaluation Score
+    </div>
+    <div class="d-flex">
+      <div class="d-flex align-items-center mr-3">
+        <div class="rounded-pill border-0 font-semibold graph-status cursor-pointer text-uppercase" title="Weekly"
+          (click)="getWeeklyGraphData()" [ngClass]="{'status-active':isWeekly}">Weekly</div>
+        <div class="rounded-pill border-0 graph-status font-semibold cursor-pointer text-uppercase" title="Monthly"
+          (click)="getMonthlyGraphData()" [ngClass]="{'status-active':isMonthly}">Monthly</div>
+      </div>
+      <div class="d-flex align-items-center xs-d-none">
+        <trigger-tooltip [pageTitle]="39"></trigger-tooltip>
+      </div>
+    </div>
+  </div>
+  <div id="lineGraph" style="height: 314px"></div>
+</div>
+<!-- Here style tag given for set height, because when we added below class insted of style tag it is created issue in 320Px responsive width. -->
+<!-- widget graph section end here -->

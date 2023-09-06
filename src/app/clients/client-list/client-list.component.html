@@ -1,0 +1,25 @@
+<section class="d-flex flex-column h-100">
+  <!-- header part start here -->
+  <trigger-header-view [pageTitle]="pageTitle" [HeaderViewParameter]="HeaderViewParameter">
+  </trigger-header-view>
+  <!-- header part end here -->
+  <section class="h-100 position-relative flex-grow-1 overflow-hidden mx-3">
+    <section class="mat-elevation-z8 rounded-top w-100 h-100">
+      <div class="h-100">
+        <!-- Client table list start here -->
+        <trigger-client-table class="d-flex flex-column h-100" [clients]="clients" [isArrayValue]="isArrayValue"
+          (goToEditClient)="goToEditClient($event)" (deleteClientEvent)="deleteClientEvent($event)"
+          (goToDashboard)="goToDashboard($event)" *ngIf="isApiCalled && !isAccordion">
+        </trigger-client-table>
+        <!-- Client table list end here -->
+        <!-- Client accordion table list start here -->
+        <trigger-client-accordion-table class="d-flex flex-column h-100" [clients]="clients"
+          [isArrayValue]="isArrayValue" (goToEditClient)="goToEditClient($event)"
+          (deleteClientEvent)="deleteClientEvent($event)" (goToDashboard)="goToDashboard($event)"
+          *ngIf="isApiCalled && isAccordion">
+        </trigger-client-accordion-table>
+        <!-- Client accordion table list end here -->
+      </div>
+    </section>
+  </section>
+</section>

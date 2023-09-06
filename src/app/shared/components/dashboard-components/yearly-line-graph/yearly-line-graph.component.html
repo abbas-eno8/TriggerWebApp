@@ -1,0 +1,14 @@
+<!-- graph widget section start here -->
+<div class="rounded white-bg shadow-sm p-3 widgets-box d-flex flex-column flex-grow-1">
+    <div class="d-flex flex-nowrap justify-content-between line-graph-header">
+        <div class="dark-text font-semibold font-md">
+            Team Member’s <span class="text-decoration">Average</span> Evaluation Score <span class="secondary-dark-text">(Yearly)</span>
+        </div>
+        <div class="d-flex align-items-center xs-d-none">
+            <trigger-tooltip [pageTitle]="40"></trigger-tooltip>
+        </div>
+    </div>
+    <div id="yearlyLineGraph" style="height: 314px"></div>
+</div>
+<!-- Here style tag given for set height, because when we added below class insted of style tag it is created issue in 320Px responsive width. -->
+<!-- graph widget section end here -->

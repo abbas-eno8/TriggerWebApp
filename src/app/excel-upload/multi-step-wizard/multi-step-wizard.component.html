@@ -1,0 +1,11 @@
+<!-- Excle upload wizard section start here -->
+<section class="d-flex justify-content-center flex-column-sm" *ngFor="let step of wizardSteps">
+  <div class="d-flex flex-column justify-content-center align-items-center round-center rounded-circle-box">
+      <div class="mx-2 primary-rounded d-flex justify-content-center align-items-center shadow-sm">
+          <span [ngClass]="step.class" class="font-semibold font-xl">{{ step.DisplayNumber }}</span>
+      </div>
+      <div class="text-center font-semibold pt-3 secondary-dark-text font-md">{{ step.display }}</div>
+  </div>
+  <div class="timeline-line" *ngIf="step.id != '4'"></div>
+</section>
+<!-- Excle upload wizard section end here -->

@@ -1,0 +1,57 @@
+<section class="p-3 rounded md-dialog-container">
+  <!-- [style.--bg-modal-box]="background-color" -->
+  <header class=" mb-3 d-flex justify-content-between align-items-center">
+    <section class="dark-text font-xl font-semibold">Purpose of Request</section>
+    <section class="icon icon-close cursor-pointer" title="Close" (click)="cancelSelection()"></section>
+  </header>
+  <div class="w-100 mb-3 request-dropdown position-relative" #modalElement [@.disabled]="disableAnimation">
+    <div class="select-label-text" *ngIf="selectedManagers.length === 0"> {{ selectInitialValue }} </div>
+    <mat-list-item class="p-0 position-relative d-flex align-items-center" role="listitem"
+      (click)="openSelectDropdown()">
+      <mat-form-field>
+        <mat-select placeholder="" panelClass="myPanelClass" name="fullName" [(ngModel)]="selectedManagers"
+          [compareWith]="equals" multiple #managerSelect="ngModel" id="metSeleasgasgasgasct" overlayDir>
+          <mat-select-trigger>
+            <div *ngIf="selectedManagers?.length > 0" class="d-flex justify-content-between cursor-pointer">
+              <span class="ml-3 dark-text">Team Members</span>
+              <span class="dark-text"> +{{selectedManagers.length}}</span>
+            </div>
+          </mat-select-trigger>
+          <mat-option class="search-class">
+            <ngx-mat-select-search [formControl]="managerMultiFilterCtrl" [placeholderLabel]="placeholderValue"
+              [noEntriesFoundLabel]="'No matching managers found'">
+              <mat-icon>close</mat-icon>
+            </ngx-mat-select-search>
+          </mat-option>
+          <mat-option disabled="disabled" class="filter-option">
+            <section class="button-group-container text-center">
+              <button mat-raised-button class="fill px-1 text-sm btn btn-outline-secondary mr-3"
+                (click)="selectAll(managerSelect, filteredManagerMulti,managers)">
+                Select All
+              </button>
+              <button mat-raised-button class="fill px-1 text-sm btn btn-outline-danger"
+                (click)="deselectAll(managerSelect,filteredManagerMulti)">
+                Deselect All
+              </button>
+            </section>
+          </mat-option>
+          <section class="custom-overflow">
+            <mat-option *ngFor="let manager of filteredManagerMulti | async" [value]="manager">
+              {{manager.fullName}}
+            </mat-option>
+          </section>
+
+        </mat-select>
+      </mat-form-field>
+    </mat-list-item>
+  </div>
+  <textarea class="form-textarea form-control w-100 rounded" [(ngModel)]="remarks" maxlength="500"
+    placeholder="Remark"></textarea>
+  <section class="mt-3 text-right">
+    <button type="button" title="Cancel" class="btn secondary-light-btn rounded-pill btn-sm mr-2 text-uppercase"
+      (click)="cancelSelection()">cancel</button>
+    <button title="Send Request" type="button" class="btn btn-secondary rounded-pill text-uppercase"
+      [disabled]="isDisableApply" [ngClass]="{'disabled-item':isDisableApply}" (click)="submitRequest()">Send
+      request</button>
+  </section>
+</section>

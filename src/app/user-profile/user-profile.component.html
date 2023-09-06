@@ -1,0 +1,171 @@
+<section class="d-flex flex-column h-100">
+    <!-- header part start here -->
+    <header class="d-flex justify-content-between p-3 flex-shrink-0">
+        <div class="dark-text font-xl font-semibold">
+            Profile
+        </div>
+        <div>
+            <trigger-tooltip [pageTitle]="pageTitle"></trigger-tooltip>
+        </div>
+    </header>
+    <!-- header part end here -->
+    <section class="h-100 position-relative flex-grow-1 overflow-hidden">
+        <!-- user profile main container start here -->
+        <section class="d-flex flex-column overflow-auto px-3 pb-3 h-100">
+            <section class="white-bg rounded shadow-sm position-relative">
+                <div class="h-100 row mx-0">
+                    <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 p-3 box-right-border">
+                        <section class="position-relative mt-5 text-center profile-box mx-auto">
+                            <div
+                                class="profile-circle shadow-lg rounded-circle d-flex align-items-center justify-content-center">
+                                <div class="font-bold display-3 text-info-dark" *ngIf="!imageUrl || isNewImageInValid">
+                                    {{ profileName }}
+                                </div>
+                                <img src="{{imageUrl}}" class="img-fluid" *ngIf="!!imageUrl && !isNewImageInValid"
+                                    alt="" (error)="onErrorNewProfile()">
+                            </div>
+                            <div (click)="openProfileUploadModal()"
+                                class="btn-float rounded-circle d-flex justify-content-center align-items-center icon icon-pen cursor-pointer shadow-lg">
+                            </div>
+                        </section>
+                        <div class="text-center mt-4">
+                            <div class="dark-text font-semibold font-lg word-break">{{ userName }}</div>
+                            <div class="text-secondary font-sm word-break">
+                                {{ email }}
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-center mt-4">
+                            <label class="switch">
+                                <input type="checkbox" [ngModel]="isSmsNotificationOn"
+                                    (ngModelChange)="changeSmsNotification($event)">
+                                <span class="slider round cursor-pointer"></span>
+                            </label>
+                            <div class="ml-3 text-secondary">SMS Notification</div>
+                        </div>
+                    </div>
+                    <section class="col-xl-8 col-lg-8 col-md-12 col-sm-12 px-2">
+                        <form class="py-3 w-100" action="#" method="post" role="form" novalidate
+                            [formGroup]="updateProfileForm">
+                            <section class="row w-100 mx-0">
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                                    <label class="mb-2 text-uppercase dark-text font-sm font-semibold">Team Member
+                                        ID</label>
+                                    <input type="text" formControlName="employeeId" [attr.disabled]="true"
+                                        class="rounded form-control" />
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 mb-3 px-2 position-relative">
+                                    <label class="mb-2 text-uppercase dark-text font-sm font-semibold">phone
+                                        number</label>
+                                    <div class="d-flex align-items-center">
+                                        <div class="flag-select-dropdown p-0">
+                                            <mat-select formControlName="callingCode" 
+                                                panelClass="userProfile" [(ngModel)]="selected" [(value)]="selected"
+                                                class="callingCode form-control rounded-right-0 border-right-0 p-0" [panelClass]="isDarkTheme ? 'mat-select-option-dark' : 'mat-select-option-light'"
+                                                >
+                                                <mat-select-trigger>
+                                                    {{ selected }}
+                                                </mat-select-trigger>
+                                                <mat-option *ngFor="let country of countryCodeList" [value]="country.countryObj.countryCode">
+                                                    <span>
+                                                   <img height="24px" width="20px" [src]="country.countryObj.flag"/><span> {{country.countryObj.countryName}} </span> 
+                                                   <span>{{country.countryObj.countryCode}}</span>
+                                                </span>
+                                                </mat-option>
+                                                <!-- <mat-option *ngFor="let type of callingCode" [value]="type.callingCodes[0]">
+                                                    <img class="img-flag" [src]="type.flag" alt=""> {{type.callingCodes [0]}}
+                                                </mat-option> -->
+                                            </mat-select>
+                                        </div>
+                                        <input type="text" class="form-control border-left-0 rounded-left-0"
+                                            formControlName="phoneNumber" (keypress)="phoneNumberValidation($event)"
+                                            (paste)="pasteOnlyNumericEvent($event)" pattern="[0-9]*" maxlength="15"
+                                            minlength="7" ng-pattern-restrict />
+                                        <button type="button" [title]="verifBtnValue"
+                                            class="btn rounded btn-primary btn-sm text-uppercase"
+                                            [disabled]="isPhoneConfirmed" [ngClass]="{'disabled-item':isPhoneConfirmed}"
+                                            (click)="redirectToSmsConfirmtaion()" *ngIf="!isHideVeirfyButton"> {{
+                                            verifBtnValue }} </button>
+                                    </div>
+                                </div>
+                                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 mb-3 px-2">
+                                    <label class="mb-2 text-uppercase dark-text font-sm font-semibold">City<span
+                                            class="text-danger pl-1">*</span></label>
+                                    <input type="text" formControlName="workCity" class="rounded form-control"
+                                        maxlength="30" (paste)="pasteOnlyAlphabaticEvent($event)"
+                                        (keypress)="AlphabaticharOnly($event)"
+                                        [ngClass]="{'border-danger': (updateProfileForm.get('workCity').touched || updateProfileForm.get('workCity').dirty) && !updateProfileForm.get('workCity').valid }"
+                                        pattern="^[a-zA-Z ]*$" ng-pattern-restrict />
+                                </div>
+                                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 mb-3 px-2">
+                                    <label class="mb-2 text-uppercase dark-text font-sm font-semibold">state<span
+                                            class="text-danger pl-1">*</span></label>
+                                    <input type="text" formControlName="workState" class="rounded form-control"
+                                        maxlength="25" (paste)="pasteOnlyAlphabaticEvent($event)"
+                                        (keypress)="AlphabaticharOnly($event)"
+                                        [ngClass]="{'border-danger': (updateProfileForm.get('workState').touched || updateProfileForm.get('workState').dirty) && !updateProfileForm.get('workState').valid }"
+                                        pattern="^[a-zA-Z ]*$" ng-pattern-restrict />
+                                </div>
+                                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 mb-3 px-2">
+                                    <label class="mb-2 text-uppercase dark-text font-sm font-semibold">zip code<span
+                                            class="text-danger pl-1">*</span></label>
+                                    <input type="text" formControlName="workZipcode" class="rounded form-control"
+                                        minlength="5" maxlength="15" (keypress)="zipcodeValidation($event)"
+                                        (paste)="pasteOnlyNumericEvent($event)"
+                                        [ngClass]="{'border-danger': (updateProfileForm.get('workZipcode').touched || updateProfileForm.get('workZipcode').dirty) && !updateProfileForm.get('workZipcode').valid }" />
+                                </div>
+
+                                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 mb-3 px-2">
+                                    <label class="mb-2 text-uppercase dark-text font-sm font-semibold">In Time
+                                        <span class="text-danger">*</span>
+                                    </label>
+
+                                    <div class="input-timepicker position-relative">
+                                        <input type="text" class="rounded form-control cursor-pointer"
+                                            placeholder="HH:MM" formControlName="inTime" [ngxTimepicker]="inTimepicker"
+                                            [format]="24" (keypress)="inTimepicker">
+                                    </div>
+                                    <ngx-material-timepicker #inTimepicker
+                                        [timepickerClass]="isDarkTheme ? 'timepickerDark' : 'timepicker'">
+                                    </ngx-material-timepicker>
+                                </div>
+                                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 mb-3 px-2">
+                                    <label class="mb-2 text-uppercase dark-text font-sm font-semibold">Out Time
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="input-timepicker position-relative">
+                                        <input type="text" class="rounded form-control cursor-pointer"
+                                            placeholder="HH:MM" maxlength="5" formControlName="outTime"
+                                            [ngxTimepicker]="outTimepicker" [format]="24" (keypress)="outTimepicker">
+                                    </div>
+                                    <ngx-material-timepicker #outTimepicker
+                                        [timepickerClass]="isDarkTheme ? 'timepickerDark' : 'timepicker'">
+                                    </ngx-material-timepicker>
+                                </div>
+                                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 mb-3 px-2">
+                                    <div class="d-flex align-items-center switch-container">
+                                        <span>Light</span>
+                                        <label class="switch mx-2 cursor-pointer">
+                                            <input type="checkbox" (change)="switchTheme()"
+                                                [checked]="updateProfileForm.controls.themeStatus.value"
+                                                formControlName="themeStatus">
+                                            <span class="slider round"></span>
+                                        </label>
+                                        <span>Dark</span>
+                                        <label>
+                                            <input type="checkbox" click="toggle">
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+                            <footer class="text-right pr-2 pt-2 container-space">
+                                <button type="submit" (click)="updateProfile()"
+                                    class="btn btn-secondary text-uppercase rounded-pill" title="Submit">Submit</button>
+                            </footer>
+                        </form>
+                    </section>
+                </div>
+            </section>
+        </section>
+        <!-- user profile main container end here -->
+    </section>
+</section>

@@ -1,0 +1,14 @@
+<trigger-spark-list-ui *ngIf="!isDashboardRoute && isSparkList" [isDataSaveInSession]="isDataSaveInSession"
+    [sparkDetailBySelectedRoute]="sparkDetailBySelectedRoute" [baseResponse]="baseResponse$ | async"
+    [classifications]="classifications$ | async" [categories]="categories$ | async" (delete)="deleteSpark($event)"
+    (deleteAttachment)="deleteAttachment($event)" (add)="addSpark($event)" (update)="updateSpark($event)"
+    (sendMail)="sendMail($event)" (loadSpark)="loadSpark($event)" (loadSparkBySelectedTab)="loadSparkByTab($event)" [updateSpark]="updateSparkObject" (addReplyOnEnter)="addReply($event)">
+</trigger-spark-list-ui>
+
+<trigger-spark-widget-ui *ngIf="isDashboardRoute" [sparkDetailBySelectedRoute]="sparkDetailBySelectedRoute"
+    [baseResponse]="baseResponse$ | async" [classifications]="classifications$ | async"
+    [categories]="categories$ | async" (delete)="deleteSpark($event)" (deleteAttachment)="deleteAttachment($event)"
+    (add)="addSpark($event)" (update)="updateSpark($event)" (sendMail)="sendMail($event)"
+    (loadSpark)="loadSpark($event)" (loadSparkByTab)="loadSparkByTab($event)" (addReply)="addReply($event)" [updateSpark]="updateSparkObject">
+</trigger-spark-widget-ui>
+<!-- [widgetBaseResponse]="widgetBaseResponse$" -->

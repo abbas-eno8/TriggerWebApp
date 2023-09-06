@@ -1,0 +1,26 @@
+@import "~assets/scss/base/variables";
+@import "~assets/scss/base/colors";
+@import "~assets/scss/base/mixins";
+@import "~bootstrap/scss/mixins/breakpoints";
+
+.text-ellipsis {
+    white-space: nowrap; 
+    overflow: hidden !important;
+    text-overflow: ellipsis; 
+}
+.font-icon-Up {
+    color: #a1ddaa;
+}
+.font-icon-Down {
+    color: #fe9198;
+}
+.font-icon-Steady {
+    color: #f8db8f;
+}
+.font-icon-Steady {
+    font-size: 12px;
+}
+.font-icon-Up,
+.font-icon-Down {
+    font-size: 14px;
+}

@@ -1,0 +1,20 @@
+<!-- widget graph section start here -->
+<div class="rounded white-bg shadow-sm p-3 widgets-box d-flex flex-column flex-grow-1 xs-mb-3">
+    <div class="d-flex justify-content-between">
+        <div class="dark-text font-semibold font-md">My Direct Reports {{selectedYearBinding}}</div>
+        <div class="d-flex flex-nowrap align-items-center xs-d-none">
+            <span class="icon icon-dragdrop mr-2 cursor-move d-flex align-items-center" title="Move" *ngIf="role !== 'TriggerAdmin'"></span>
+            <trigger-tooltip [pageTitle]="pageTitle" [bulbTootlip]="bulbTootlip"></trigger-tooltip>
+            <span class="icon icon-close cursor-pointer" title="Close" (click)="onclickremoveTile()"
+                *ngIf="role !== 'TriggerAdmin'"></span>
+        </div>
+    </div>
+    <div id="fistPieContainer" style="min-width: 230px;height: 230px;"></div>
+    <trigger-direct-reports-to-date-progressive-common-graph
+        (callgoToEmployeeListPage)="callgoToEmployeeListPage($event)"
+        [pieStatckTotalCountOfIP]="pieStatckTotalCountOfIP" [pieStatckTotalCountOfA]="pieStatckTotalCountOfA"
+        [pieStatckTotalCountOfB]="pieStatckTotalCountOfB" [pieStatckTotalCountOfC]="pieStatckTotalCountOfC"
+        [pieStatckTotalCountOfRP]="pieStatckTotalCountOfRP" [isShowIPGrade]="isShowIPGrade"></trigger-direct-reports-to-date-progressive-common-graph>
+</div>
+<!-- Here style tag given for set height, because when we added below class insted of style tag it is created issue in 320Px responsive width. -->
+<!-- widget graph section end here --> 

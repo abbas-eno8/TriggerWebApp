@@ -1,0 +1,144 @@
+<section class="d-flex flex-column h-100">
+  <!-- header design start here -->
+  <header class="d-flex justify-content-between p-3 flex-shrink-0">
+    <section class="d-flex align-items-center">
+      <div class="dark-text font-xl font-semibold">
+        {{ pageTitle }}
+      </div>
+    </section>
+    <section *ngIf="tooltipId > 0">
+      <trigger-tooltip [pageTitle]="tooltipId">
+      </trigger-tooltip>
+    </section>
+  </header>
+  <!-- header design end here -->
+  <!-- Add teams module design start here -->
+  <section class="h-100 position-relative flex-grow-1 overflow-hidden">
+    <section class="d-flex flex-column overflow-auto px-3 pb-3 h-100">
+      <section class="white-bg rounded shadow-sm px-2 pt-3 pb-1">
+        <form [formGroup]="teamsForm">
+          <section class="row mx-0">
+            <div class="col-xl-3 col-md-6 col-sm-12 px-2 mb-3">
+              <label class="mb-2 text-uppercase dark-text font-sm font-semibold">team name
+                <span class="text-danger">*</span>
+              </label>
+              <input type="text" class="rounded form-control" formControlName="name" [ngClass]="isInputValid('name')"
+                triggerKeyEvent [pattern]="getPattern('name')">
+            </div>
+            <div class="col-xl-3 col-md-6 col-sm-12 px-2 mb-3">
+              <label class="mb-2 text-uppercase dark-text font-sm font-semibold">Evaluation Activity
+                <span class="text-danger">*</span>
+              </label>
+              <input type="text" class="rounded form-control" formControlName="triggerActivityDays"
+                [ngClass]="isInputValid('triggerActivityDays')" triggerKeyEvent
+                [pattern]="getPattern('triggerActivityDays')">
+            </div>
+            <div class="col-xl-3 col-md-6 col-sm-12 px-2 mb-3">
+              <label class="mb-2 text-uppercase dark-text font-sm font-semibold">start date
+                <span class="text-danger">*</span>
+              </label>
+              <div class="calendar-input">
+                <input type="text" class="rounded form-control cursor-pointer" formControlName="startDate"
+                   onDrop="return false" (bsValueChange)="onChangeStartDate($event)"
+                  onPaste="return false" maxlength="10" [minDate]="minDate"
+                  [bsConfig]="{ dateInputFormat: 'MM-DD-YYYY' , rangeInputFormat : 'MM-DD-YYYY' , containerClass: themeClass , showWeekNumbers: false}"
+                  placeholder="MM-DD-YYYY" bsDatepicker [ngClass]="isInputValid('startDate')"
+                  (keypress)="inputDateValidation($event)" triggerKeyEvent>
+              </div>
+            </div>
+            <div class="col-xl-3 col-md-6 col-sm-12 px-2 mb-3">
+              <label class="mb-2 text-uppercase dark-text font-sm font-semibold">end date
+                <span class="text-danger">*</span>
+              </label>
+              <div class="calendar-input">
+                <input type="text" class="rounded form-control cursor-pointer" formControlName="endDate"
+                  onDrop="return false" onPaste="return false" maxlength="10"
+                  [minDate]="minDate"
+                  [bsConfig]="{ dateInputFormat: 'MM-DD-YYYY' , rangeInputFormat : 'MM-DD-YYYY' , containerClass: themeClass , showWeekNumbers: false}"
+                  placeholder="MM-DD-YYYY" bsDatepicker [ngClass]="isInputValid('endDate')"
+                  (keypress)="inputDateValidation($event)" triggerKeyEvent>
+              </div>
+            </div>
+          </section>
+          <section class="row mx-0">
+            <div class="px-2 col-xl-6 col-md-6 col-sm-12 mb-3">
+              <label class="mb-2 text-uppercase dark-text font-sm font-semibold">team Members
+                <span class="text-danger">*</span>
+              </label>
+              <section class="chips-container rounded" [ngClass]="isSelectDropdownValid('selectedTeamEmployees')">
+                <section class="chips">
+                  <ng-select [multiple]="true" bindLabel="name" bindValue="empId"
+                    [placeholder]="teamsMembersPlaceHolder" [closeOnSelect]="false"
+                    formControlName="selectedTeamEmployees" (close)="getMembers()" (remove)="getMembers()" [(ngModel)]="empId"
+                    [searchFn]="customSearchFn" [clearSearchOnAdd]="true" [items]="_teamMembers" triggerKeyEvent>
+                    <ng-template ng-option-tmp let-item="item">
+                     <button type="button" class="btn btn-transparent w-100 text-left p-2" [attr.disabled]="item.isDisabled ? true: null">  {{ item.name }}</button>
+                    </ng-template>
+                  </ng-select>
+                </section>
+              </section>
+            </div>
+            <div class="px-2 col-xl-6 col-md-6 col-sm-12 mb-3">
+              <label class="mb-2 text-uppercase dark-text font-sm font-semibold">team managers
+                <span class="text-danger">*</span>
+              </label>
+              <section class="chips-container rounded" [ngClass]="isSelectDropdownValid('selectedTeamManagers')">
+                <section class="chips">
+                  <ng-select [multiple]="true" bindLabel="name" bindValue="managerId"
+                    [placeholder]="teamsManagersPlaceHolder" [closeOnSelect]="false" [(ngModel)]="managerId"
+                    formControlName="selectedTeamManagers" (close)="getManagers()" (remove)="getManagers()" [(ngModel)]="managerId"
+                    [searchFn]="customSearchFn" [clearSearchOnAdd]="true" [items]="_teamManagers" triggerKeyEvent>
+                    <ng-template ng-option-tmp let-item="item">
+                      <button type="button" class="btn btn-transparent w-100 text-left p-2" [attr.disabled]="item.isDisabled ? true: null">  {{ item.name }}</button>
+                     </ng-template>
+                  </ng-select>
+                </section>
+              </section>
+            </div>
+          </section>
+          <section class="row mx-0">
+            <section class="px-2 col-xl-6 col-md-6 col-sm-12 mb-3">
+              <label class="mb-2 text-uppercase dark-text font-sm font-semibold">team Description
+                <span class="text-danger">*</span>
+              </label>
+              <textarea class="form-textarea form-control rounded" formControlName="description"
+                [ngClass]="isInputValid('description')" maxlength="150"
+                [pattern]="getPattern('description')"></textarea>
+            </section>
+            <section class="px-2 col-xl-6 col-md-6 col-sm-12 mb-3">
+              <label class="mb-2 text-uppercase dark-text font-sm font-semibold">status
+                <span class="text-danger">*</span>
+              </label>
+              <div class="d-flex flex-nowrap w-100">
+                <div class="col-xl-3 col-md-3 col-sm-6 col-xs-6 p-0 d-flex flex-nowrap align-items-center">
+                  <label class="custom-radiobutton">
+                    <span class="pl-2">Active</span>
+                    <input type="radio" value='true' formControlName="status">
+                    <span class="radio-checked"></span>
+                  </label>
+                </div>
+                <div class="col-xl-3 col-md-3 col-sm-6 col-xs-6 p-0 d-flex flex-nowrap align-items-center">
+                  <label class="custom-radiobutton">
+                    <span class="pl-2">Inactive</span>
+                    <input type="radio" value='false' formControlName="status"
+                      [attr.disabled]="!isInactiveDisabled ? 'disabled' : null">
+                    <span class="radio-checked"></span>
+                  </label>
+                </div>
+              </div>
+            </section>
+          </section>
+          <!-- footer button container start here -->
+          <footer class="d-flex justify-content-end align-items-center mr-auto w-100 mb-3 pr-3">
+            <button type="button" title="Cancel" class="btn secondary-light-btn text-uppercase mr-3 rounded-pill"
+              (click)="cancel()">cancel</button>
+            <button type="submit" title="Save" class="btn btn-secondary text-uppercase rounded-pill"
+              (click)="saveTeam()" [attr.disabled]="isDisabledSubmitBtn ? 'disabled' : null">save</button>
+          </footer>
+          <!-- footer button container end here -->
+        </form>
+      </section>
+    </section>
+  </section>
+  <!-- Add teams module design end here -->
+</section>

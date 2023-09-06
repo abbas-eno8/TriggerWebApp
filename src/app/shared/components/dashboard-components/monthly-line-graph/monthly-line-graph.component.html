@@ -1,0 +1,25 @@
+<!-- graph widget section start here -->
+<div class="rounded white-bg shadow-sm p-3 widgets-box d-flex flex-column flex-grow-1">
+    <div class="d-flex flex-nowrap justify-content-between line-graph-header">
+        <div class="dark-text font-semibold font-md">
+            Team Member’s Current Evaluation Score
+            <span class="secondary-dark-text">(Monthly)</span>
+        </div>
+        <div class="d-flex align-items-center xs-d-none">
+            <trigger-tooltip [pageTitle]="73"></trigger-tooltip>
+        </div>
+    </div>
+    <div id="monthlyLineGraph" style="height: 314px"></div>
+    <div class="d-flex justify-content-center align-items-center mt-2">
+        <button class="btn btn-transparent p-0" (click)="prevMonth()">
+            <span class="icon icon-previous font-xs"></span>
+        </button>
+        <span style="width: 70px; margin-bottom: 3px" class="text-center mx-2">{{currentMonth | date : 'MMM y'}}</span>
+        <button class="btn btn-transparent p-0" [disabled]="isCurrentMonth" (click)="nextMonth()">
+            <span class="icon icon-next font-xs"></span>
+        </button>
+    </div>
+
+</div>
+<!-- Here style tag given for set height, because when we added below class insted of style tag it is created issue in 320Px responsive width. -->
+<!-- graph widget section end here -->

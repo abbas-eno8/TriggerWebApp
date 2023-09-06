@@ -1,0 +1,28 @@
+@import "~assets/scss/base/variables";
+@import "~assets/scss/base/colors";
+@import "~bootstrap/scss/mixins/breakpoints";
+@import "~assets/scss/base/mixins";
+
+.icon-dashboard-1, .icon-wall, .icon-team-dashboard, .icon-manager-dashboard {
+    color: var(--icon-notify);
+}
+.font-xs {
+    font-size: 12px;
+}
+.btn-primary {
+    padding: 8px 8px 8px 11px;
+    min-width: 210px;
+    &.dropdown-toggle:after {
+        @include position(absolute, 12px, 8px, auto, auto);
+    }
+}
+.btn-default {
+    padding: 8px 12px;
+    color: var(--dark-text);
+    &.active {
+        color: $white;
+    }
+    @include media-breakpoint-down('sm-small') {
+        padding:  0.7rem 0.6rem;
+    }
+}

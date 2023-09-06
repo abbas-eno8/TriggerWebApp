@@ -1,0 +1,40 @@
+<section class="d-flex flex-shrink-0">
+    <button color="primary" mat-stroked-button [matMenuTriggerFor]="columnMenu">
+        <ng-content></ng-content>
+    </button>
+    <mat-menu #columnMenu="matMenu" class="shadow-sm">
+        <div class="trigger-table-ui-dragable-container overflow-auto" (click)="$event.stopPropagation();">
+            <div class="d-flex align-items-center justify-content-center py-2">
+                <button type="button" class="btn btn-sm px-2 py-1 btn-outline-primary mr-2" title="Select All" (click)="$event.stopPropagation();onCheckAll(true)">Select All</button>
+                <button type="submit" class="btn btn-sm px-2 py-1 btn-outline-primary" title="Deselect All" (click)="$event.stopPropagation();onCheckAll(false)">Deselect All</button>
+            </div>
+            <div class="row">
+                <div class="col-xl-10 col-lg-10 col-md-10 px-2">
+                    <div class="panel panel-warning" dnd-sortable-container [sortableData]="columns" [dropZones]="['source-dropZone']">
+                        <div class="panel-body">
+                            <ul class="list-group list-group-item">
+                                <li *ngFor="let source of columns; let x = index" class="border-0 d-flex px-2 py-1" dnd-sortable [sortableIndex]="x"
+                                    [dragEnabled]="source.hidden" [dragData]="source" (onDropSuccess)="onDrop($event)">
+                                    <mat-icon>drag_indicator</mat-icon>
+                                    <mat-checkbox [disabled]="source.preventBeingHidden" [checked]="source.hidden" (change)="onClickCheckBox(source.property)">
+                                    </mat-checkbox>
+                                    <mat-card class="trigger-table-ui-drag-preview" *cdkDragPreview>
+                                        <mat-icon>drag_indicator</mat-icon>
+                                        <mat-checkbox [checked]="source.hidden">
+                                            {{ source.column }}
+                                        </mat-checkbox>
+                                    </mat-card>
+                                    <span class="pl-1 font-semibold cursor-move">{{ source.column }}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center py-2">
+            <button type="button" class="btn btn-sm px-0 py-2 secondary-light-btn border-0 text-uppercase mr-2" title="Cancel" (click)="memberPresenter.columnConfiguration(false)">cancel</button>
+            <button type="submit" class="btn btn-sm px-0 py-2 btn-secondary border-0 text-uppercase" title="Submit" (click)="memberPresenter.columnConfiguration(true)">submit</button>
+        </div>
+    </mat-menu>
+</section>

@@ -1,0 +1,45 @@
+@import "~assets/scss/base/variables";
+@import "~assets/scss/base/colors";
+@import "~bootstrap/scss/mixins/breakpoints";
+@import "~assets/scss/base/mixins";
+.btn-primary {
+    &.btn-sm {
+        height: 30px;
+        padding: 5px;
+        min-width: auto;
+        @include position(absolute, 35px, 15px, auto, auto);
+        line-height: 19px;
+        @include media-breakpoint-down('xl-wide') {
+            @include position(absolute, 34px, 15px, auto, auto);
+        }
+        @include media-breakpoint-down('lg-mini') {
+            font-size: 12px;
+        }
+        @include media-breakpoint-down('sm-small') {
+            font-size: 11px;
+            padding: 2px;
+            @include position(absolute, 34px, 15px, auto, auto);
+        }
+    }
+}
+
+.container-space {
+    margin-top: 130px;
+    @include media-breakpoint-down('xl') {
+        margin-top: 80px;
+    }
+    @include media-breakpoint-down('sm') {
+        margin-top: 0;
+    }
+}
+
+.mat-select-panel {
+    background: inherit;
+}
+
+.switch-container {
+    margin-top: 2.3em;
+    @include media-breakpoint-down('sm-small') {
+        margin-top: 0;
+    }
+}

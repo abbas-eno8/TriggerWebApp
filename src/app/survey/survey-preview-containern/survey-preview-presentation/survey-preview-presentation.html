@@ -1,0 +1,87 @@
+<section class="d-flex flex-column h-100">
+    <!-- header part start here -->
+    <header class="d-flex justify-content-between p-3 flex-shrink-0 flex-nowrap">
+        <section class="d-flex align-items-center dark-text font-xl font-semibold">
+            View Survey Details
+        </section>
+        <section class="d-flex align-items-center">
+            <button type="button" title="Copy" (click)="redirectToAddSurve()" class="btn btn-primary xs-btn text-uppercase rounded-pill mr-3 d-flex align-items-center justify-content-center">
+                <div class="icon icon-copy text-white"></div>
+                <div class="pl-2 d-md-inline-flex d-none">Copy</div>
+            </button>
+            <!-- tooltip start here -->
+            <trigger-tooltip [pageTitle]="67"></trigger-tooltip>
+        </section>
+    </header>
+    <!-- header part end here -->
+    <section class="px-3 pb-3 overflow-auto h-100" *ngIf="!!surveyDetail">
+        <div class="text-secondary font-semibold font-lg pb-3">General Details:</div>
+        <section class="white-bg py-3 px-1 shadow-sm rounded mb-3">
+            <section class="d-flex justify-content-between flex-wrap">
+                <div class="col-lg-2 col-md-3 col-sm-6 col-xs-12 xs-mb-3">
+                    <div class="secondary-dark-text text-uppercase font-xs font-semibold mb-1">survey name</div>
+                    <div class="dark-text font-semibold">{{surveyDetail.surveyName}}</div>
+                </div>
+                <div class="col-lg-1 col-md-3 col-sm-6 col-xs-12 xs-mb-3">
+                    <div class="secondary-dark-text text-uppercase font-xs font-semibold mb-1">from date</div>
+                    <div class="dark-text font-semibold">
+                        {{surveyDetail.fromDate | date: 'MM/dd/yyyy'}}
+                    </div>
+                </div>
+                <div class="col-lg-1 col-md-3 col-sm-6 col-xs-12 xs-mb-3">
+                    <div class="secondary-dark-text text-uppercase font-xs font-semibold mb-1">
+                        to date
+                    </div>
+                    <div class="dark-text font-semibold">
+                        {{surveyDetail.toDate | date: 'MM/dd/yyyy'}}
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-6 col-xs-12">
+                    <div class="secondary-dark-text text-uppercase font-xs font-semibold mb-1">survey type name</div>
+                    <div class="dark-text font-semibold">{{surveyDetail.surveyTypeName}}</div>
+                </div>
+                <div class="col-lg-5 col-md-3 col-sm-6 col-xs-12">
+                    <div class="secondary-dark-text text-uppercase font-xs font-semibold mb-1">description</div>
+                    <div class="dark-text text-break font-semibold">
+                        <trigger-read-more [text]='surveyDetail.description' [maxLength]="150"></trigger-read-more>
+                    </div>
+                </div>
+            </section>
+        </section>
+        <div class="text-secondary font-semibold font-lg pb-3">Survey Details:</div>
+        <section class="white-bg px-3 pt-3 shadow-sm rounded mb-3" *ngFor="let question of surveyDetail.surveyWiseQuestions;let i = index">
+            <div class="secondary-dark-text text-uppercase font-xs font-semibold mb-2">question <span class="text-danger font-md" *ngIf="question.isMandatory">*</span></div>
+            <section class="d-flex dark-text font-semibold mb-2">
+                <div class="num-field">{{i+1}}.</div>
+                <div class="pl-1">{{question.question}}</div>
+            </section>
+            <section class="d-flex flex-wrap w-100">
+                <section class="flex-grow-1 question-type col-lg-3 col-md-3 col-sm-6 col-xs-12" *ngFor="let answer of question.surveyWiseQuestionAnswers;let j = index" [ngClass]="{'col-lg-12 col-md-12 col-sm-12': question.answerSelectionTypeId === 3 }">
+                    <div class="d-flex flex-nowrap mb-3" *ngIf="question.answerSelectionTypeId === 2">
+                        <div class="icon-box d-flex">
+                            <img src="/assets/images/dashboard/checkbox.png" alt="checkbox">
+                        </div>
+                        <label for="item5"></label>
+                        <label for="item5" class="pl-2 dark-text">{{answer.answers}}</label>
+                    </div>
+                    <div class="w-100" *ngIf="question.answerSelectionTypeId === 3">
+                        <section class="form-data-container position-relative w-100 rounded d-flex align-items-center mb-3">
+                            <div class="free-from-textbox rounded w-100 p-2"></div>
+                        </section>
+                    </div>
+                    <div *ngIf="question.answerSelectionTypeId === 1">
+                        <section class="form-data-container position-relative w-100 rounded d-flex mb-3">
+                            <div class="icon-box d-flex">
+                                <img src="/assets/images/dashboard/radio-button.png" alt="radio">
+                            </div>
+                            <label for="item5" class="pl-2 dark-text">{{answer.answers}}</label>
+                        </section>
+                    </div>
+                </section>
+            </section>
+        </section>
+        <footer class="text-right">
+            <button type="button" title="Cancel" class="btn secondary-light-btn text-uppercase rounded-pill" (click)="redirectedToLastRoute()">cancel</button>
+        </footer>
+    </section>
+</section>

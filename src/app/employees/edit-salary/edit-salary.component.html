@@ -1,0 +1,31 @@
+<!--modal box section start here -->
+<h1 mat-dialog-title>Edit Salary</h1>
+<section class="d-flex flex-wrap py-3">
+  <section class="width-200px">
+    <div class="font-semibold text-secondary">Current Salary</div>
+    <mat-form-field class="input-width">
+      <div class="d-flex align-items-center py-1">
+        <div class="pr-1" matPrefix>$</div>
+        <input matInput [(ngModel)]="currentSalary" [disabled]="true" [textMask]="{mask: numberMask}">
+      </div>
+    </mat-form-field>
+  </section>
+  <section class="width-200px">
+    <div class="font-semibold text-secondary">Revised Salary</div>
+    <form>
+      <mat-form-field class="input-width border-bottom-secondary">
+        <input matInput type="text" [formControl]="newSalaryFormControl" maxlength="9" cdkFocusInitial
+          class="example-right-align" (keypress)="numberOnly($event)" (paste)="pasteOnlyNumericEvent($event)"
+          [textMask]="{mask: numberMask}" [errorStateMatcher]="matcher">
+        <span matPrefix>$&nbsp;</span>
+      </mat-form-field>
+    </form>
+  </section>
+</section>
+<div mat-dialog-actions class="d-flex justify-content-end mb-1">
+  <button type="button" class="btn secondary-light-btn rounded-pill mr-2 btn-sm text-uppercase" [mat-dialog-close]
+    title="Cancel">Cancel</button>
+  <button type="button" class="btn btn-secondary rounded-pill btn-sm text-uppercase" (click)="updateSalary()" title="Update"
+    cdkFocusInitial>Update</button>
+</div>
+<!--modal box section end here -->

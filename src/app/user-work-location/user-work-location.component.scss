@@ -1,0 +1,41 @@
+@import "~assets/scss/base/variables";
+@import "~assets/scss/base/colors";
+@import "~bootstrap/scss/mixins/breakpoints";
+@import "~assets/scss/base/mixins";
+.btn-default {
+    border: 2px solid var(--brand-border);
+    color: var(--primary-text);
+    background-color: var(--bg-list-even);
+    & .icon {
+        color: var(--primary-text);
+    }
+    &.active {
+        background-color: var(--sidebar-active);
+        color: $white;
+        & .icon {
+            color: $white;
+        }
+    }
+}
+
+.md-container {
+    min-width: 45em;
+    max-width: 45em;
+    height: 30em;
+    & .btn-default {
+        min-height: 150px;
+        // @include media-breakpoint-down('sm') {
+        //     min-height: 100px;
+        // }
+    }
+    @include media-breakpoint-down('sm-small') {
+        min-width: auto;
+        max-width: auto;
+    }
+}
+
+.col-xs-6 {
+    @include media-breakpoint-down('sm-small') {
+        width: 50%;
+    }
+}

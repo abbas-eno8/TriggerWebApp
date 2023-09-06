@@ -1,0 +1,19 @@
+<section class="p-3 rounded lg-dialog-container d-flex flex-column">
+  <header class="dark-text font-normal font-lg px-3 pt-3" *ngIf="data.activSurvey">
+    <!-- Would you like to activate <b>Engagement Survey for Employees</b>? if yes then previously active survey will deactivate. -->
+    Would you like to activate <b>{{data.surveyName}}</b>? If yes, then previously deactive survey will activate.
+  </header>
+  <header class="dark-text font-normal font-lg px-3 pt-3" *ngIf="!data.activSurvey">
+    <!-- Would you like to deactivate <b>{{data.surveyName}}</b>? -->
+    Would you like to deactivate <b>{{data.surveyName}}</b>? If yes, then previously active survey will deactivate.
+  </header>
+  <!-- <header class="dark-text font-normal font-lg px-3 pt-3" *ngIf="data.inActiveSurvey">
+    Would you like to inactive <b>{{data.surveyName}}</b>?
+  </header> -->
+  <footer class="d-flex justify-content-end mb-0 p-3">
+    <button type="button" class="btn secondary-light-btn rounded-pill mr-2 btn-sm text-uppercase" title="Cancel"
+      (click)="onClickCancel()">Cancel</button>
+    <button type="button" class="btn btn-secondary rounded-pill btn-sm text-uppercase" title="Send"
+      (click)="onClickSubmit()">Submit</button>
+  </footer>
+</section>

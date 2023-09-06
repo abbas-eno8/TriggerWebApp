@@ -1,0 +1,112 @@
+<section class="pb-3">
+  <!-- search section start here -->
+  <section class="w-100 d-flex wrap-block">
+    <div
+      class="left-radius-input d-flex justify-content-between align-items-center white-bg p-2 xs-mb-3 col-xl-8 col-md-7 col-sm-12 p-0">
+      <input type="text" class="w-100 border-0 pl-2" placeholder="Search Admins..." [(ngModel)]="searchText"
+        (keyup)="searchAdmins($event.target.value)">
+      <span class="icon icon-search-1 ml-3 text-primary"></span>
+      <span class="ml-2 separator-border d-md-inline-flex d-none"></span>
+    </div>
+    <div class="right-radius-input white-bg d-flex align-items-center col-xl-4 col-md-5 col-sm-12 p-0">
+      <div class="dark-text font-md">Clients:</div>
+      <div class="search-select-dropdown">
+        <select class="cursor-pointer" name="" id="" [(ngModel)]="selectedClient"
+          (change)="onChangeClient(selectedClient)">
+          <option value="0" class="select-emp">All Clients</option>
+          <option *ngFor="let data of clientData" value={{data.compId}}> {{data.companyName}}</option>
+        </select>
+      </div>
+    </div>
+  </section>
+  <!-- search section end here -->
+</section>
+
+<!-- Accordion table container start here -->
+<section class="flex-grow-1 rounded shadow-sm overflow-auto" id="mainDIV" (scroll)="scrollService.onWindowScroll()">
+  <mat-accordion displayMode="flat" multi="false" class="mat-table">
+    <section matSort class="mat-elevation-z2 mat-header-row" matSortDisableClear>
+      <div class="mat-header-cell">Id
+        <div class="ml-1">
+          <div class="cursor-pointer" (click)="sortData('employeeId','asc')"
+            [ngClass]="isSortingDirecion('employeeId')"></div>
+        </div>
+      </div>
+      <div class="mat-header-cell">Name
+        <div class="ml-1">
+          <div class="cursor-pointer" (click)="sortData('lastName','asc')" [ngClass]="isSortingDirecion('lastName')">
+          </div>
+        </div>
+      </div>
+      <div class="mat-header-cell text-center">Action</div>
+      <div class="mat-header-cell"></div>
+    </section>
+    <mat-expansion-panel [disabled]="isExpand" hideToggle="true"
+      *ngFor="let item of displayedRows$ | async; let index = index" #example>
+      <mat-expansion-panel-header class="mat-row" [ngClass]="{'highlight': index%2 == 1}">
+        <div class="mat-cell text-ellipsis" (click)="expansionPanel(true)" title="{{item.employeeId}}">
+          {{item.employeeId}}
+        </div>
+        <div class="mat-cell text-ellipsis" (click)="expansionPanel(true)"
+          title="{{item.firstName.charAt(0).toUpperCase() + item.firstName.slice(1) }} {{item.lastName.charAt(0).toUpperCase()+ item.lastName.slice(1)}}">
+          {{item.firstName.charAt(0).toUpperCase() + item.firstName.slice(1) + " " + item.lastName.charAt(0).toUpperCase()+ item.lastName.slice(1)}}
+        </div>
+        <div class="mat-cell text-center d-flex justify-content-center align-items-center"
+          (click)="expansionPanel(true)">
+
+          <div class="dropdown list-action-dropdown">
+            <button type="button" class="btn bg-transparent dropdown-toggle d-flex align-items-center"
+              data-toggle="dropdown">
+              <span class="icon icon-click d-flex align-items-center"></span>
+            </button>
+            <div class="dropdown-menu toggle-dropdown-menu border-0 shadow-sm">
+              <a>
+                <button class="icon icon-edit-1 mr-1 btn bg-transparent d-flex align-items-center"
+                  (click)="goToEditEmployeePage(item.empId, item.companyId)" title="Edit"></button>
+              </a>
+              <a>
+                <button class="icon icon-bin mr-1 btn bg-transparent"
+                  (click)="openDeleteAdminModal(item.empId,item.companyId)" title="Delete"></button>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="mat-cell text-center">
+          <div *ngIf="!example.expanded" (click)="expansionPanel(false)">
+            <span class="icon icon-pluse cursor-pointer text-primary"></span>
+          </div>
+          <div *ngIf="example.expanded" (click)="expansionPanel(false)">
+            <span class="icon icon-minus cursor-pointer text-primary"></span>
+          </div>
+        </div>
+      </mat-expansion-panel-header>
+      <div class="d-flex flex-wrap">
+        <section class="col-sm-12 col-md-6">
+          <div class="d-flex mb-2">
+            <div class="font-semibold text-primary font-sm">CLIENT: </div>
+            <div class="ml-2 font-sm text-ellipsis">{{item.companyName}}</div>
+          </div>
+
+          <div class="d-flex mb-2">
+            <div class="font-semibold text-primary font-sm">EMAIL ADDRESS: </div>
+            <div class="ml-2 font-sm text-ellipsis">{{item.email}}</div>
+          </div>
+        </section>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+</section>
+<!-- Accordion table container end here -->
+<!-- pagination footer section start here -->
+<footer class="d-flex justify-content-end align-items-center w-100 py-2">
+  <div class="text-right pagination-container" (click)="openPaginationDropdown()">
+    <mat-paginator panelClass="textClass1" #paginator [length]="totalRows$ | async" [pageIndex]="0" [pageSize]="50"
+      [pageSizeOptions]="[50,100,150]" (page)="pageChanged($event)" showFirstLastButtons></mat-paginator>
+  </div>
+</footer>
+<!-- pagination footer section end here -->
+<!-- No records section start here -->
+<section class="no-records-container" *ngIf="isDisplayRecordsNotFound">
+  <trigger-no-records-found></trigger-no-records-found>
+</section>
+<!-- No records section end here -->

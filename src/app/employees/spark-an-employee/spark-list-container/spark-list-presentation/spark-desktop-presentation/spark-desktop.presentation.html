@@ -1,0 +1,101 @@
+<!-- table container section start here -->
+<section class="flex-grow-1 rounded shadow-sm overflow-auto" id="mainDIV" (scroll)="scrollService.onWindowScroll()">
+  <ng-container>
+    <mat-table [dataSource]="dataSource" matSort matSortDisableClear>    
+      <ng-container matColumnDef="isSparkSent">
+        <mat-header-cell *matHeaderCellDef>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let spark">          
+          <div *ngIf="spark.isSparkSent" class="icon icon-denote mr-1 d-flex align-items-center justify-content-center text-primary"></div>
+        </mat-cell>
+      </ng-container>  
+        <ng-container matColumnDef="category">
+            <mat-header-cell *matHeaderCellDef>
+              <div class="text-uppercase">category</div>
+              <div class="icon icon-top-bottom cursor-pointer ml-1" (click)="sort('category')" [ngClass]="getDirecionIcon('category')"></div>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let spark">
+              <span class="text-ellipsis"> {{ spark.category }}</span>
+            </mat-cell>
+          </ng-container>
+      <ng-container matColumnDef="classification">
+        <mat-header-cell *matHeaderCellDef>
+          <div class="text-uppercase">classification</div>
+          <div class="icon icon-top-bottom cursor-pointer ml-1" (click)="sort('classification')" [ngClass]="getDirecionIcon('classification')"></div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let spark">
+          <span class="text-ellipsis"> {{ spark.classification }}</span>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="spark">
+        <mat-header-cell *matHeaderCellDef>
+          <div class="text-uppercase">spark</div>
+          <div class="icon icon-top-bottom cursor-pointer ml-1" (click)="sort('spark')" [ngClass]="getDirecionIcon('spark')"></div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let spark">
+          <read-more [text]='spark.spark' [maxLength]="115"></read-more>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="givenBy">
+        <mat-header-cell *matHeaderCellDef>
+          <div class="text-uppercase">given By</div>
+          <div class="icon icon-top-bottom cursor-pointer ml-1" (click)="sort('sparkByLastName')" [ngClass]="getDirecionIcon('sparkByLastName')"></div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let spark">
+          <span class="text-ellipsis"> {{ spark.givenBy }}</span>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="sparkDate">
+        <mat-header-cell *matHeaderCellDef>
+          <div class="text-uppercase">date and Time</div>
+          <div class="icon icon-top-bottom cursor-pointer ml-1" (click)="sort('sparkDate')" [ngClass]="getDirecionIcon('sparkDate')"></div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let spark">
+          <span class="text-ellipsis">{{ spark.sparkDate | date: 'MM/dd/yyyy h:mm:ss aaa' }}</span>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <mat-header-cell *matHeaderCellDef>
+          <div class="text-uppercase text-center">Action</div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let spark">
+          <section class="text-center d-flex justify-content-center align-items-center">
+            <div class="dropdown list-action-dropdown">
+              <button type="button" class="btn bg-transparent dropdown-toggle d-flex align-items-center" data-toggle="dropdown"
+              [disabled]="!spark.isEnabledAction">
+                <span class="icon icon-click d-flex align-items-center"></span>
+              </button>
+              <div id="action-dropdown" class="dropdown-menu toggle-dropdown-menu border-0 shadow-sm">
+                <a>
+                  <button [disabled]="!spark.isEditable" class="icon icon-edit-1 mr-1 btn bg-transparent d-flex align-items-center"
+                    title="Edit" (click)="editModal(spark)"></button>
+                </a>
+                <a>
+                  <button [disabled]="!spark.isDeletable" class="icon icon-bin mr-1 btn bg-transparent" title="Delete"
+                    (click)="deleteModal(spark)"></button>
+                </a>
+                <a>
+                  <button [disabled]="!spark.isPreviewFile" class="icon icon-eye-1 mr-1 btn bg-transparent" title="Preview"
+                    (click)="previewModal(spark)"></button>
+                </a>
+              </div>
+            </div>
+          </section>
+        </mat-cell>
+      </ng-container>      
+      <mat-header-row *matHeaderRowDef="desktopViewColumn"></mat-header-row>
+      <mat-row [ngClass]="{'highlight': index%2 == 1}" *matRowDef="let spark; columns: desktopViewColumn;let index = index">
+      </mat-row>
+    </mat-table>
+  </ng-container>
+</section>
+<!-- table container section end here -->
+<!-- footer section start here -->
+<footer class="d-flex justify-content-end align-items-center w-100 flex-wrap pb-3">
+  <section class="text-right p-0 col-xl-9 col-sm-12 col-xs-12 pagination-container" (click)="onClickPaginationPanel()">
+    <mat-paginator fixed [pageSizeOptions]="[50, 100, 150]" (page)="pageChanged($event)" showFirstLastButtons>
+    </mat-paginator>
+  </section>
+</footer>
+<!-- footer section end here -->

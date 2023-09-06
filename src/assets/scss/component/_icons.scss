@@ -1,0 +1,200 @@
+.icon {
+    font-size: 23px;
+    color: var(--brand-icon);
+    vertical-align: middle;
+    line-height: 15px;
+    @include transition();
+
+    @include media-breakpoint-down("sm") {
+        font-size: 18px;
+    }
+}
+
+.icon-close,
+.icon-add,
+.icon-minus,
+.icon-pluse {
+    font-size: 15px;
+}
+
+.icon-dragdrop,
+.icon-xls,
+.icon-search-1,
+.icon-import,
+.icon-click {
+    font-size: 20px;
+}
+
+.icon-click {
+    color: var(--primary-text);
+}
+
+.icon-user-dollar,
+.icon-spark,
+.icon-spark-reject,
+.icon-spark-approve {
+    font-size: 25px;
+    color: var(--primary-text);
+
+    &:hover {
+        color: var(--primary-text);
+    }
+
+    &.btn {
+        padding: 0;
+    }
+}
+
+.icon-spark {
+    @include media-breakpoint-down("sm") {
+        font-size: 20px;
+    }
+}
+
+.icon-user-setting {
+    @extend .icon-user-dollar;
+    font-size: 27px;
+
+    @include media-breakpoint-down("sm") {
+        font-size: 20px;
+    }
+}
+
+.icon-edit-1,
+.icon-bin,
+.icon-business-man,
+.icon-info,
+.font-icon-publish,
+.font-icon-send {
+    font-size: 20px;
+    color: var(--primary-text);
+
+    @include media-breakpoint-down("sm") {
+        font-size: 14px;
+    }
+
+    &:hover {
+        color: $primary-light-50;
+    }
+
+    &.btn {
+        padding: 0;
+    }
+}
+
+.font-icon-draft,
+.font-icon-hidden,
+.font-icon-dont-send {
+    font-size: 20px;
+
+    @include media-breakpoint-down("sm") {
+        font-size: 14px;
+    }
+}
+
+.icon-eye-1 {
+    color: var(--primary-text);
+
+    &:hover {
+        color: var(--primary-text);
+    }
+
+    &.btn {
+        padding: 0;
+    }
+}
+
+.icon-sorting {
+    color: $primary;
+    font-size: 13px;
+}
+
+.icon-chart,
+.icon-clip-board,
+.icon-user-group,
+.icon-graph {
+    font-size: 45px;
+    color: var(--icon-chart);
+}
+
+.icon-toggle-menu {
+    color: var(--icon-chart);
+}
+
+.icon-cloud-upload {
+    font-size: 60px;
+    line-height: 0;
+}
+
+.icon-sorting-up {
+    background-image: url("/assets/images/dashboard/up-arrow.png");
+    background-repeat: no-repeat;
+    @include size(10px, 12px);
+    margin-left: 2px;
+}
+
+.icon-sorting-down {
+    background-image: url("/assets/images/dashboard/down-arrow.png");
+    background-repeat: no-repeat;
+    @include size(10px, 12px);
+    margin-left: 2px;
+}
+
+.icon-sorting-updown {
+    background-image: url("/assets/images/dashboard/up_down.png");
+    background-repeat: no-repeat;
+    @include size(10px, 12px);
+    margin-left: 2px;
+}
+
+.icon-excel {
+    background-image: url("/assets/images/dashboard/excel-icon.png");
+    background-repeat: no-repeat;
+    @include size(29px, 33px);
+    margin-left: 2px;
+}
+
+.icon-info {
+    width: 0 !important;
+    height: 0 !important;
+}
+
+.icon-paper-clip {
+    padding: 8px;
+
+    @include media-breakpoint-down("sm-small") {
+        padding: 10px;
+    }
+}
+
+.icon-first,
+.icon-previous,
+.icon-last,
+.icon-next {
+    font-size: 15px;
+    color: var(--text-pagination);
+
+    &:hover {
+        color: $secondary-dark;
+    }
+
+    &.active {
+        color: $secondary-dark;
+    }
+
+    &:disabled {
+        cursor: no-drop;
+        opacity: 0.5;
+    }
+}
+
+.icon-notification {
+    color: var(--icon-notify);
+}
+
+.icon-prohibited-access {
+    font-size: 20px;
+}
+.font-icon-bulb {
+    font-size: 24px;
+}

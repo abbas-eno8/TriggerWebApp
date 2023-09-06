@@ -1,0 +1,14 @@
+<!-- header part start here -->
+<header class="d-flex justify-content-between py-3 flex-shrink-0">
+  <div class="dark-text font-xl font-semibold d-flex align-items-center">Teams</div>
+  <section class="d-flex align-items-center">
+    <button [disabled]="!isTeamAddable" type="button" title="Add Team" (click)="addTeam()"
+      class="btn btn-primary xs-btn text-uppercase rounded-pill mr-3 d-flex align-items-center justify-content-center">
+      <div class="icon icon-add text-white"></div>
+      <div class="pl-2 d-md-inline-flex d-none">New Team</div>
+    </button>
+    <!-- tooltip start here -->
+    <trigger-tooltip [pageTitle]="49"></trigger-tooltip>
+  </section>
+</header>
+<!-- header part end here -->

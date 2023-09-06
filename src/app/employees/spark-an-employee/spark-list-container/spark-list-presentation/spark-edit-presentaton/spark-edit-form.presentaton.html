@@ -1,0 +1,82 @@
+<section class="d-flex justify-content-between allign-items-center">
+  <h1 class="dark-text">{{ pageTitle }} </h1>
+</section>
+<form [formGroup]="sparkAnForm">
+  <section class="mt-3">
+    <div class="form-select mb-3">
+      <select #focus triggerFocusInit="true" class="w-100 rounded" formControlName="categoryId"
+        [ngClass]="isDropdownValid('categoryId')" (change)="onChangeCategory($event)">
+        <option value=0>Select Category</option>
+        <option *ngFor="let type of _categories" [value]=type.id>
+          {{ type.category }}
+        </option>
+      </select>
+    </div>
+    <div class="form-select mb-3">
+      <select class="w-100 rounded" formControlName="classificationId" (focus)="focusOnClassification($event)"
+        [ngClass]="isDropdownValid('classificationId')">
+        <option value=0>Select Classification</option>
+        <option *ngFor="let type of _classifications" [ngValue]=type.classificationId>
+          {{ type.classification }}
+        </option>
+      </select>
+    </div>
+    <section class="d-flex flex-column position-relative textarea-container rounded">
+      <div class="right-date-time-container secondary-dark-text text-right">
+        <DateTimeStamp #dateTimeStamp></DateTimeStamp>
+      </div>
+      <textarea class="form-textarea form-control border-0 w-100" formControlName="spark"></textarea>
+    </section>
+  </section>
+  <section class="d-flex justify-content-end align-items-center mt-3">
+
+    <button *ngIf="fileName != '' && !isFileDeletable" type="button"
+      class="btn bg-transparant p-0 text-primary font-sm mr-2 cursor-pointer" [title]="fileName" (click)="preview()">
+      {{ fileName | ellipsis : 30 }}
+    </button>
+    <button *ngIf="isFileDeletable" type="button" class="btn bg-transparant p-0 text-primary font-sm mr-2 cursor-defult"
+      [title]="fileName">
+      {{ fileName | ellipsis : 30 }}
+    </button>
+    <div class="position-relative upload-btn-wrapper">
+      <button class="btn bg-transparant icon icon-paper-clip text-primary d-flex align-items-center" title="Attachment"
+        (click)="openCustomFileChooser()" #attachment></button>
+    </div>
+    <button *ngIf="isFileDeletable" type="button"
+      class="icon icon-bin mr-1 btn bg-transparent d-flex align-items-center cursor-pointer" title="Delete"
+      (click)="deleteAttachment()"></button>
+  </section>
+  <section *ngIf="hideRadioButton"
+    class="d-flex flex-nowrap w-100 mt-3 col-lg-6 col-md-6 col-sm-6 col-xs-12 px-0 align-items-center">
+    <div class="col-6 p-0 d-flex flex-nowrap align-items-center">
+      <label class="custom-radiobutton">
+        <span class="pl-2">Public</span>
+        <input type="radio" value=1 formControlName="sparkPrivacy" [checked]="isCheckedPublicRadioButton(1)">
+        <span class="radio-checked"></span>
+      </label>
+    </div>
+    <div class="col-6 p-0 d-flex flex-nowrap align-items-center">
+      <label class="custom-radiobutton">
+        <span class="pl-2">Private</span>
+        <input type="radio" value="2" formControlName="sparkPrivacy" [checked]="isCheckedPublicRadioButton(2)">
+        <span class="radio-checked"></span>
+      </label>
+    </div>
+  </section>
+  <footer class="d-flex flex-wrap mt-3">
+    <section class="d-flex align-items-center mb-2 xs-mb-3 pr-2" *ngIf="isShowCheckbox">
+      <label class="md-switch">
+        <input type="checkbox" formControlName="sendSpark" [value]="sparkAnForm.value.sendSpark"
+          [attr.disabled]="!sendSpark ? 'disabled' : null">
+        <span class="md-slider round"></span>
+      </label>
+      <div class="ml-2 dark-text">Send Spark</div>
+    </section>
+    <section class="d-flex justify-content-end align-items-center ml-auto">
+      <button type="button" title="Cancel" class="btn secondary-light-btn btn-sm text-uppercase rounded-pill mr-2"
+        [mat-dialog-close]>Cancel</button>
+      <button type="submit" title="Submit" class="btn btn-secondary btn-sm text-uppercase rounded-pill" (click)="save()"
+        [disabled]="isDisabledSubmitBtn">Submit</button>
+    </section>
+  </footer>
+</form>

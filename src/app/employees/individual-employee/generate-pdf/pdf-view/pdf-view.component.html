@@ -1,0 +1,175 @@
+<section class="white-bg lg-container rounded">
+    <section class="white-bg rounded" id="wrapper" #pdfTable>
+        <section class="d-flex flex-column w-100 px-3 pt-3">
+            <section class="d-flex justify-content-between">
+                <div class="img-container border-0 mr-1">
+                    <img [src]="companyLogoPathByteArray" alt="truvelop" class="text-center">
+                </div>
+                <div>
+                    <div class="feild-bottom"><span class="font-semibold">Employee Name:</span>
+                        {{annualReportDetail.employeeFirstName}} {{annualReportDetail.employeeLastName}}
+                    </div>
+                    <div class="feild-bottom"><span class="font-semibold">Position:</span>
+                        {{annualReportDetail.employeePosition}}
+                    </div>
+                    <div class="feild-bottom"><span class="font-semibold">Manager:</span>
+                        {{annualReportDetail.managerFirstName}} {{annualReportDetail.managerLastName}}
+                    </div>
+                    <div class="feild-bottom"><span class="font-semibold">Department:</span>
+                        {{annualReportDetail.department}}
+                    </div>
+                    <!-- <div class="feild-bottom"><span class="font-semibold">Evaluator Name:</span> {{annualReportDetail.loggedInUserName}}
+                    </div> -->
+                    <div><span class="font-semibold">Date:</span> {{annualReportDetail.evaluationDate}}</div>
+                </div>
+            </section>
+            <header class="font-lg font-semibold mt-4">
+                {{rangeTitle}}
+            </header>
+        </section>
+        <section class="modal-body-container overflow-auto p-3">
+            <div *ngIf="!!userRemark">
+                <div class="bg-info text-white font-semibold px-3 py-2 text-uppercase">Evaluator Remarks</div>
+                <div class="px-3 pt-2 pb-3">
+                    {{userRemark}}
+                </div>
+            </div>
+            <div *ngIf="annualReportDetail.summaryReportingView">
+                <div class="d-flex w-100 flex-column mb-3" *ngIf="!!annualReportDetail.scoreSummary">
+                    <div class="bg-info text-white font-semibold px-3 py-2 text-uppercase">Overall Yearly Score</div>
+                    <div class="d-flex field-border-bottom py-2 px-3">
+                        <div class="table-cell-width font-semibold">Score Summary: </div>
+                        <div class="pl-2">{{annualReportDetail.scoreSummary}}</div>
+                    </div>
+                    <div class="d-flex field-border-bottom py-2 px-3">
+                        <div class="table-cell-width font-semibold">Score Remarks:</div>
+                        <div class="pl-2">{{annualReportDetail.employeeRemarks}}
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex w-100 flex-column mb-3" *ngIf="!!annualReportDetail.evaluationDetails">
+                    <div class="bg-info text-white font-semibold px-3 py-2 text-uppercase">
+                        List of Evaluations
+                    </div>
+                    <div class="d-flex field-border-bottom text-uppercase py-2 px-3 font-semibold">
+                        <div class="table-cell-width">Date</div>
+                        <div class="table-cell-width">Evaluator</div>
+                        <div>Evaluate Scores</div>
+                    </div>
+                    <div class="d-flex field-border-bottom py-2 px-3"
+                        *ngFor="let detailScore of annualReportDetail.evaluationDetails;let last = last">
+                        <div class="table-cell-width">{{detailScore.evaluationDate}}</div>
+                        <div class="table-cell-width">{{detailScore.evaluator}}</div>
+                        <div>{{detailScore.scoreSummary}}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex w-100 flex-column mb-3" *ngIf="isShowCommentSection">
+                <div class="bg-info text-white font-semibold px-3 py-2 text-uppercase">
+                    Comments
+                </div>
+                <div *ngFor="let comment of annualReportDetail.commentDetails;let index = index;let last = last">
+                    <div class="mb-3 field-border-bottom" *ngIf="comment.checked">
+                        <div class="px-3 py-2 field-border-bottom">
+                            <div class="font-xs">{{comment.commentDate | date: 'MM/dd/yyyy, h:mm:ss aaa'}} |
+                                {{comment.scoreSummary }}
+                                <!-- <span *ngIf="comment.isTriggerSent" class="pl-2 icon icon-denote text-primary"></span> -->
+                            </div>
+                        </div>
+                        <div class="px-3 py-2">
+                            <span class="font-semibold">Comment By</span> - <span class="pl-2">
+                                {{comment.commentBy}}
+                            </span>
+                        </div>
+                        <div class="d-flex align-items-start px-3 py-2" *ngIf="(comment.performance !== '')">
+                            <div class="comment-icon-wrapper">
+                                <span class="pr-2 text-primary icon" [ngClass]="{'font-icon-dont-send' : (comment.isPerformanceCommentSend === 0 || comment.isPerformanceCommentSend === 1), 'icon-denote' : comment.isPerformanceCommentSend === 2}"></span>
+                            </div>
+                            <span class="font-semibold">Performance</span> - <span class="pl-2">
+                                {{comment.performance}}
+                            </span>
+                        </div>
+                        <div class="d-flex align-items-start px-3 py-2" *ngIf="(comment.attitude !== '')">
+                            <div class="comment-icon-wrapper">
+                                <span class="pr-2 text-primary icon" [ngClass]="{'font-icon-dont-send' : (comment.isAttitudeCommentSend === 0 || comment.isAttitudeCommentSend === 1), 'icon-denote' : comment.isAttitudeCommentSend === 2}"></span>
+                            </div>
+                            <span class="font-semibold">Attitude</span> - <span class="pl-2">
+                                {{comment.attitude}}
+                            </span>
+                        </div>
+                        <div class="d-flex align-items-start px-3 py-2" *ngIf="(comment.maintenance !== '')">
+                            <div class="comment-icon-wrapper">
+                                <span class="pr-2 text-primary icon" [ngClass]="{'font-icon-dont-send' : (comment.isMaintenanceCommentSend === 0 || comment.isMaintenanceCommentSend === 1), 'icon-denote' : comment.isMaintenanceCommentSend === 2}"></span>
+                            </div>
+                            <span class="font-semibold">Maintenance</span> - <span class="pl-2">
+                                {{comment.maintenance}}
+                            </span>
+                        </div>
+                        <div class="d-flex align-items-start px-3 py-2">
+                            <div class="comment-icon-wrapper">
+                                <span class="pr-2 text-primary icon" [ngClass]="{'font-icon-dont-send' : (comment.isGeneralRemarkSend === 0 || comment.isGeneralRemarkSend === 1), 'icon-denote' : comment.isGeneralRemarkSend === 2}"></span>
+                            </div>
+                            <span class="font-semibold">General</span> - <span class="pl-2">
+                                {{comment.generalRemarks}}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex w-100 flex-column mb-3">
+                <div *ngIf="isShowSparkSection">
+                    <div class="bg-info text-white font-semibold px-3 py-2 text-uppercase">
+                        Sparks
+                    </div>
+                    <div *ngFor="let spark of annualReportDetail.sparkDetails;let i = index;let last = last">
+                        <div class="mb-3 field-border-bottom" *ngIf="spark.checked">
+                            <div class="px-3 py-2 field-border-bottom">
+                                <div class="font-xs">{{spark.sparkDateForView | date: 'MM/dd/yyyy, h:mm:ss aaa'}} <span
+                                        *ngIf="spark.isSparkSent" class="pl-2 icon icon-denote text-primary"></span>
+                                </div>
+                            </div>
+                            <div class="px-3 py-2">
+                                <div class="mb-2"><span class="font-semibold">Spark By</span> - {{spark.sparkBy}}</div>
+                                <div class="mb-2"><span class="font-semibold">Category</span> - {{spark.category}}</div>
+                                <div><span class="font-semibold">Classification</span> - {{spark.classification}}</div>
+                            </div>
+                            <div class="px-3 py-2" *ngIf="!!spark.sparkRemarks">
+                                {{spark.sparkRemarks}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-info text-white font-semibold px-3 py-2 text-uppercase">
+                    Signature
+                </div>
+                <div class="brand-border rounded mt-3 p-2">
+                    <div class="text-center pt-3">
+                        <img [src]="base64Signature" class="img-fluid" alt="truvelop" *ngIf="!!base64Signature">
+                    </div>
+                    <div class="text-center pt-3">
+                        <img [src]="truvelopByteArray" alt="truvelop" *ngIf="!!truvelopByteArray">
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+
+    <footer class="d-flex justify-content-between px-4 py-3 w-100 flex-wrap">
+        <button type="button"
+            class="btn btn-secondary rounded-pill text-uppercase xs-mb-3 d-flex align-items-center mr-2"
+            (click)="exportSendMailPdf('Export')" title="Export To PDF">
+            <span class="icon icon-download text-white"></span>
+            <span class="pl-2">Export To PDF</span>
+        </button>
+        <section class="d-flex">
+            <button type="button" title="Cancel" class="btn secondary-light-btn btn-sm text-uppercase mr-3 rounded-pill"
+                (click)="closePreview()">cancel</button>
+            <button type="button" class="btn btn-secondary rounded-pill text-uppercase d-flex align-items-center"
+                title="Send Email" (click)="exportSendMailPdf('SendMail')">
+                <span class="icon icon-email text-white"></span>
+                <span class="pl-2">Send Email</span>
+            </button>
+        </section>
+    </footer>
+</section>

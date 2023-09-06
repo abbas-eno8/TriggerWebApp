@@ -1,0 +1,21 @@
+@import "~assets/scss/base/colors";
+@import "~assets/scss/base/variables";
+@import "~assets/scss/base/mixins";
+
+.list-action-dropdown {
+    .dropdown-menu {
+        & a button {
+            margin: 0 0 5px 14px;
+        }
+    }
+}
+.input-width {
+    width: 180px;
+}
+.border-bottom-secondary {
+    border-bottom: 1px solid $secondary;
+}
+// ::ng-deep .mat-dialog-container {
+//     background: none;
+//     color:inherit;
+// }

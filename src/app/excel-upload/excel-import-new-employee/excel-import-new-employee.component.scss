@@ -1,0 +1,49 @@
+@import "~assets/scss/base/variables";
+@import "~assets/scss/base/colors";
+.data-table-header {
+    & table thead tr {
+        & th:nth-child(1) {
+          min-width: 60px;
+          max-width: 60px;
+          width: 60px;
+        }
+        & th:nth-child(7) {
+          min-width: 110px;
+          max-width: 110px;
+          width: 110px;
+        }
+        & th:nth-child(8) {
+          min-width: 80px;
+          max-width: 80px;
+          width: 80px;
+        }
+    }
+}
+.data-table-body {
+    // overflow-y: auto;
+    // height: calc(100% - 40px);
+    & table tbody tr {
+        & td:nth-child(1) {
+          min-width: 60px;
+          max-width: 60px;
+          width: 60px;
+        }
+        & td:nth-child(7) {
+          min-width: 110px;
+          max-width: 110px;
+          width: 110px;
+        }
+        & td:nth-child(8) {
+          min-width: 80px;
+          max-width: 80px;
+          width: 80px;
+        }
+    }
+    & tr:hover {
+      background-color: $transparent;
+    } 
+}
+.table-container {
+  min-height: 16rem;
+  height: 45%;
+}

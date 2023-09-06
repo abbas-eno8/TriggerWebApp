@@ -1,0 +1,240 @@
+<section class="d-flex flex-column h-100">
+  <!-- Header section start here -->
+  <header class="d-flex justify-content-between align-items-center p-3">
+    <div class="dark-text font-xl font-semibold">Spark</div>
+    <trigger-tooltip [pageTitle]="48"></trigger-tooltip>
+  </header>
+  <!-- Header section end here -->
+  <section class="h-100 flex-grow-1 overflow-hidden position-relative">
+    <!-- main container section start here -->
+    <section class="flex-grow-1 px-3 pb-3 h-100 overflow-auto main-container">
+      <!-- form container start here -->
+      <section
+        class="white-bg rounded shadow-sm"
+        [ngClass]="{ 'p-3 mb-3': true }"
+      >
+        <div class="dark-text font-lg font-semibold ml-2" *ngIf="true">
+        Add New Spark 
+        </div>
+        <form [formGroup]="sparkAnForm">
+          <section class="row mx-0 mt-3">
+
+            <section class="col-xl-6 col-md-6 col-sm-12 px-2">
+              <section class="chips-teams-container rounded" [ngClass]="isSelectDropdownValid('empIds')">
+                  <section class="chips">
+                    <ng-select class="team-members-spark" placeholder="Add Team Members"
+                    formControlName="empIds" [items]="allTeamMemberList" [multiple]="true"
+                    bindLabel="fullName" bindValue="empId" placeholder="Add Team Members"
+                    [closeOnSelect]="false" [searchFn]="customSearchFn" [clearSearchOnAdd]="true"
+                    groupBy="selectAll" [selectableGroup]="true" [selectableGroupAsModel]="false"
+                    triggerKeyEvent>
+                    <ng-template ng-optgroup-tmp let-item="item" let-item$="item$"
+                        let-index="index">
+                        <div class="custom-checkbox ">
+                            <input type="checkbox" [checked]="item$.selected" id="item-{{index}}" />
+                            {{item.selectAll}}
+                        </div>
+                    </ng-template>
+                    <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                        <div class="custom-checkbox">
+                            <input type="checkbox" [checked]="item$.selected" id="item-{{index}}" />
+                            {{item.fullName}}
+                        </div>
+                    </ng-template>
+                </ng-select>
+                  </section>
+              </section>
+          </section>
+
+            <!-- <section class="col-xl-6 col-md-6 col-sm-12 px-2">
+              <section
+                id="openPopup"
+                class="chips-container spark-form-control rounded position-relative d-flex flex-column overflow-hidden"
+                [ngClass]="isSelectDropdownValid('empIds')"
+              >
+                <section class="overflow-auto chips d-flex flex-wrap">
+                  <div class="d-flex" *ngFor="let item of newTeamMember">
+                    <div
+                      id="deleteEmployee"
+                      class="team-members-spark-badge mx-1 d-flex align-items-center my-1"
+                    >
+                      {{ item.fullName }}
+                      <span
+                        class="icon icon-close cursor-pointer"
+                        (click)="removeEmployeeList(item.employeeId)"
+                      ></span>
+                    </div>
+                  </div>
+                </section>
+              </section>
+            </section> -->
+            <section
+              class="spark-select-section col-xl-6 col-md-6 col-sm-12 px-2 mt-md-0 mt-4"
+            >
+              <div class="form-select mb-3">
+                <select
+                  class="w-100 rounded"
+                  formControlName="categoryId"
+                  [ngClass]="isDropdownValid('categoryId')"
+                  (change)="onChangeCategory($event)"
+                >
+                  <option class="select-placeholder" value="0">
+                    Select Category
+                  </option>
+                  <option
+                    *ngFor="let item of categories"
+                    [value]="item.categoryId"
+                  >
+                    {{ item.category }}
+                  </option>
+                </select>
+                <div class="form-select mt-2">
+                  <div class="form-select xs-mb-3">
+                    <select
+                      class="w-100 rounded mt-1"
+                      formControlName="classificationId"
+                      [ngClass]="isDropdownValid('classificationId')"
+                      (focus)="focusOnClassification($event)"
+                    >
+                      <option value="0">Select Classification</option>
+                      <option
+                        *ngFor="let type of classifications"
+                        [ngValue]="type.classificationId"
+                      >
+                        {{ type.classification }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-select mt-2">
+                  <div class="form-select xs-mb-3">
+                    <ng-select  class="additional-filter-ng-select" [ngClass]="isDarkTheme ? 'ng-select-option-dark' : 'ng-select-option-light'" [items]="sparkAdditionalFilterType" [searchable]="false" [clearable]="false" formControlName="dimensionId"  bindLabel="dimensionName" bindValue="dimensionId">
+                      <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+                                  <div [ngClass]="isDarkTheme ? 'ng-select-option-dark' : 'ng-select-option-light'"  class="additional-filter-body" (click)="openGroupSpark(item.dimensionId)">{{item.dimensionName}}</div>
+                      </ng-template>
+                  </ng-select>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </section>
+          <section class="row mx-0 mt-1">
+            <section class="col-12 px-2">
+              <section
+                class="d-flex flex-column position-relative textarea-container rounded"
+              >
+                <div
+                  class="right-date-time-container secondary-dark-text text-right"
+                >
+                  <DateTimeStamp #dateTimeStamp></DateTimeStamp>
+                </div>
+                <textarea
+                  class="spark-form-textarea form-textarea form-control border-0 w-100"
+                  placeholder="Enter description"
+                  formControlName="spark"
+                ></textarea>
+              </section>
+            </section>
+          </section>
+          <section
+            class="d-flex justify-content-between align-items-center flex-wrap"
+          >
+            <section
+              class="d-flex align-items-center w-100 mt-2 col-xl-6 col-md-6 col-sm-12 px-2"
+            >
+              <div class="d-flex align-items-center pr-3">
+                <div class="position-relative upload-btn-wrapper w-auto">
+                  <button
+                    class="btn bg-transparant icon icon-paper-clip text-primary d-flex align-items-center"
+                    title="Attachment"
+                    (click)="openCustomFileChooser()"
+                    #attachment
+                  ></button>
+                </div>
+                <div
+                  *ngIf="fileName"
+                  class="text-primary font-sm ml-2 cursor-defult"
+                  [title]="fileName"
+                >
+                  {{ fileName | ellipsis : 30 }}
+                </div>
+              </div>
+              <button
+                *ngIf="fileName"
+                type="button"
+                class="icon icon-bin mr-1 btn bg-transparent d-flex align-items-center cursor-pointer"
+                title="Delete"
+                (click)="deleteAttachment()"
+              ></button>
+            </section>
+            <section
+              class="d-flex justify-content-between flex-wrap mt-2 col-xl-6 col-md-6 col-sm-12 px-2"
+            >
+              <section
+                *ngIf="hideRadioButton"
+                class="d-flex flex-nowrap w-100 col-lg-6 col-md-6 col-sm-6 col-xs-12 px-0 align-items-center"
+              >
+                <div class="col-6 p-0 d-flex flex-nowrap align-items-center">
+                  <label class="custom-radiobutton">
+                    <span class="pl-2">Public</span>
+                    <input
+                      type="radio"
+                      value="1"
+                      formControlName="sparkPrivacy"
+                      [checked]="isCheckedPublicRadioButton(1)"
+                    />
+                    <span class="radio-checked"></span>
+                  </label>
+                </div>
+                <div class="col-6 p-0 d-flex flex-nowrap align-items-center">
+                  <label class="custom-radiobutton">
+                    <span class="pl-2">Private</span>
+                    <input
+                      type="radio"
+                      value="2"
+                      formControlName="sparkPrivacy"
+                      [checked]="isCheckedPublicRadioButton(2)"
+                    />
+                    <span class="radio-checked"></span>
+                  </label>
+                </div>
+              </section>
+              <section class="d-flex align-items-center xs-mb-3 ml-auto">
+                <label class="md-switch">
+                  <input
+                    type="checkbox"
+                    formControlName="sendSpark"
+                    [value]="sparkAnForm.value.sendSpark"
+                  />
+                  <span class="md-slider round"></span>
+                </label>
+                <div class="ml-2 dark-text">Send Spark</div>
+              </section>
+            </section>
+          </section>
+          <footer class="d-flex justify-content-end align-items-center mt-3">
+            <button
+              type="button"
+              title="Reset"
+              class="btn secondary-light-btn btn-sm text-uppercase rounded-pill mr-2"
+              (click)="reset()"
+            >
+              Reset
+            </button>
+            <button
+              type="button"
+              title="Submit"
+              class="btn btn-secondary btn-sm text-uppercase rounded-pill"
+              (click)="save()"
+              [disabled]="isDisabledSubmitBtn"
+            >
+              Submit
+            </button>
+          </footer>
+        </form>
+      </section>
+      <!-- form container end here -->
+    </section>
+    <!-- main container section end here -->
+  </section>
+</section>

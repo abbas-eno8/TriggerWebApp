@@ -1,0 +1,188 @@
+* {
+    outline: none;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+
+    &:hover {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    &:focus {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    &:visited {
+        text-decoration: none;
+        color: inherit;
+    }
+}
+
+/* clears the 'X' from Chrome */
+input[type="search"],
+input[type="text"] {
+    &::-webkit-search-decoration {
+        display: none;
+    }
+
+    &::-webkit-search-cancel-button {
+        display: none;
+    }
+
+    &::-webkit-search-results-button {
+        display: none;
+    }
+
+    &::-webkit-search-results-decoration {
+        display: none;
+    }
+
+    &::-ms-clear {
+        /* clears the 'X' from Internet Explorer */
+        display: none;
+        width: 0;
+        height: 0;
+    }
+
+    &::-ms-reveal {
+        display: none;
+        width: 0;
+        height: 0;
+    }
+}
+
+ul {
+    margin: 0 !important;
+    padding: 0 !important;
+    padding-left: 0;
+}
+
+input {
+    font-weight: $font-weight-normal;
+    overflow: hidden;
+}
+
+input[type=radio] {
+    cursor: pointer;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    &:focus {
+        outline: 0;
+        -webkit-box-shadow: 0 0 0 0.2rem $box-shadow;
+        box-shadow: 0 0 0 0.2rem $box-shadow;
+        @include border-radius($border-radius);
+        @include size(17px, 17px);
+        opacity: 1;
+        @include position(absolute, 0, 0, auto, 0);
+    }
+}
+
+input[type=checkbox] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+    opacity: 0;
+    @include size(0, 0);
+
+    &:focus {
+        -webkit-box-shadow: 0 0 0 0.2rem $box-shadow;
+        box-shadow: 0 0 0 0.2rem $box-shadow;
+        @include border-radius($border-radius);
+        @include size(20px, 20px);
+        opacity: 1;
+        @include position(absolute, 0, 0, auto, 0);
+    }
+
+}
+
+input::-ms-check {
+    display: none
+}
+
+input[type=button] {
+    border: 0
+}
+
+input[type="file"] {
+    display: none;
+}
+
+select {
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    appearance: none;
+    font-weight: $font-weight-normal;
+
+    &:focus {
+        outline: 0;
+        -webkit-box-shadow: 0 0 0 0.2rem $box-shadow;
+        box-shadow: 0 0 0 0.2rem $box-shadow !important;
+        border-color: $primary-dark !important;
+    }
+
+    &::-ms-expand {
+        display: none;
+    }
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: no-drop;
+    }
+}
+
+label {
+    @include margin(bottom, 0);
+
+    & input {
+        &:disabled {
+            cursor: no-drop;
+            @include size(100%, 100%);
+            position: absolute;
+            z-index: 9;
+        }
+    }
+}
+
+button {
+    outline: none;
+}
+
+.overflow-auto {
+    overflow-x: hidden !important;
+}
+
+.form-control {
+    &::placeholder {
+        color: var(--text-secondary-dark);
+        opacity: 1;
+    }
+
+    &:-ms-input-placeholder,
+    &::-ms-input-placeholder {
+        color: var(--text-secondary-dark);
+    }
+}
+
+.form-textarea.form-control, .reply-textarea.form-control {
+    &::placeholder {
+        color: var(--text-secondary-dark);
+        opacity: 1;
+    }
+
+    &:-ms-input-placeholder,
+    &::-ms-input-placeholder {
+        color: var(--text-secondary-dark);
+    }
+}
+//for angular material
+::placeholder {
+    color: $primary !important;
+}

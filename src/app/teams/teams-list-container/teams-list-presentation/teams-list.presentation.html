@@ -1,0 +1,19 @@
+<section class="d-flex flex-column h-100">
+    <section class="px-3">
+        <!-- header section start here -->
+        <trigger-teams-header-ui [isTeamAddable]="isTeamAddable"></trigger-teams-header-ui>
+        <!-- header section end here -->
+        <!-- search view section start here -->
+        <section class="pb-3">
+            <trigger-search-view [searchFields]="searchFields" [list]="baseResponse" [placeHolder]="searchPlaceHolder"
+                (bindRecords)="bindRecords($event)">
+            </trigger-search-view>
+        </section>
+        <!-- search view section end here -->
+    </section>
+    <section class="h-100 position-relative mx-3 overflow-hidden flex-grow-1">
+        <section class="mat-elevation-z8 rounded-top w-100 h-100" [ngClass]="containerClass">
+            <div #container></div>
+        </section>
+    </section>
+</section>

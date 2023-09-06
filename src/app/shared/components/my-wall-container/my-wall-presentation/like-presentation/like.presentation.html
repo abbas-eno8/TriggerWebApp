@@ -1,0 +1,44 @@
+<section class="white-bg rounded lg-dialog-container d-flex flex-column my-wall-modal-box">
+    <header class="d-flex justify-content-between align-items-center w-100">
+        <ul class="nav nav-tabs px-3" role="tablist">
+            <li class="nav-item">
+                <a class="h-100 nav-link font-sm font-semibold" data-toggle="tab" href="#all" (click)="onClickCount(0)"
+                    [ngClass]="allEmoji? 'active-all' : ''">All <span class="pl-1"> {{ allCount }}</span></a>
+            </li>
+            <li class="nav-item" *ngFor="let list of listOfEmoji; let i = index">
+                <a *ngIf="list.isDisplay" class="nav-link font-sm font-semibold"
+                    [ngClass]="list.active? list.activeClass : ''" data-toggle="tab" href="#like"
+                    (click)="onClickCount(list.id)">
+                    <span><img [src]="list.image" alt="like"> </span>
+                    <span class="pl-1"> {{ list.count }} </span>
+                </a>
+            </li>
+            <li class="ml-auto">
+                <div class="icon icon-close d-flex align-items-center h-100 cursor-pointer" title="Close"
+                    (click)="onClickCancel()"></div>
+            </li>
+        </ul>
+    </header>
+    <section class="overflow-auto flex-grow-1 modal-body-container">
+        <section class="tab-content">
+            <section id="all" class="container tab-pane pt-2 active">
+                <section class="d-flex align-items-center mb-2" *ngFor="let list of displayList; let i = index">
+                    <div class="position-relative">
+                        <div class="user-profile-img d-flex align-items-center justify-content-center rounded-circle">
+                            <div class="font-semibold text-secondary" *ngIf="!list.profileImage">
+                                {{ list.profileName }}
+                            </div>
+                            <img [src]="list.profileImage" class="img-fluid" alt="avatar" *ngIf="!!list.profileImage">
+                        </div>
+                        <div class="status-icons-container">
+                            <img [src]="getEmoji(list.reactType)" alt="like">
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center w-100 status-bottom-border">
+                        <div class="dark-text font-semibold ml-3 pt-3"> {{ list.name }} </div>
+                    </div>
+                </section>
+            </section>
+        </section>
+    </section>
+</section>

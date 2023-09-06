@@ -1,0 +1,37 @@
+@import "~assets/scss/base/variables";
+@import "~assets/scss/base/colors";
+@import "~bootstrap/scss/mixins/breakpoints";
+@import "~assets/scss/base/mixins";
+.disable-section {
+    pointer-events: none;
+}
+
+.upload-btn-wrapper {
+    @include size(40px, 40px);
+    overflow: visible;
+    margin: unset;
+    & input[type="file"] {
+        margin-top: -4px;
+        @include position(absolute, auto, auto, auto, auto);
+        opacity: 0;
+        display: block;
+        cursor: pointer;
+        @include size(24px, 24px);
+    }
+}
+
+.text-ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.form-textarea {
+    padding: 0 10px 10px 10px;
+    min-height: 60px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    &:focus {
+        box-shadow: none;
+    }
+}

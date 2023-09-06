@@ -1,0 +1,22 @@
+<!-- widget section start here -->
+<div class="rounded white-bg shadow-sm p-3 widgets-box d-flex flex-column flex-grow-1">
+  <div class="d-flex flex-nowrap justify-content-end align-items-center">
+    <span class="icon icon-dragdrop mr-2 cursor-move d-flex align-items-center" title="Move"
+      *ngIf="role !== 'TriggerAdmin'"></span>
+    <trigger-tooltip [pageTitle]="pageTitle"> </trigger-tooltip>
+    <span class="icon icon-close cursor-pointer" title="Close" *ngIf="role !== 'TriggerAdmin'"
+      (click)="onclickremoveTile()"></span>
+  </div>
+  <div class="d-flex flex-column text-center py-4 cursor-pointer flex-grow-1"
+    (click)="onclickgoToNumberOfDirectReport()">
+    <div class="icons">
+      <div class="icon icon-chart mx-auto"></div>
+    </div>
+    <div class="display-2 text-primary font-bold d-flex align-items-center justify-content-center h-100">
+      {{noOfTodatDirectReport}}</div>
+    <div class="dark-text font-semibold font-md text-center cursor-pointer mt-auto">
+      Total Number Of Direct Reports {{selectedYearBinding}}
+    </div>
+  </div>
+</div>
+<!-- widget section end here -->

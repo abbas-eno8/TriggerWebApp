@@ -1,0 +1,88 @@
+<section class="d-flex flex-column h-100 overflow-hidden rounded">
+    <section class="data-table-header position-relative" id="data-table-header">
+        <table class="w-100 font-semibold">
+            <thead>
+                <tr>
+                    <th *ngFor="let header of desktopHeader">
+                        <div class="d-inline-flex align-items-center">
+                            <div>{{header.name}}</div>
+                            <div class="cursor-pointer" (click)="presenter.sort(header.property)"
+                                [ngClass]="presenter.getDirecionIcon(header.property)"></div>
+                        </div>
+                    </th>
+                    <th *ngIf="!isSurvey" class="text-align-start">
+                        <div class="d-inline-flex align-items-center">
+                            <div> survey Type Name</div>
+                            <div class="cursor-pointer" (click)="presenter.sort('surveyTypeName')"
+                                [ngClass]="presenter.getDirecionIcon('surveyTypeName')"></div>
+                        </div>
+                    </th>
+                    <th *ngIf="isSurvey" class="text-center">status</th>
+                    <th  [ngClass]="isSurvey ? 'survey-last-child' : 'active-survey-last-child'">action</th>
+                </tr>
+            </thead>
+        </table>
+    </section>
+    <section class="data-table-body" id="mainDiv" (scroll)="scrollService.onScroll($event)"
+        (scroll)="presenter.onWindowScroll()">
+        <table class="w-100">
+            <tbody>
+                <tr *ngFor="let item of filterSurvey">
+                    <td>{{item.surveyName}}</td>
+                    <td *ngIf="!isSurvey">{{item.createdByName}}</td>
+                    <td>{{item.fromDate}}</td>
+                    <td>{{item.toDate}}</td>
+                    <td>{{item.surveyTypeName}}</td>
+                    <td *ngIf="isSurvey">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <label class="md-switch">
+                                <input type="checkbox" [(ngModel)]="item.isActive"
+                                    (change)="ischangeStatus($event, item.id, item.surveyName)"
+                                    [disabled]="isCheckAndDisableToggle(item)">
+                                <span class="md-slider round"></span>
+                            </label>
+                        </div>
+                    </td>
+                    <td *ngIf="!isSurvey" class="active-survey-last-child">
+                        <button type="button" style="min-width: 105px;"
+                            class="btn btn-secondary rounded-pill text-uppercase px-2 py-1 font-sm"
+                            (click)="presenter.redirectToGlobalAssessment(item.surveyId)" title="Participate">
+                            Participate
+                        </button>
+                    </td>
+                    <td *ngIf="isSurvey"  class="survey-last-child">
+                        <section class="d-flex justify-content-center align-items-center">
+                            <div class="dropdown list-action-dropdown">
+                                <button type="button"
+                                    class="btn border-0 bg-transparent dropdown-toggle d-flex align-items-center"
+                                    data-toggle="dropdown">
+                                    <span class="icon icon-click d-flex align-items-center"></span>
+                                </button>
+                                <div id="action-dropdown" class="dropdown-menu toggle-dropdown-menu border-0 shadow-sm">
+                                    <a>
+                                        <button [disabled]="item.isPublished"
+                                            class="icon icon-edit-1 mr-1 btn bg-transparent d-flex align-items-center"
+                                            title="Edit" (click)="presenter.redirectedToEditSurvey(item.id)"></button>
+                                    </a>
+                                    <a>
+                                        <button class="icon icon-bin mr-1 btn bg-transparent" title="Delete"
+                                            (click)="presenter.deleteTeam(item.id)"></button>
+                                    </a>
+                                    <a>
+                                        <button class="icon icon-eye-1 mr-1 btn bg-transparent" title="Preview"
+                                            (click)="presenter.redirectedToPreviewSurvey(item.id)"></button>
+                                    </a>
+                                    <a>
+                                        <button class="icon icon-info mr-1 btn bg-transparent" title="Survey Details"
+                                            *ngIf="item.isSurveySubmitted"
+                                            (click)="presenter.redirectedToSurveyDetails(item.id)"></button>
+                                    </a>
+                                </div>
+                            </div>
+                        </section>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+</section>

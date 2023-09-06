@@ -1,0 +1,326 @@
+<section class="d-flex flex-column h-100">
+    <trigger-child-header-view [pageTitle]="pageTitle"></trigger-child-header-view>
+    <section class="position-relative flex-grow-1 overflow-hidden">
+        <section class="overflow-auto px-3 pb-3 h-100">
+            <section class="white-bg rounded shadow-sm px-2 py-3">
+                <form class="form" novalidate [formGroup]="addClientForm">
+                    <section class="row mx-0">
+                        <div *ngIf="clientId > 0 && isTriggerAdmin" class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">client id<span
+                                    class="text-danger pl-1">*</span></label>
+                            <input type="text" class="rounded form-control" maxlength="30" (keypress)="avoidBlankSpace($event)" formControlName="companyId" pattern="^$|^[A-Za-z0-9]+" [ngClass]="{'border-danger': (addClientForm.get('companyId').touched || addClientForm.get('companyId').dirty) && !addClientForm.get('companyId').valid }">
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">company name<span
+                                    class="text-danger pl-1">*</span></label>
+                            <input type="text" class="rounded form-control" formControlName="companyName" trim="blur" maxlength="100" (click)="clientNameValidation($event)" (paste)="clientNameValidationOnPaste($event.clipboardData.getData('text/plain'))" (keypress)="clientNameValidation($event)"
+                                on-touch="clientNameValidation($event)" pattern="^$|^[A-Za-z0-9\-\s]+" [ngClass]="{'border-danger': (addClientForm.get('companyName').touched || addClientForm.get('companyName').dirty) && !addClientForm.get('companyName').valid }"
+                            />
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">company/industry
+                                type<span class="pl-1 text-danger">*</span></label>
+                            <div class="form-select">
+                                <select class="rounded w-100 cursor-pointer" formControlName="industryTypeId" maxlength="50" [ngClass]="{'border-danger': addClientForm.get('industryTypeId').touched && this.addClientForm.value.industryTypeId === '0'}">
+                                    <option value="0">Select Company Type</option>
+                                    <option *ngFor="let type of industryTypes" value={{type.industryTypeId}}
+                                        title="{{type.industryType}}">{{ type.industryType | ellipsis : 45 }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">Address line
+                                1<span class="text-danger pl-1">*</span></label>
+                            <input type="text" class="rounded form-control" formControlName="address1" (keypress)="addressValidation($event)" (click)="addressValidation($event)" on-touch="addressValidation($event)" maxlength="100" [ngClass]="{'border-danger': (addClientForm.get('address1').touched || addClientForm.get('address1').dirty) && !addClientForm.get('address1').valid }"
+                                pattern="^$|^[A-Za-z0-9\'\s]+" />
+
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">Address line
+                                2</label>
+                            <input type="text" class="rounded form-control" formControlName="address2" (keypress)="addressValidation($event)" (click)="addressValidation($event)" on-touch="addressValidation($event)" maxlength="100" pattern="^$|^[A-Za-z0-9\'\s]+" />
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">city<span
+                                    class="text-danger pl-1">*</span></label>
+                            <input type="text" class="rounded form-control" formControlName="city" (keypress)="AlphabaticharOnly($event,this.addClientForm.value.city)" (click)="AlphabaticharOnly($event,this.addClientForm.value.city)" on-touch="AlphabaticharOnly($event,this.addClientForm.value.city)"
+                                (paste)="pasteOnlyAlphabaticEvent($event)" maxlength="25" pattern="^[a-zA-Z ]*$" ng-pattern-restrict [ngClass]="{'border-danger': (addClientForm.get('city').touched || addClientForm.get('city').dirty) && !addClientForm.get('city').valid }">
+
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">state<span
+                                    class="text-danger pl-1">*</span></label>
+                            <input type="text" class="rounded form-control" formControlName="state" (paste)="pasteOnlyAlphabaticEvent($event)" maxlength="25" (keypress)="AlphabaticharOnly($event,this.addClientForm.value.state)" (click)="AlphabaticharOnly($event,this.addClientForm.value.state)"
+                                on-touch="AlphabaticharOnly($event,this.addClientForm.value.state)" maxlength="25" pattern="^[a-zA-Z ]*$" ng-pattern-restrict [ngClass]="{'border-danger': (addClientForm.get('state').touched || addClientForm.get('state').dirty) && !addClientForm.get('state').valid }"
+                            />
+
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">zip code<span
+                                    class="text-danger pl-1">*</span></label>
+                            <input type="text" class="rounded form-control" (keypress)="zipcodeValidation($event)" (click)="zipcodeValidation($event)" on-touch="zipcodeValidation($event)" (paste)="pasteOnlyNumericEvent($event)" formControlName="zipcode" minlength="5" maxlength="15"
+                                [ngClass]="{'border-danger': (addClientForm.get('zipcode').touched || addClientForm.get('zipcode').dirty) && !addClientForm.get('zipcode').valid }" />
+
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">country<span
+                                    class="text-danger pl-1">*</span></label>
+                            <input type="text" class="rounded form-control" formControlName="country" (paste)="pasteOnlyAlphabaticEvent($event)" maxlength="30" (keypress)="AlphabaticharOnly($event,this.addClientForm.value.country)" (click)="AlphabaticharOnly($event,this.addClientForm.value.country)"
+                                on-touch="AlphabaticharOnly($event,this.addClientForm.value.country)" pattern="^[a-zA-Z ]*$" ng-pattern-restrict [ngClass]="{'border-danger': (addClientForm.get('country').touched || addClientForm.get('country').dirty) && !addClientForm.get('country').valid }"
+                            />
+
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">phone number<span
+                                    class="text-danger pl-1">*</span></label>
+                            <input type="text" class="rounded form-control" (keypress)="phoneNumberValidation($event)" (input)="phoneNumberValidation($event)" (click)="phoneNumberValidation($event)" (paste)="pasteOnlyNumericEvent($event)" on-touch="phoneNumberValidation($event)"
+                                formControlName="phoneNo1" maxlength="15" minlength="7" [ngClass]="{'border-danger': (addClientForm.get('phoneNo1').touched || addClientForm.get('phoneNo1').dirty) && !addClientForm.get('phoneNo1').valid }" />
+
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">website
+                                address</label>
+                            <input type="text" class="rounded form-control" on-touch="avoidBlankSpace($event)" (keypress)="avoidBlankSpace($event)" (click)="avoidBlankSpace($event)" maxlength="50" formControlName="website">
+
+                        </div>
+                        <div *ngIf="isTriggerAdmin" class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">cost per
+                                Team Member</label>
+                            <input type="text" class="rounded form-control" maxlength="8" [textMask]="{mask: numberMask, guide:false}" (paste)="pasteOnlyNumericEvent($event)" (keypress)="numberOnly($event,this.addClientForm.value.costPerEmp)" (click)="numberOnly($event,this.addClientForm.value.costPerEmp)"
+                                on-touch="numberOnly($event,this.addClientForm.value.costPerEmp)" placeholder="$ 00,000" formControlName="costPerEmp">
+
+                        </div>
+                        <div *ngIf="isTriggerAdmin" class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">fixed amount per
+                                month</label>
+                            <input type="text" class="rounded form-control" maxlength="8" [textMask]="{mask: numberMask, guide:false}" (paste)="pasteOnlyNumericEvent($event)" on-touch="numberOnly($event,this.addClientForm.value.fixedAmtPerMon)" (keypress)="numberOnly($event,this.addClientForm.value.fixedAmtPerMon)"
+                                (click)="numberOnly($event,this.addClientForm.value.fixedAmtPerMon)" placeholder="$ 00,000" formControlName="fixedAmtPerMon">
+
+                        </div>
+                        <div *ngIf="isTriggerAdmin" class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">Contract start
+                                date<span class="text-danger pl-1">*</span></label>
+                            <div class="calendar-input">
+                                <input type="text" class="rounded form-control cursor-pointer" bsDatepicker (bsValueChange)="onValueChange($event)" formControlName="contractStartDate" placement="top" [bsConfig]="{ dateInputFormat: 'MM-DD-YYYY' , containerClass: themeClass, showWeekNumbers: false }"
+                                    placeholder="MM-DD-YYYY" [bsValue]="bsValue" [attr.readonly]="true" [ngClass]="{'border-danger': (addClientForm.get('contractStartDate').touched || addClientForm.get('contractStartDate').dirty) && !addClientForm.get('contractStartDate').valid }">
+                            </div>
+                        </div>
+                        <div *ngIf="isTriggerAdmin" class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">Contract end
+                                date<span class="text-danger pl-1">*</span></label>
+                            <div class="calendar-input">
+                                <input type="text" class="rounded form-control cursor-pointer" bsDatepicker formControlName="contractEndDate" placement="top" [bsConfig]="{ dateInputFormat: 'MM-DD-YYYY' , containerClass: themeClass, showWeekNumbers: false}" [attr.readonly]="true" [ngClass]="{'border-danger': (addClientForm.get('contractEndDate').touched || addClientForm.get('contractEndDate').dirty) && !addClientForm.get('contractEndDate').valid }">
+                            </div>
+
+                        </div>
+                        <div *ngIf="isTriggerAdmin" class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">Grace
+                                Period<span class="text-danger pl-1">*</span></label>
+                            <input type="text" class="rounded form-control" (keypress)="numberOnly($event,this.addClientForm.value.gracePeriod)" (click)="numberOnly($event,this.addClientForm.value.gracePeriod)" on-touch="numberOnly($event,this.addClientForm.value.gracePeriod)" (paste)="pasteOnlyNumericEvent($event)"
+                                formControlName="gracePeriod" maxlength="3" minlength="1" [ngClass]="{'border-danger': (addClientForm.get('gracePeriod').touched || addClientForm.get('gracePeriod').dirty) && !addClientForm.get('gracePeriod').valid }" />
+
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">Inactivity
+                                Days</label>
+                            <input type="text" class="rounded form-control" (keypress)="numberOnly($event,this.addClientForm.value.inActivityDays)" (paste)="pasteOnlyNumericEvent($event)" formControlName="inActivityDays" maxlength="3" minlength="1" />
+
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">Reminder
+                                Days</label>
+                            <input type="text" class="rounded form-control" (keypress)="numberOnly($event,this.addClientForm.value.reminderDays)" (paste)="pasteOnlyNumericEvent($event)" formControlName="reminderDays" maxlength="3" minlength="1" />
+
+                        </div>
+                        <div *ngIf="isTriggerAdmin" class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">Organization
+                                Type</label>
+                            <div class="form-select">
+                                <select class="rounded w-100 cursor-pointer" formControlName="organizationTypeId">
+                                    <option value="0">Select Organization Type</option>
+                                    <option *ngFor="let orgType of organizationTypeList"
+                                        value={{orgType.organizationTypeId}} title="{{orgType.organizationType}}">
+                                        {{ orgType.organizationType | ellipsis : 45 }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">External Provider</label>
+                            <div class="form-select">
+                                <select class="rounded w-100 cursor-pointer" formControlName="externalProviderType" [ngClass]="isDropdownValid('externalProviderType')" (change)="onChangeProvider()">
+                                    <option value="0" selected>Select External Provider</option>
+                                    <option value="1">Google</option>
+                                    <option value="2">Azure Ad</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                            <label class="text-uppercase dark-text font-sm font-semibold white-space">Notification for
+                                location
+                                <span class="pl-1 text-danger">*</span></label>
+                            <div class="d-flex flex-nowrap w-100 align-items-center mt-3">
+                                <div class="col-6 p-0 d-flex flex-nowrap align-items-center">
+                                    <label class="custom-radiobutton">
+                                        <span class="pl-2">Active</span>
+                                        <input type="radio" value='true' formControlName="isWorkLocationMandatory">
+                                        <span class="radio-checked"></span>
+                                    </label>
+                                </div>
+                                <div class="col-6 p-0 d-flex flex-nowrap align-items-center">
+                                    <label class="custom-radiobutton">
+                                        <span class="pl-2">Disabled</span>
+                                        <input type="radio" value='false' formControlName="isWorkLocationMandatory">
+                                        <span class="radio-checked"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                            <label class="text-uppercase dark-text font-sm font-semibold white-space">daily survey
+                                <span class="pl-1 text-danger">*</span></label>
+                            <div class="d-flex flex-nowrap w-100 align-items-center mt-3">
+                                <div class="col-6 p-0 d-flex flex-nowrap align-items-center">
+                                    <label class="custom-radiobutton">
+                                        <span class="pl-2">Active</span>
+                                        <input type="radio" value='true' formControlName="isUpdateSurveyMandatory">
+                                        <span class="radio-checked"></span>
+                                    </label>
+                                </div>
+                                <div class="col-6 p-0 d-flex flex-nowrap align-items-center">
+                                    <label class="custom-radiobutton">
+                                        <span class="pl-2">Disabled</span>
+                                        <input type="radio" value='false' formControlName="isUpdateSurveyMandatory">
+                                        <span class="radio-checked"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <section class="position-relative col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2" *ngIf="isAdmin">
+                            <div class="d-flex align-items-center position-relative mb-3 image-container">
+                                <div class="img-container d-flex align-items-center">
+                                    <img [src]="iconUrl" alt="Client Logo" (error)="onError()" />
+                                </div>
+                                <div (click)="openModal()" class="btn-float rounded-circle d-flex justify-content-center align-items-center icon icon-pen cursor-pointer shadow-lg">
+                                </div>
+                            </div>
+                        </section>
+                    </section>
+                    <section class="d-flex flex-wrap" *ngIf="isTriggerAdmin">
+                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 pr-2 pl-2">
+                            <div class="d-flex flex-column">
+                                <label class="mb-2 text-uppercase dark-text font-sm font-semibold">miscellaneous
+                                    comments fields</label>
+                                <textarea class="form-textarea p-2 rounded form-control mb-3" maxlength="300" formControlName="remarks" on-touch="avoidBlankSpace($event)" (keypress)="avoidBlankSpace($event)" (click)="avoidBlankSpace($event)"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 pr-2 pl-2">
+                            <div class="d-flex flex-column">
+                                <label class="mb-2 text-uppercase dark-text font-sm font-semibold">Deals
+                                    details</label>
+                                <textarea class="form-textarea p-2 rounded form-control mb-3" maxlength="300" formControlName="dealsRemarks" (keypress)="avoidBlankSpace($event)" (click)="avoidBlankSpace($event)" on-touch="avoidBlankSpace($event)"></textarea>
+                            </div>
+                        </div>
+                    </section>
+                    <!-- External Provider Details part start here -->
+                    <section class="d-flex align-items-center flex-wrap">
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2" *ngIf="isAzureProvider">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">Provider Client
+                                ID<span
+                                class="text-danger pl-1">*</span></label>
+                            <input type="text" class="rounded form-control" maxlength="" formControlName="providerClientId" [ngClass]="isInputValid('providerClientId')">
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2" *ngIf="isAzureProvider">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">Provider Tenant
+                                ID<span
+                                class="text-danger pl-1">*</span></label>
+                            <input type="text" class="rounded form-control" maxlength="" formControlName="providerTenantId" [ngClass]="isInputValid('providerTenantId')">
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2" *ngIf="isAzureProvider">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">application name<span
+                                class="text-danger pl-1">*</span></label>
+                            <input type="text" class="rounded form-control" maxlength="" formControlName="applicationName" [ngClass]="isInputValid('applicationName')">
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2" *ngIf="isAzureProvider">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">Email<span
+                                class="text-danger pl-1">*</span></label>
+                            <input type="email" class="rounded form-control" maxlength="60" formControlName="email" [ngClass]="isInputValid('email')" (keypress)="IgnoreSpace($event)">
+                        </div>
+                    </section>
+                    <div *ngIf="isDisplayCallbackUrl">
+                        <div class="text-secondary font-semibold mb-3 font-md px-2">
+                            Web Configuration
+                        </div>
+                        <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 mb-3 px-2" *ngIf="isDisplayCallbackUrl">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">Redirect URL</label>
+                            <input type="text" class="rounded form-control" maxlength="" formControlName="webCallBack" [ngClass]="isInputValid('webCallBack')">
+                        </div>
+                    </div>
+                    <section *ngIf="isDisplayCallbackUrl && !!mobileExternalProvider.packageName">
+                        <div class="text-secondary font-semibold mb-3 font-md px-2">
+                            Android Configuration
+                        </div>
+                        <section class="row mx-0">
+                            <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                                <label class="mb-2 text-uppercase dark-text font-sm font-semibold">Package name</label>
+                                <div class="field-box p-2 rounded text-ellipsis">{{mobileExternalProvider.packageName}}
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                                <label class="mb-2 text-uppercase dark-text font-sm font-semibold">signature
+                                    hash</label>
+                                <div class="field-box p-2 rounded text-ellipsis">
+                                    {{mobileExternalProvider.signatureHash}}</div>
+                            </div>
+                            <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                                <label class="mb-2 text-uppercase dark-text font-sm font-semibold">Redirect URI</label>
+                                <div class="field-box p-2 rounded text-ellipsis">
+                                    {{mobileExternalProvider.androidCallBack}}</div>
+                            </div>
+                        </section>
+                        <div class="text-secondary font-semibold mb-3 font-md px-2">
+                            IOS Configuration
+                        </div>
+                        <section class="row mx-0">
+                            <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                                <label class="mb-2 text-uppercase dark-text font-sm font-semibold">bundle Id
+                                </label>
+                                <div class="field-box p-2 rounded text-ellipsis">{{mobileExternalProvider.bundleId}}
+                                </div>
+                            </div>
+
+                            <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                                <label class="mb-2 text-uppercase dark-text font-sm font-semibold">Redirect
+                                    URI</label>
+                                <div class="field-box p-2 rounded text-ellipsis">{{mobileExternalProvider.iosCallBack}}
+                                </div>
+                            </div>
+                        </section>
+                    </section>
+
+                    <!-- External Provider Details part end here -->
+                    <!-- Work loction list start here -->
+                    <div class="field-border-bottom"></div>
+                    <trigger-work-location-list-container [isAddClient]="isAddClient" (getDefaultWorkLocations)="getDefaultWorkLocations($event)">
+                    </trigger-work-location-list-container>
+                    <!-- Work loction list end here -->
+                    <div class="d-flex justify-content-end px-2" *ngIf="isTriggerAdmin">
+                        <a [routerLink]="['/clients']">
+                            <button type="button" class="btn secondary-light-btn text-uppercase rounded-pill mr-3" title="Cancel">Cancel</button>
+                        </a>
+                        <a>
+                            <button type="submit" class="btn btn-secondary text-uppercase rounded-pill" title="Submit" (click)="onClickSubmitBtn()">Submit</button>
+                        </a>
+                    </div>
+                    <div class="d-flex justify-content-end px-2" *ngIf="isAdmin">
+                        <a>
+                            <button type="submit" class="btn btn-secondary text-uppercase rounded-pill" title="Submit" (click)="onClickSubmitBtn()">Submit</button>
+                        </a>
+                    </div>
+                </form>
+            </section>
+        </section>
+    </section>
+</section>

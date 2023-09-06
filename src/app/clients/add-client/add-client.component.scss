@@ -1,0 +1,22 @@
+@import "~assets/scss/base/variables";
+@import "~assets/scss/base/colors";
+@import "~assets/scss/base/mixins";
+.form-control[readonly] {
+    background-color: $transparent;
+}
+.btn-float {
+    @include position(absolute, auto, -13px, -10px, auto);
+}
+.field-box {
+    border: 2px solid $border;
+    height: 40px
+}
+.text-ellipsis {
+    min-width: 100px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.image-container {
+    width: 125px;
+}

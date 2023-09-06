@@ -1,0 +1,59 @@
+<section class="d-flex flex-column flex-grow-1 pt-3">
+    <header class="d-flex flex-nowrap justify-content-end flex-shrink-0 pb-3 px-3"
+        [ngClass]="{'justify-content-between': sparkDetailBySelectedRoute.routeType === 'sparkList'}">
+        <div class="dark-text font-semibold font-md" *ngIf="sparkDetailBySelectedRoute.routeType === 'sparkList'">
+            <!-- {{sparkDetailBySelectedRoute.widgetHeader}}  -->
+            Sparks for {{currentSparkAnEmployee.firstName}} {{currentSparkAnEmployee.lastName}}
+        </div>
+        <button type="button" class="btn btn-primary rounded-pill xs-btn text-uppercase mr-3 white-space flex-shrink-0"
+            title="New Spark" *ngIf="sparkDetailBySelectedRoute.routeType === 'empDashboard'"
+            [disabled]="!isSparkAddable" (click)="addModal()">
+            <span class="icon icon-add text-white"></span>
+            <span class="d-md-inline-flex d-none pl-2">new spark</span>
+        </button>
+
+        <div class="d-flex align-items-center xs-d-none" *ngIf="sparkDetailBySelectedRoute.routeType !== 'sparkList'">
+            <trigger-tooltip [pageTitle]="sparkDetailBySelectedRoute.tooltipId"></trigger-tooltip>
+        </div>
+    </header>
+    <section class="widgets-tab">
+        <div class="flex-shrink-0 px-3">
+            <ul class="nav nav-tabs nav-fill d-flex align-items-center flex-nowrap">
+                <li class="nav-item">
+                    <a class="nav-link font-md font-semibold border-0 d-flex align-items-center justify-content-center active"
+                        data-toggle="tab" href="#currentWeek" (click)="selectTab(1)">Current Week</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link font-md font-semibold border-0 d-flex align-items-center justify-content-center"
+                        data-toggle="tab" href="#currentMonth" (click)="selectTab(2)">Current Month</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link font-md font-semibold border-0 d-flex align-items-center justify-content-center"
+                        data-toggle="tab" href="#history" (click)="selectTab(3)">History</a>
+                </li>
+            </ul>
+        </div>
+        <!-- tab content -->
+        <section class="tab-content" id="nav-tabContent">
+            <section class="tab-pane border-0 position-relative fade show active" id="currentWeek" role="tabpanel"
+                aria-labelledby="nav-home-tab">
+
+                <trigger-spark-reply-presentation *ngIf="currentSelectedTab === 1" [updateSpark]="updateSpark"
+                    [isGetResponse]="isGetResponse" [filterSparks]="filterSparks">
+                </trigger-spark-reply-presentation>
+                <!-- [isSparkViewable]="isSparkViewable" -->
+
+            </section>
+            <div class="tab-pane border-0 fade" id="currentMonth" role="tabpanel" aria-labelledby="nav-profile-tab">
+                <trigger-spark-reply-presentation *ngIf="currentSelectedTab === 2" [updateSpark]="updateSpark"
+                    [isGetResponse]="isGetResponse" [filterSparks]="filterSparks">
+                </trigger-spark-reply-presentation>
+            </div>
+            <div class="tab-pane border-0 fade" id="history" role="tabpanel" aria-labelledby="nav-contact-tab">
+                <trigger-spark-reply-presentation *ngIf="currentSelectedTab === 3" [updateSpark]="updateSpark"
+                    [isGetResponse]="isGetResponse" [filterSparks]="filterSparks">
+                </trigger-spark-reply-presentation>
+            </div>
+        </section>
+    </section>
+</section>

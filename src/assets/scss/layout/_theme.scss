@@ -1,0 +1,301 @@
+//colors
+.white-bg {
+    background-color: var(--bg-wizad);
+    @include transition();
+}
+
+.light-bg {
+    background-color: var(--bg-light);
+    @include transition();
+}
+
+.dark-text {
+    color: var(--dark-text);
+}
+
+.secondary-dark-text {
+    color: var(--text-secondary-dark);
+}
+
+.text-danger-light {
+    color: $danger-light;
+}
+
+.primary-text {
+    color: var(--primary-text);
+    &:hover {
+        color: inherit;
+    }
+}
+
+.field-border-bottom {
+    border-bottom: 1px solid var(--brand-border);
+}
+
+.field-border {
+    border: 2px solid var(--field-border);
+}
+
+// For update modal css
+.modal-background {
+    background: #36425d !important;
+    @include border-radius($border-radius);
+    margin-top: 76px;
+    color: $white !important;
+    & .mat-form-field.mat-focused .mat-form-field-label {
+        color: $white;
+    }
+}
+
+.modal-white-background {
+    @extend .modal-background;
+    background: $white !important;
+    color: #404040 !important;
+    & .mat-form-field.mat-focused .mat-form-field-label {
+        color: $secondary;
+    }
+}
+
+//modalbox dark
+.modal-background-with-dialog-container {
+    background: #222c41 !important;
+    @include border-radius($border-radius);
+    color: white !important;
+    & .form-select,
+    .sm-select-dropdown {
+        select {
+            background-color: #36425d;
+            border: 2px solid #455270;
+            color: $white;
+        }
+    }
+    & .form-control {
+        background-color: #36425d;
+        border: 2px solid #455270;
+        color: $white;
+    }
+    & .brand-border {
+        border: 2px solid #455270;
+    }
+    .btn-outline-secondary,
+    .btn-outline-danger,
+    .btn-outline-success {
+        background-color: $transparent;
+        border: 1px solid $primary;
+    }
+    .request-dropdown .mat-list-item-content {
+        border: 2px solid #455270;
+    }
+    .select-dropdown-text {
+        color: $white;
+    }
+    .xl-dialog-container .radio-checked {
+        border: 2px solid $primary;
+    }
+    .custom-radiobutton .radio-checked {
+        border: 2px solid $primary;
+    }
+    .dark-text {
+        color: $white;
+    }
+    .form-textarea {
+        border: 2px solid #455270;
+        background-color: #36425d;
+        &.form-control {
+            &::placeholder {
+                color: $primary;
+            }
+            &:focus {
+                background-color: #36425d;
+            }
+        }
+    }
+    .textarea-container {
+        border: 2px solid #455270;
+        background-color: #36425d;
+    }
+    .right-date-time-container {
+        background-color: #36425d;
+    }
+    .user-profile-img {
+        border: 2px solid rgba(255, 255, 255, 0.1);
+    }
+    .status-bottom-border {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .my-wall-modal-box {
+        & .nav-tabs {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            & .nav-link.active {
+                background-color: #2c374f;
+            }
+        }
+    }
+    .mat-form-field.mat-focused .mat-form-field-label {
+        color: $white;
+    }
+    .field-border-bottom {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .field-border {
+        border: 2px solid rgba(255, 255, 255, 0.1);
+    }
+    .light-bg {
+        background-color: #2c374f;
+    }
+
+    .trending-ng-select {
+        &.ng-select {
+            .ng-select-container {
+                background-color: #36425d;
+                border: 2px solid #455270;
+                color: $white;
+            }
+        }
+    }
+}
+
+//modalbox white
+.modal-white-background-with-dialog-container {
+    @include border-radius($border-radius);
+    background: $white !important;
+    color: $dark !important;
+    & .form-select,
+    .sm-select-dropdown {
+        select {
+            background-color: $white;
+            border: 2px solid $border;
+            color: $dark;
+        }
+    }
+    & .form-control {
+        background-color: $white;
+        border: 2px solid $border;
+        color: $dark;
+    }
+    & .brand-border {
+        border: 2px solid $border;
+    }
+    .btn-outline-secondary,
+    .btn-outline-danger,
+    .btn-outline-success {
+        background-color: $transparent;
+        border: 1px solid $primary;
+    }
+    .request-dropdown .mat-list-item-content {
+        border: 2px solid #ebecf1;
+    }
+    .select-dropdown-text {
+        color: $primary;
+    }
+    .xl-dialog-container .radio-checked {
+        border: 2px solid $primary-light-50;
+    }
+    .custom-radiobutton .radio-checked {
+        border: 2px solid $primary-light-50;
+    }
+    .dark-text {
+        color: $dark;
+    }
+    .form-textarea {
+        border: 2px solid $border;
+        &.form-control {
+            &::placeholder {
+                color: $secondary-dark;
+            }
+        }
+    }
+    .textarea-container {
+        border: 2px solid $border;
+    }
+    .right-date-time-container {
+        background-color: $white;
+    }
+    .user-profile-img {
+        border: 2px solid $border;
+    }
+    .status-bottom-border {
+        border-bottom: 1px solid $border;
+    }
+    .my-wall-modal-box {
+        & .nav-tabs {
+            border-bottom: 1px solid $border;
+            & .nav-link.active {
+                background-color: $border;
+            }
+        }
+    }
+    .mat-form-field.mat-focused .mat-form-field-label {
+        color: $secondary;
+    }
+    .field-border-bottom {
+        border-bottom: 1px solid $border;
+    }
+    .field-border {
+        border: 2px solid $border;
+    }
+    .light-bg {
+        background-color: #f8f9fa;
+    }
+
+    .trending-ng-select {
+        &.ng-select {
+            .ng-select-container {
+                background-color: $white;
+                border: 2px solid $border;
+                color: $dark;
+            }
+        }
+        .ng-dropdown-panel-items {
+            background-color: $white !important;
+        }
+    }
+}
+
+// For pagination dropdown color change :
+.material-pagination-dropdown-white {
+    background: $white;
+    color: $black;
+}
+
+.material-pagination-dropdown-dark {
+    background: #36425d;
+    color: $white;
+}
+
+//date picker
+.theme-default {
+    &.bs-datepicker {
+        background: $white;
+    }
+    & .bs-datepicker-head {
+        background-color: #777;
+    }
+    & .bs-datepicker-body {
+        border: 1px solid #e9edf0;
+        & table td {
+            color: #54708b;
+        }
+        & table td span.is-other-month {
+            color: rgba(0, 0, 0, 0.25);
+        }
+    }
+}
+
+.theme-dark {
+    &.bs-datepicker {
+        background: #36425d;
+    }
+    & .bs-datepicker-head {
+        background-color: #222c41;
+    }
+    & .bs-datepicker-body {
+        border: 1px solid #455270;
+        & table td {
+            color: $white;
+        }
+        & table td span.is-other-month {
+            color: $secondary;
+        }
+    }
+}

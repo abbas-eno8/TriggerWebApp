@@ -1,0 +1,46 @@
+<!-- Excel upload import read data section start here -->
+<section class="white-bg rounded file-upload-wizard">
+  <section class="excel-upload-container d-flex justify-content-center align-items-center flex-column p-5">
+    <section class="d-flex justify-content-center flex-wrap">
+      <div class="text-center">
+        <div class="icon icon-cloud-upload text-secondary cursor-pointer mb-3" title="Download"></div>
+        <div class="text-secondary font-lg font-semibold mb-3" type="file" triggerExcel accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+          Drag and drop your Excel file here</div>
+        <div class="mb-3" *ngIf="!isVisibleExcelIcon">
+          <label for="file-upload" class="btn btn-primary shadow-sm text-uppercase rounded-pill text-white cursor-pointer" title="Select File">
+            Select File
+          </label>
+          <input class="browse-file" id="file-upload" type="file" (change)="onClickConvertFile($event)" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+        </div>
+        <section class="d-flex justify-content-center align-items-center xs-mb-3" *ngIf="isVisibleExcelIcon">
+          <button type="button" class="d-flex justify-content-center align-items-center btn btn-secondary xs-btn text-uppercase rounded-pill mr-3"
+            title="Import" (click)="onclickImportButton()">
+            <span class="icon icon-import d-flex align-items-center text-white"></span>
+            <span class="pl-2 d-md-inline-flex d-none">import</span>
+          </button>
+          <button type="button" class="d-flex justify-content-center align-items-center btn btn-secondary xs-btn text-uppercase rounded-pill mr-3"
+            title="Reset" (click)="onClickReset()">
+            <span class="icon icon-import d-flex align-items-center text-white"></span>
+            <span class="pl-2 d-md-inline-flex d-none">reset</span>
+          </button>
+        </section>
+      </div>
+      <div class="d-flex align-items-center flex-column justify-content-center pl-2">
+        <span class="mb-1 icon" [ngClass]="{'icon-excel':isVisibleExcelIcon}"></span>
+        <span class="text-primary font-sm mb-1">
+          {{ fileName }}
+        </span>
+        <span class="text-primary font-sm mb-1">
+          {{ fileSize }}
+        </span>
+      </div>
+    </section>
+  </section>
+  <section class="d-flex justify-content-end mt-4">
+    <a href='{{ downloadExcelFileUrl }}' download>
+      <button type="button" class="btn btn-secondary text-uppercase rounded-pill" title="Download Template">download template
+      </button>
+    </a>
+  </section>
+</section>
+<!-- Excel upload import read data section end here -->

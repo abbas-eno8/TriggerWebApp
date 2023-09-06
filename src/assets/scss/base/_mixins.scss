@@ -1,0 +1,141 @@
+// To apply borders
+// ARG: $for as [all,top,right,bottom,left],$type as [any border type value], $size as [any CSS unit], $color as [any CSS unit]
+@mixin border($for, $type, $size, $color) {
+    @if $for==all {
+        border: $size $type $color;
+    }
+
+    @else if $for==top {
+        border-top: $size $type $color;
+    }
+
+    @else if $for==right {
+        border-right: $size $type $color;
+    }
+
+    @else if $for==bottom {
+        border-bottom: $size $type $color;
+    }
+
+    @else if $for==left {
+        border-left: $size $type $color;
+    }
+}
+
+// To apply margin
+// ARG: $for as [all,top,right,bottom,left], $size as [any CSS unit], 
+@mixin margin($for, $size) {
+    @if $for==all {
+        margin: $size;
+    }
+
+    @else if $for==top {
+        margin-top: $size;
+    }
+
+    @else if $for==right {
+        margin-right: $size;
+    }
+
+    @else if $for==bottom {
+        margin-bottom: $size;
+    }
+
+    @else if $for==left {
+        margin-left: $size;
+    }
+}
+
+// To apply padding
+// ARG: $for as [all,top,right,bottom,left], $size as [any CSS unit], 
+@mixin padding($for, $size) {
+    @if $for==all {
+        padding: $size;
+    }
+
+    @else if $for==top {
+        padding-top: $size;
+    }
+
+    @else if $for==right {
+        padding-right: $size;
+    }
+
+    @else if $for==bottom {
+        padding-bottom: $size;
+    }
+
+    @else if $for==left {
+        padding-left: $size;
+    }
+
+    @else if $for==py {
+        padding: $size 0;
+    }
+
+    @else if $for==px {
+        padding: 0 $size;
+    }
+}
+
+
+// use below mixin for applying position's properties
+// ARG: $position as [relative, absolute, fixed]
+/*  for giving position absolute to top & left
+    E.g:-
+     @include position(absolute, 10px, auto, auto, 6px);
+*/
+
+@mixin position ($position, $top: auto, $right: auto, $bottom: auto, $left: auto) {
+    position: $position;
+    top: $top;
+    right: $right;
+    bottom: $bottom;
+    left: $left;
+}
+
+@mixin input-placeholder {
+    &.placeholder {
+        @content;
+    }
+
+    &:-moz-placeholder {
+        @content;
+    }
+
+    &::-moz-placeholder {
+        @content;
+    }
+
+    &:-ms-input-placeholder {
+        @content;
+    }
+
+    &::-webkit-input-placeholder {
+        @content;
+    }
+}
+
+//for height width size
+@mixin size($width, $height: $width) {
+    width: $width;
+    height: $height;
+}
+
+// //for retina 
+// @mixin for-viewport($size) {
+//     @media #{$retina} {
+//         @if $size==4k-view {
+//             @media (max-width: 2560px) {
+//                 @content;
+//             }
+//         }
+
+//         @else if $size==5k-view {
+//             @media (max-width: 5120px) {
+//                 @content;
+//             }
+//         }
+//     }
+// }
+

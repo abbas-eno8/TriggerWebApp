@@ -1,0 +1,90 @@
+<section class="list-accordion-conatiner d-flex flex-column h-100 overflow-hidden">
+  <header class="list-header d-flex justify-content-between align-items-center rounded-top flex-shrink-0">
+    <div class="w-40px text-center">
+      <mat-checkbox *ngIf="isDisplayMasterCheckbox" (change)="memberPresenter.onCheckMasterCheckbox($event.checked)"
+        [(ngModel)]="isCheckedMasterCheckbox"></mat-checkbox>
+    </div>
+    <div class="card-header-item font-semibold text-uppercase d-flex align-items-center">
+      <div class="text-ellipsis"> {{ columns[0].column }}</div>
+      <div class="ml-1 cursor-pointer" (click)="memberPresenter.sort(columns[0].property)"
+        [ngClass]="memberPresenter.getDirecionIcon(columns[0].property)"></div>
+    </div>
+    <div class="card-header-item font-semibold text-uppercase d-flex align-items-center">
+      <div class="text-ellipsis"> {{ columns[1].column }}</div>
+      <div class="ml-1 cursor-pointer" (click)="memberPresenter.sort(columns[1].property)"
+        [ngClass]="memberPresenter.getDirecionIcon(columns[1].property)"></div>
+    </div>
+    <div class="card-header-item font-semibold text-uppercase text-center">action</div>
+    <div class="w-40px text-uppercase mr-3"></div>
+  </header>
+  <section class="overflow-auto card-accordion-container rounded-bottom h-100 shadow-sm" id="mainDIV" (scroll)="scrollService.onWindowScroll()">
+    <section id="accordion" class="accordion">
+      <section class="card mb-0 border-0" *ngFor="let member of filterTeamMembers; let i = index">
+        <div class="d-flex justify-content-between align-items-center card-container">
+          <div class="w-40px d-flex justify-content-center align-items-center"
+          [ngClass]="{'item-status-supported': member.empStatus === 2, 'item-status-on-leave' : member.empStatus === 3}">
+            <mat-checkbox (change)="memberPresenter.onCheck($event.checked, i, member.empId)" *ngIf="!member.isMailSent"
+              [checked]="member.isChecked" [disabled]="!member.email"></mat-checkbox>
+            <label for="item"></label>
+            <div *ngIf="member.isMailSent && !member.isPasswordGenerated && member.empStatus" class="icon icon-prohibited-access text-primary text-center"></div>
+          </div>
+          <div class="card-header-item text-ellipsis d-flex align-items-center">
+            <div>{{ member[columns[0].property] }}</div>
+          </div>
+          <div class="card-header-item text-ellipsis">
+            {{ member[columns[1].property] }}
+          </div>
+          <div class="card-header-item">
+            <section class="d-flex justify-content-center align-items-center">
+              <div class="dropdown list-action-dropdown">
+                <button type="button" class="btn border-0 bg-transparent dropdown-toggle d-flex align-items-center"
+                  data-toggle="dropdown" [disabled]="member.isDisabledAction">
+                  <span class="icon icon-click d-flex align-items-center"></span>
+                </button>
+                <div id="action-dropdown" class="dropdown-menu toggle-dropdown-menu border-0 shadow-sm">
+                  <a>
+                    <button class="icon icon-edit-1 mr-1 btn bg-transparent d-flex align-items-center" title="Edit"
+                      *ngIf="member.isEditable" (click)="memberPresenter.redirectedToEditMember(member.empId)"></button>
+                  </a>
+                  <a>
+                    <button class="icon icon-bin mr-1 btn bg-transparent" title="Delete" *ngIf="member.isDeletable"
+                      (click)="memberPresenter.openModalForDeleteTeamMember(member.empId)"></button>
+                  </a>
+                  <a>
+                    <button class="icon icon-business-man mr-1 btn bg-transparent" title="Evaluate Employee"
+                      *ngIf="(member.isTriggerEmployee && member.empStatus !== 2)"
+                      (click)="memberPresenter.redirectedToEvaluateTeamMember(member.empId, member.managerLastAssessedDate, member.isTriggerSent)"></button>
+                  </a>
+                  <a>
+                    <button class="icon icon-user-setting mr-1 btn bg-transparent" title="Team Member Dashboard"
+                      *ngIf="(member.isDisplayEmployeeDashboard && member.empStatus !== 2)"
+                      (click)="memberPresenter.redirectedToEmployeeDashboard(member.empId, member.ratingCompleted, member.isTriggerSent)"></button>
+                  </a>
+                  <a>
+                    <button class="icon icon-spark mr-1 btn bg-transparent" title="Spark Team Member"
+                      *ngIf="(isAdminOrSuperAdmin || member.isSparkViewable || member.isSparkAddable) && member.empStatus !== 2"
+                      (click)="memberPresenter.redirectedToSparkAnEmployee(member)"></button>
+                  </a>
+                </div>
+              </div>
+            </section>
+          </div>
+          <div class="card-header collapsed p-0 text-center cursor-pointer bg-transparent" data-toggle="collapse"
+            href="#collapseOne" [attr.data-target]="'#collapse' + member.employeeId"
+            [attr.aria-controls]="'collapse' + member.employeeId">
+          </div>
+        </div>
+
+        <div [id]="'collapse' + member.employeeId" class="collapse" data-parent="#accordion">
+          <div class="card-body px-3 py-2 font-sm" *ngFor="let col of columns | slice:2 ; let idx = index">
+            <span class="text-primary font-semibold">{{ col.column }}</span> : 
+            <span *ngIf="(col.property !== 'trending')">{{ member[col.property] }}</span>
+            <span *ngIf="(col.property === 'trending')" class="icon" [ngClass]="{'font-icon-Up' : member[col.property] === 1,
+            'font-icon-Down' : member[col.property] === 2, 'font-icon-Steady' : member[col.property] === 3 }">
+           </span>
+          </div>
+        </div>
+      </section>
+    </section>
+  </section>
+</section>

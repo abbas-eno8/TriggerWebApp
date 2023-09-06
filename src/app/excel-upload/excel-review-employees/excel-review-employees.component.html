@@ -1,0 +1,38 @@
+<!-- Excle upload review employee section start here -->
+<section class="d-flex justify-content-center align-items-center flex-wrap">
+  <section class="excel-review-box shadow xs-mb-3 d-flex flex-column" [ngClass]="{'box-disabled':newEmpCount === 0 || newEmpValue === 'DONE' || mismatchValue === 'IMPORT & REPLACE'}">
+    <section class="rounded-top white-bg wizard-box d-flex flex-grow-1 justify-content-center">
+      <div class="text-center">
+        <div class="text-primary font-xl font-semibold mb-4">New Team Members</div>
+        <div class="text-primary font-semibold display-3">
+          {{ newEmpCount }}
+        </div>
+      </div>
+    </section>
+    <section class="rounded-bottom bg-success cursor-pointer mt-auto d-flex align-items-center justify-content-center" (click)="onClickReviewNewEmployees()">
+      <div class="p-4 d-flex justify-content-center align-items-center">
+        <div [ngClass]="newEmpClass"></div>
+        <div class="text-white text-uppercase pl-3 font-lg">
+          {{ newEmpValue }} 
+        </div>
+      </div>
+    </section>
+  </section>
+  <section class="excel-review-box shadow d-flex flex-column" [ngClass]="{'box-disabled':mismatchCount === 0}">
+    <section class="rounded-top white-bg wizard-box d-flex flex-grow-1 justify-content-center">
+      <div class="text-center">
+        <div class="text-primary font-xl font-semibold mb-4">Mismatch Data</div>
+        <div class="text-primary font-semibold display-3">
+          {{ mismatchCount }}
+        </div>
+      </div>
+    </section>
+    <section class="rounded-bottom bg-info cursor-pointer mt-auto" (click)="onClickReviewMismatchData()">
+      <div class="p-4 d-flex justify-content-center align-items-center">
+        <div [ngClass]="mismatchClass"></div>
+        <div class="text-white text-uppercase pl-3 font-lg">{{ mismatchValue }}</div>
+      </div>
+    </section>
+  </section>
+</section>
+<!-- Excle upload review employee section end here -->

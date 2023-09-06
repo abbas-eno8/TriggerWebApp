@@ -1,0 +1,36 @@
+<section class="d-flex flex-column h-100">
+    <!-- header part start here -->
+    <header class="d-flex justify-content-between p-3 flex-shrink-0 flex-nowrap">
+        <section class="d-flex align-items-center dark-text font-xl font-semibold">
+            {{headerText}}
+        </section>
+        <section class="d-flex align-items-center">
+            <button *ngIf="isSurvey" type="button" title="New Survey"
+                class="btn btn-primary xs-btn text-uppercase rounded-pill mr-3 d-flex align-items-center justify-content-center"
+                (click)="surveyListPresenter.redirectedToAddSurvey(0)">
+                <div class="icon icon-add text-white"></div>
+                <div class="pl-2 d-md-inline-flex d-none">New Survey</div>
+            </button>
+            <!-- tooltip start here -->
+            <trigger-tooltip [pageTitle]="isSurvey ? 64 : 74"></trigger-tooltip>
+        </section>
+    </header>
+    <section *ngIf="isSurvey" class="px-3 pb-3 flex-shrink-0">
+        <trigger-search-view [searchFields]="searchFields" [list]="baseResponse"
+            [placeHolder]="searchPlaceHolder" (bindRecords)="bindRecords($event)">
+        </trigger-search-view>
+    </section>
+
+    <section class="h-100 flex-grow-1 overflow-hidden position-relative">
+        <!-- main conrainer start here -->
+        <section class="d-flex flex-column overflow-hidden px-3 h-100 main-container">
+            <section class="h-100">
+                <ng-container #viewListRef></ng-container>
+            </section>
+        </section>
+        <!-- main conrainer end here -->
+    </section>
+    <footer class="d-flex justify-content-end align-items-center mt-auto px-3">
+        <ng-container #viewPaginationRef></ng-container>
+    </footer>
+</section>

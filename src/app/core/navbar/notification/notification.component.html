@@ -1,0 +1,112 @@
+<div class="dropdown notify-dropdown mr-3">
+    <button type="button" (click)='onClickIcon()' class="dropdown-toggle btn bg-transparent" id="dropdownMenuButton"
+        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <div class="icon icon-notification mt-2 cursor-pointer">
+            <div class="notify-active font-semibold" *ngIf="countOfUnreadMessage === 0"></div>
+            <div class="notify-active font-semibold" *ngIf="countOfUnreadMessage !== 0">
+                {{ countOfUnreadMessage }}
+            </div>
+        </div>
+    </button>
+    <span class="arrow"></span>
+    <div class="dropdown-menu border-0 shadow-sm dropdown-menu-right rounded" aria-labelledby="dropdownMenuButton">
+        <div class="text-white bg-dropdown font-semibold p-2 field-border-bottom font-lg rounded-top">Notifications
+        </div>
+        <div *ngIf="notifications?.length === 0" class="font-semibold">
+            <div class='p-3 text-center'>{{responseErrorMessage}}</div>
+        </div>
+        <div #scrollRef class="notification-container" (scroll)="loadMoreNotification()"
+            *ngIf="notifications?.length !== 0">
+            <ng-container *ngFor="let data of notifications">
+                <div (click)='redirection(data)' class="p-2 field-border-bottom d-flex align-items-start font-sm"
+                    [ngClass]="{'unread-notification': !data.markAs}">
+                    <div class="d-flex align-items-center">
+                        <span *ngIf="!data.markAs" class="unread-badge"></span>
+                        <div style="width:32px; height:32px"
+                            class="rounded-circle flex-shrink-0 bg-primary ml-2 mr-2 d-flex align-items-center justify-content-center">
+                            <span class="font-md text-white icon" [ngClass]="{
+                                'icon-user': data.type === 1,
+                                'icon-team': data.type === 2,
+                                'icon-spark-an-employee': data.type === 3 || data.type === 4 || data.type === 6 || data.type === 7 || data.type === 12,
+                                'icon-reward': data.type === 5,
+                                'icon-location-1': data.type === 9,
+                                'icon-clip-board': data.type == 8 || data.type === 10,
+                                'icon font-icon-draft': data.type === 11,
+                                'icon icon-trigger-an-employee': data.type === 13}">
+                            </span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="cursor-pointer" id='{{ data.id }}'>
+                            {{ data.message }}
+                        </div>
+                        <div class="text-secondary-dark notification-timestamp font-xs ">
+                            {{data.createdDtStamp | dateAgo}}
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+        <!-- <div class="notification-container px-2 pt-2">
+            <div class="d-flex shadow-sm cursor-pointer p-2 grow position-relative overflow-hidden light-bg rounded mb-2 ">
+                <div class="sm-user-profile-img mr-2 d-flex align-items-center shadow-sm justify-content-center rounded-circle ">
+                    <div class="font-semibold text-secondary font-sm">
+                        AP
+                    </div>
+                    
+                </div>
+                <section class="d-flex flex-column">
+                    <div class="pl-1" style="height: 48px;">
+                        <div class="font-sm">notification from xyz </div>
+                        <div class="font-xs secondary-dark-text">20 min ago</div>
+                    </div>
+                    <div class="font-sm pt-1">Lorem ipsum, dolor sit amet consectetur adipisicing elit. </div>
+                </section>
+            </div>
+            <div class="d-flex shadow-sm cursor-pointer p-2 grow position-relative overflow-hidden light-bg rounded mb-2 ">
+                <div class="sm-user-profile-img mr-2 d-flex align-items-center shadow-sm justify-content-center rounded-circle ">
+                    <div class="font-semibold text-secondary font-sm">
+                        AP
+                    </div>
+                    
+                </div>
+                <section class="d-flex flex-column">
+                    <div class="pl-1" style="height: 48px;">
+                        <div class="font-sm">notification from xyz </div>
+                        <div class="font-xs secondary-dark-text">20 min ago</div>
+                    </div>
+                    <div class="font-sm pt-1">Lorem ipsum, dolor sit amet consectetur adipisicing elit. </div>
+                </section>
+            </div>
+            <div class="d-flex shadow-sm cursor-pointer p-2 grow position-relative overflow-hidden light-bg rounded mb-2 ">
+                <div class="sm-user-profile-img mr-2 d-flex align-items-center shadow-sm justify-content-center rounded-circle ">
+                    <div class="font-semibold text-secondary font-sm">
+                        AP
+                    </div>
+                   
+                </div>
+                <section class="d-flex flex-column">
+                    <div class="pl-1" style="height: 48px;">
+                        <div class="font-sm">notification from xyz </div>
+                        <div class="font-xs secondary-dark-text">20 min ago</div>
+                    </div>
+                    <div class="font-sm pt-1">Lorem ipsum, dolor sit amet consectetur adipisicing elit. </div>
+                </section>
+            </div>
+            <div class="d-flex shadow-sm cursor-pointer p-2 grow position-relative overflow-hidden light-bg rounded mb-2 ">
+                <div class="sm-user-profile-img mr-2 d-flex align-items-center shadow-sm justify-content-center rounded-circle ">
+                    <div class="font-semibold text-secondary font-sm">
+                        AP
+                    </div>
+                </div>
+                <section class="d-flex flex-column">
+                    <div class="pl-1" style="height: 48px;">
+                        <div class="font-sm">notification from xyz </div>
+                        <div class="font-xs secondary-dark-text">20 min ago</div>
+                    </div>
+                    <div class="font-sm pt-1">Lorem ipsum, dolor sit amet consectetur adipisicing elit. </div>
+                </section>
+            </div>
+        </div> -->
+    </div>
+</div>

@@ -1,0 +1,47 @@
+<!-- multiselect dropdown section start here -->
+<section class="department-dropdown">
+  <mat-list-item class="p-0 position-relative d-flex align-items-center cursor-pointer" role="listitem">
+    <mat-form-field>
+      <!-- (click)="addClassDynamic()" -->
+      <mat-select  placeholder="" name="department" [(ngModel)]="selectedDepartments" [compareWith]="equals" multiple
+        #departmentSelect="ngModel" (click)="openSelectDropdown()" [disabled]="!isDepartment"
+        [ngClass]="{'disabled-item':!isDepartment}" (openedChange)="openedChange($event)">
+        <mat-select-trigger>
+          <div *ngIf="selectedDepartments?.length > 0" class="d-flex justify-content-between cursor-pointer">
+            <span class="ml-3 xs-d-none">Departments</span>
+            <span class="ml-3 d-none xs-d-block">Select Departments</span>
+            <span> +{{selectedDepartments.length}}</span>
+          </div>
+        </mat-select-trigger>
+        <mat-option class="search-class">
+          <ngx-mat-select-search [formControl]="departmentMultiFilterCtrl" [placeholderLabel]="'Search Department...'"
+            [noEntriesFoundLabel]="'No matching departments found'">
+            <mat-icon>close</mat-icon>
+          </ngx-mat-select-search>
+        </mat-option>
+        <mat-option disabled="disabled" class="filter-option">
+          <section class="button-group-container text-center">
+            <button mat-raised-button class="fill text-sm btn btn-outline-secondary"
+              (click)="selectAll(departmentSelect, filteredDepartmentMulti,departments)">
+              Select All
+            </button>
+            <button mat-raised-button class="fill text-sm btn btn-outline-danger mx-2"
+              (click)="deselectAll(departmentSelect,filteredDepartmentMulti)">
+              Deselect All
+            </button>
+            <button mat-raised-button class="fill text-sm btn btn-outline-success" (click)="submitDepartment()"
+              [disabled]="isDisableApply" [ngClass]="{'disabled-item':isDisableApply}">
+              Apply
+            </button>
+          </section>
+        </mat-option>
+        <section class="custom-overflow">
+          <mat-option *ngFor="let department of filteredDepartmentMulti | async" [value]="department">
+            {{department.name}}
+          </mat-option>
+        </section>
+      </mat-select>
+    </mat-form-field>
+  </mat-list-item>
+</section>
+<!-- multiselect dropdown section end here -->

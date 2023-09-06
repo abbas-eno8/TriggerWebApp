@@ -1,0 +1,84 @@
+<form [formGroup]="sparkAnForm">
+    <section class="row mx-0 mt-3">
+        <section class="col-xl-6 col-md-6 col-sm-12 px-2">
+            <div class="form-select mb-3">
+                <select class="w-100 rounded" formControlName="categoryId" [ngClass]="isDropdownValid('categoryId')"
+                    (change)="onChangeCategory($event)">
+                    <option value=0>Select Category</option>
+                    <option *ngFor="let type of _categories" [value]=type.id>
+                        {{ type.category }}
+                    </option>
+                </select>
+            </div>
+            <div class="form-select xs-mb-3">
+                <select class="w-100 rounded" formControlName="classificationId" (focus)="focusOnClassification($event)"
+                    [ngClass]="isDropdownValid('classificationId')">
+                    <option value=0>Select Classification</option>
+                    <option *ngFor="let type of _classifications" [ngValue]=type.classificationId>
+                        {{ type.classification }}
+                    </option>
+                </select>
+            </div>
+        </section>
+        <section class="col-xl-6 col-md-6 col-sm-12 xs-mb-3 px-2">
+            <section class="d-flex flex-column position-relative textarea-container rounded">
+                <div class="right-date-time-container secondary-dark-text text-right">
+                    <DateTimeStamp #dateTimeStamp></DateTimeStamp>
+                </div>
+                <textarea class="form-textarea form-control border-0 w-100" placeholder="Enter description"
+                    formControlName="spark"></textarea>
+            </section>
+        </section>
+    </section>
+    <section class="d-flex justify-content-between align-items-center flex-wrap">
+        <section class="d-flex justify-content-between align-items-center w-100 col-xl-6 col-md-6 col-sm-12 px-2">
+            <div class="d-flex align-items-center">
+                <div class="position-relative upload-btn-wrapper">
+                    <button class="btn bg-transparant icon icon-paper-clip text-primary d-flex align-items-center"
+                        title="Attachment" (click)="openCustomFileChooser()" #attachment></button>
+                </div>
+                <div *ngIf="fileName" class="text-primary font-sm ml-2 cursor-defult" [title]="fileName">
+                    {{ fileName | ellipsis : 30 }}
+                </div>
+            </div>
+            <button *ngIf="fileName" type="button"
+                class="icon icon-bin mr-1 btn bg-transparent d-flex align-items-center cursor-pointer" title="Delete"
+                (click)="deleteAttachment()"></button>
+        </section>
+        <section class="d-flex justify-content-between flex-wrap mt-3 col-xl-6 col-md-6 col-sm-12 px-2">
+            <section class="d-flex align-items-center xs-mb-3">
+                <label class="md-switch">
+                    <input type="checkbox" formControlName="sendSpark" [value]="sparkAnForm.value.sendSpark"
+                        [attr.disabled]="!sendSpark ? 'disabled' : null">
+                    <span class="md-slider round"></span>
+                </label>
+                <div class="ml-2 dark-text">Send Spark</div>
+            </section>
+            <section *ngIf="hideRadioButton"
+                class="d-flex flex-nowrap w-100 col-lg-6 col-md-6 col-sm-6 col-xs-12 px-0 align-items-center">
+                <div class="col-6 p-0 d-flex flex-nowrap align-items-center">
+                    <label class="custom-radiobutton">
+                        <span class="pl-2">Public</span>
+                        <input type="radio" value=1 formControlName="sparkPrivacy"
+                            [checked]="isCheckedPublicRadioButton(1)">
+                        <span class="radio-checked"></span>
+                    </label>
+                </div>
+                <div class="col-6 p-0 d-flex flex-nowrap align-items-center">
+                    <label class="custom-radiobutton">
+                        <span class="pl-2">Private</span>
+                        <input type="radio" value="2" formControlName="sparkPrivacy"
+                            [checked]="isCheckedPublicRadioButton(2)">
+                        <span class="radio-checked"></span>
+                    </label>
+                </div>
+            </section>
+        </section>
+    </section>
+    <footer class="d-flex justify-content-end align-items-center mt-3">
+        <button type="button" title="Reset" class="btn secondary-light-btn btn-sm text-uppercase rounded-pill mr-2"
+            (click)="reset()">Reset</button>
+        <button type="button" title="Submit" class="btn btn-secondary btn-sm text-uppercase rounded-pill"
+            (click)="save()" [disabled]="isDisabledSubmitBtn">Submit</button>
+    </footer>
+</form>

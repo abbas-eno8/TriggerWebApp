@@ -1,0 +1,7 @@
+<trigger-survey-list-presentation 
+    [isSurvey] ="isSurvey"
+    [baseResponse]="baseResponse$ | async" 
+    [isDeleteSurvey]="isDeleteSurvey" 
+    (updateStatus)="updateStatus($event)" 
+    (delete)="deleteSurvey($event)">
+</trigger-survey-list-presentation>

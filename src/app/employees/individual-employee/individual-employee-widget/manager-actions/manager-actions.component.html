@@ -1,0 +1,33 @@
+<!-- widget section start here -->
+<section class="rounded white-bg shadow-sm d-flex flex-column flex-grow-1"
+  [ngClass]="isSparkViewable? 'comment-widgets-box' : 'widgets-box'">
+  <div class="d-flex flex-nowrap justify-content-between p-3">
+    <div class="dark-text font-semibold font-md">
+      Manager Action for Team Member
+    </div>
+    <div class="d-flex align-items-center xs-d-none">
+      <trigger-tooltip [pageTitle]="pageTitle" [bulbTootlip]="bulbTootlip"></trigger-tooltip>
+    </div>
+  </div>
+  <section class="flex-grow-1 overflow-auto px-3 mb-2">
+    <div class="d-flex align-items-center flex-wrap mb-2">
+      <div class="d-flex align-items-center text-secondary font-sm " *ngIf="generalScoreRank">
+      <span class="font-semibold"> {{generalScoreRank}}:-</span>  
+        <span class="dark-text ml-1">{{scoreSummary}}</span>
+      </div>
+      <div class="d-flex align-items-center flex-wrap" *ngIf="managerAction">
+        <div class="mx-2 xs-d-none">|</div>
+        <div class="d-flex align-items-center text-secondary font-sm">
+          <span class="font-semibold"> Manager Action:- </span> 
+          <span class="dark-text ml-1">{{managerAction}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="d-flex align-items-center text-secondary font-sm my-2" *ngIf="lastAssessedDate">
+      <span class="font-semibold">Date:- </span> 
+      <span class="dark-text ml-1">{{lastAssessedDate}}</span>
+    </div>
+    <div class="font-sm"> {{lastScoreRemarks}}</div>
+  </section>
+</section>
+<!-- widget graph section end here -->

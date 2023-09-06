@@ -1,0 +1,24 @@
+@import "~assets/scss/base/variables";
+@import "~assets/scss/base/colors";
+@import "~bootstrap/scss/mixins/breakpoints";
+@import "~assets/scss/base/mixins";
+.modal-body-container {
+    overflow-y: auto;
+    height: 100%;
+    @include media-breakpoint-down('sm-small') {
+        height: 20rem;
+    }
+}
+.box-body-container {
+    height: 25rem;
+}
+.filter-button{
+    background: none;
+	color: inherit;
+	border: none;
+	// padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+    text-decoration: underline;
+}

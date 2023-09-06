@@ -1,0 +1,19 @@
+.mat-cell:nth-child(1),
+.mat-header-cell:nth-child(1) {
+    justify-content: center;
+    text-align: center;
+    flex: 0 0 10%;
+}
+
+.bg-danger-light, .bg-success-light {
+    width: 92px;
+}
+.mat-cell, .mat-footer-cell, .mat-header-cell {
+    min-height: 100%;
+}
+.mat-row {
+    align-items: flex-start;
+}
+.mat-cell {
+    margin: 14px 0;
+}

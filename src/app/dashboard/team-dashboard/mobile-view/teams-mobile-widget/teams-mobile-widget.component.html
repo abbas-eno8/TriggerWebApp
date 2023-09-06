@@ -1,0 +1,32 @@
+<!-- team dashboard mobile view design start here -->
+<section class="d-none xs-d-block">
+    <section class="d-flex justify-content-between w-100 my-3 white-bg p-3 rounded">
+        <section class="d-flex flex-column col-6 px-0">
+            <section class="d-flex">
+                <div class="icon-container bg-primary d-flex justify-content-center align-items-center text-white mt-3"
+                [ngClass]="getbackgroundClassOfAvgScoreByDay()">
+                    <span class="icon icon-graph text-white"></span>
+                </div>
+                <div class="px-2">
+                    <div class="text-primary font-bold display-3" [ngClass]="aveargeScoreByDayClass">
+                        {{ avgScoreByDayScore }}</div>
+                    <div class="dark-text font-semibold font-xs">Team Average Score By Day</div>
+                </div>
+            </section>
+        </section>
+        <section class="d-flex flex-column col-6 px-0">
+            <section class="d-flex">
+                <div class="icon-container d-flex justify-content-center align-items-center text-white mt-3"
+                    [ngClass]="getbackgroundClassOfAvgScore()">
+                    <span class="icon icon-graph text-white"></span>
+                </div>
+                <div class="px-2">
+                    <div class="font-bold display-3" [ngClass]="teamAvgscoreClass">
+                        {{ teamAvgScore }}</div>
+                    <div class="dark-text font-semibold font-xs">Team Average Score {{selectedYearBinding}}</div>
+                </div>
+            </section>
+        </section>
+    </section>
+</section>
+<!-- team dashboard mobile view design start here -->

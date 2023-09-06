@@ -1,0 +1,38 @@
+<section class="d-flex flex-column overflow-hidden rounded" style="max-height: 400px;">
+    <section class="data-table-header position-relative" id="data-table-header" (scroll)="scrollService.onScroll($event)">
+        <table class="w-100 font-semibold">
+            <thead>
+                <tr>
+                    <th>Report Details</th>
+                    <th>Team Member</th>
+                    <th>Status</th>
+                    <th>Remark</th>
+                    <th>Date</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+        </table>
+    </section>
+    <section  class="data-table-body h-100" (scroll)="scrollService.onScroll($event)" id="mainDiv">
+        <table class="w-100">
+            <tbody>
+                <tr *ngFor="let item of reportsData">
+                    <td>{{item.reportTitle}}</td>
+                    <td>{{item.employeeName}}</td>
+                    <td>{{item.status === 1 ? 'Download' : ((item.status === 2) ? 'Sent' : '')}}</td>
+                    <td>{{item.remark}}</td>
+                    <td>{{item.createdDateTime | date: 'MM/dd/yyyy'}}</td>
+                    <td>
+                        <button type="button" style="min-width: 105px;" class="btn btn-secondary rounded-pill text-uppercase px-2 py-1 font-sm"
+                            (click)="exportReport(item)" title="Export">
+                            Export
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+    <section *ngIf="noRecordFound" class=" d-flex justify-content-center align-items-center h-100 flex-column w-100 p-4">
+        <div class="dark-text font-semibold font-lg"> No records found</div>
+    </section>
+</section>

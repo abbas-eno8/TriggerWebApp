@@ -1,0 +1,55 @@
+<!-- tooltip header section start here -->
+<div class="d-flex align-items-center">
+    <div class="info-tooltip show-bulb-icon pb-1" *ngIf="isBulbTootlip && !!bulbTootlipContent">
+        <span class="icon font-icon-bulb text-warning"></span>
+        <div class="tooltiptext">
+            <!-- <span class="d-flex justify-content-center align-items-center font-semibold text-center">
+                bulbTootlipHeader
+            </span> -->
+            <div class="mt-1">
+                <span class="bulbtooltip" [innerHTML]="bulbTootlipContent"></span>
+            </div>
+        </div>
+    </div>
+    <div class="info-tooltip" [ngClass]="tooltipIconClass" *ngIf="tooltipIconClass !== 'info-tooltip-dashboard-big'">
+        <div class="tooltiptext">
+            <span class="d-flex justify-content-center align-items-center font-semibold text-center">
+                {{ tooltipHeader}}
+            </span>
+            <div class="mt-1" *ngFor="let text of tooltipDescription; let i = index">
+                <span>{{ text }}</span>
+            </div>
+        </div>
+    </div>
+    <!-- tooltip dashboard section start here -->
+    <div class="info-tooltip" [ngClass]="tooltipIconClass" *ngIf="tooltipIconClass === 'info-tooltip-dashboard-big'">
+        <div class="tooltiptext">
+            <div class="text-center">
+                <span class="font-semibold">{{ tooltipHeader }}</span>
+            </div>
+            <div class="text-left">
+                {{ tooltipDescription }}
+            </div>
+            <div class="my text-left">This is split up by the following categories:</div>
+            <div class="text-info-light font-semibold ">
+                A-PLAYER:
+            </div>
+            <div class="text-left">Offers a consistent competitive advantage. </div>
+            <div class="text-info-light font-semibold ">B-PLAYER:</div>
+            <div class="text-left"> Offers some competitive advantage. </div>
+            <div class="text-info-light font-semibold ">C-PLAYER: </div>
+            <div class="text-left">Offers no competitive advantage but fills a role. </div>
+            <div class="text-info-light font-semibold "> RP (REPLACEMENT PLAYER):</div>
+            <div class="text-left">Current, or potential liability to the company.</div>
+        </div>
+    </div>
+</div>
+<!-- tooltip dashboard section end here -->
+<!-- tooltip iframe section start here -->
+<!-- <div class="info-tooltip" [ngClass]="tooltipIconClass" *ngIf="tooltipIconClass === 'tooltip-settings'">
+    <div class="tooltiptext">
+        <span class="d-flex justify-content-center align-items-center font-semibold">{{ tooltipHeader }}</span>
+        <div class="mt-1">{{ tooltipDescription }}</div>
+    </div>
+</div> -->
+<!-- tooltip iframe section end here -->

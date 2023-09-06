@@ -1,0 +1,12 @@
+<section class="flex-grow-1 overflow-hidden position-relative h-100" [ngClass]="{'list-accordion':isAccordianView}">
+    <!-- main conrainer start here -->
+    <section class="d-flex flex-column overflow-hidden px-3 pb-3 h-100">
+        <section class="h-100">
+            <ng-container #viewListRef></ng-container>
+        </section>
+    </section>
+    <!-- main conrainer end here -->
+</section>
+<footer class="d-flex justify-content-end align-items-center mt-auto px-3">
+    <ng-container #viewPaginationRef></ng-container>
+</footer>

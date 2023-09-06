@@ -1,0 +1,8 @@
+<trigger-my-wall-ui [userSpark]="userSparks$ | async" [sparkReactions]="sparkReactions$ | async"
+    [reactions]="reactions$ | async" [comments]="comments$ | async" (getUserSparks)="getUserSparks($event)"
+    (getSparkComments)="getSparkComments($event)" (getSparkReactionsById)="getSparkReactionsById($event)"
+    (addReaction)="addReaction($event)" (deleteReaction)="deleteReaction($event)"
+    [isUpdateReaction]="isUpdateReaction" (addComment)="addComment($event)"
+    [updateComment]="updateCommentObject" 
+    [subSparks]="subSparks$| async" (getSubSparks)="getSubSparks($event)">
+</trigger-my-wall-ui>

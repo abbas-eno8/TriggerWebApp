@@ -1,0 +1,28 @@
+@import "~assets/scss/base/variables";
+@import "~assets/scss/base/colors";
+@import "~bootstrap/scss/mixins/breakpoints";
+@import "~assets/scss/base/mixins";
+
+// .form-select {
+//     & select {
+//         min-width: 90px;
+//     }
+// }
+// .icon-first, .icon-previous, .icon-last, .icon-next {
+//     font-size: 15px;
+//     // color: $primary-dark;
+//     color: var(--text-pagination);
+//     &:hover {
+//         color: $secondary-dark;
+//     }
+//     &.active {
+//         color: $secondary-dark;
+//     }
+//     &:disabled {
+//         cursor: no-drop;
+//         opacity: 0.5;
+//     }
+// }
+.secondary-dark-text {
+    color: var(--text-pagination);
+}

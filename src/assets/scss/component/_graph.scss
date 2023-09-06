@@ -1,0 +1,77 @@
+.graph-line {
+    height: 28px;
+    @include media-breakpoint-down('xl') {
+        height: 25px;
+    }
+}
+
+.graph-icon-container {
+    @include size(45px, 45px);
+    min-width: 45px;
+    margin-left: -5px;
+    @include media-breakpoint-down('xl-wide') {
+        @include size(40px, 40px);
+        min-width: 40px;
+    }
+    @include media-breakpoint-down('sm-small') {
+        @include size(35px, 35px);
+        min-width: 35px;
+    }
+}
+
+.graph-icon-indicator-container {
+    @extend .graph-icon-container;
+    margin-left: 0;
+}
+
+.graph-indicator-container {
+    @include position(absolute, auto, auto, 14px, auto);
+    @include media-breakpoint-down('xl') {
+        @include position(absolute, auto, auto, 0, auto);
+    }
+    @include media-breakpoint-down('sm-small') {
+        @include position(absolute, auto, auto, 20px, auto);
+    }
+}
+
+.grow-right {
+    padding: 5px 5px 5px 5px;
+    height: 25px;
+    @include position(relative, auto, auto, auto, -5px);
+    overflow: hidden;
+    transition: .8s;
+    max-width: 20px;
+    margin-top: -6px;
+    @include border-radius($border-radius);
+    &:hover {
+        max-width: 160px;
+        color: $white;
+        background-color: $primary;
+    }
+    & .grow-p-l {
+        padding-left: 9px;
+    }
+}
+
+// .graph-gread-text {
+//     font-size: 4em;
+//     line-height: normal;
+//     @include media-breakpoint-down('xl') {
+//         font-size: 2.3em;
+//     }
+// }
+.graph-text {
+    color: var(--text-pagination);
+    font-size: 11px;
+    font-weight: 500;
+    transition: .8s;
+    @include media-breakpoint-down('sm-small') {
+        max-width: 50px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 10px;
+        &:hover {
+            max-width: 116px;
+        }
+    }
+}

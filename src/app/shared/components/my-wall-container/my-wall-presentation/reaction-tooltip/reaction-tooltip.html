@@ -1,0 +1,29 @@
+<div *ngIf="userSpark && !!userSpark.countReaction" class="d-flex align-items-center cursor-pointer info-tooltip"
+    [ngClass]="tooltipClass">
+    <div class="emojis-parent-img" *ngFor="let imageId of userSpark.reactionEmoji; let i = index">
+        <img [src]="getEmoji(imageId)" (click)="onClickCount(userSpark.sparkId, userSpark.commentId)">
+    </div>
+    <div>
+        <span class="font-semibold font-md dark-text pl-1"
+            (click)="onClickCount(userSpark.sparkId, userSpark.commentId)">{{ userSpark.countReaction }}</span>
+        <div class="tooltiptext d-flex flex-column">
+            <div class="d-flex align-items-center pb-2" *ngFor="let like of userSpark.reactionTooltip; let i = index">
+                <img [src]="getEmoji(like.reactType)" alt="heart">
+                <div class="text-white font-medium font-xs pl-1"> {{ like.name }} </div>
+            </div>
+            <div *ngIf="!!userSpark.moreLikeCount" class="d-flex align-items-center">
+                <i>and {{ userSpark.moreLikeCount }} more...</i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="reactions" class="tooltiptext d-flex align-items-center flex-wrap">
+    <div class="image-wrapper cursor-pointer" *ngFor="let rections of reactions | slice:0: reactionShow; let i = index">
+        <img [src]="rections.reactTypeImgPath" [alt]="rections.reactName" [title]="rections.reactName"
+            (click)="onClickReaction(sparkGroupId, sparkId, commentId, rections.reactTypeId)">
+    </div>
+    <button *ngIf="reactionShow < reactions.length" (click)="showAllReaction()" class="btn btn-transparent text-white ml-1">
+        + {{reactions.length - reactionShow}}
+    </button>
+</div>

@@ -1,0 +1,47 @@
+<!-- header part start here -->
+<section class="d-flex flex-column h-100">
+  <trigger-child-header-view [pageTitle]="pageTitle"></trigger-child-header-view>
+  <!-- header part end here -->
+  <!-- sms confirmation section start here -->
+  <section class="h-100 position-relative flex-grow-1 overflow-hidden">
+    <section class="d-flex flex-column overflow-auto px-3 pb-3 h-100">
+      <section class="d-flex justify-content-center align-items-center">
+        <section class="rounded shadow-sm white-bg md-container text-center d-flex flex-column justify-content-center">
+          <section class="d-flex flex-column justify-content-center align-items-center">
+            <div class="success-header-text text-primary mb-2">SMS Verification</div>
+            <div class="dark-text">We have sent you a verification code</div>
+            <div class="dark-text">via SMS for Mobile number verification</div>
+            <section class="my-5 d-flex">
+              <input *ngFor="let element of inputValue;" type="text" [(ngModel)]="element.value"
+                [ngClass]="element.class" [autofocus]="element.isAutoFocus" minlength="1" maxlength="1"
+                (ngModelChange)="inputModelChange(element)" (keydown.backspace)="onKeyDownBackSpace(element)"
+                (keypress)="onKeyPress($event)" (keydown.tab)="onKeyDownTab(element.id)"
+                (keydown.enter)="onKeyDownEnter()" (click)="onclick(element)"
+                class="rounded form-control verification-code-control d-flex align-items-center font-semibold text-center"
+                pattern="[0-9]">
+            </section>
+            <button type="submit" class="rounded-pill btn btn-secondary text-uppercase border-0 mb-3"
+              [disabled]="isDisableVerifyBtn" [ngClass]="{'disabled-item':isDisableVerifyBtn}" (click)="verify()"
+              title="Verify & Proceed">Verify & Proceed</button>
+            <div class="text-secondary font-lg font-bold">
+              <span class="dark-text font-sm font-semibold">SMS verification code will expire in</span>
+              <div class="d-flex justify-content-center align-items-center">
+                <span class="icon icon-time-1 mr-2 d-flex align-items-center text-secondary"></span>
+                <counter #counter></counter>
+              </div>
+            </div>
+            <div class="d-flex mt-3">
+              <span>Didn't recieve the SMS?</span>
+              <span class="pl-1 text-primary cursor-pointer">
+                <button type="button" class="btn bg-transparent text-secondary p-0" [disabled]="isDisableResendSmsLink"
+                  [ngClass]="{'disabled-item':isDisableResendSmsLink}" title="Resend SMS" (click)="resend()">Resend
+                  SMS</button>
+              </span>
+            </div>
+          </section>
+        </section>
+      </section>
+    </section>
+  </section>
+  <!-- sms confirmation section end here -->
+</section>

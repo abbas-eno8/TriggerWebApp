@@ -1,0 +1,59 @@
+<!-- header part start here -->
+<section class="d-flex flex-column h-100">
+  <div #header></div>
+  <!-- header part end here -->
+  <!-- section start here -->
+  <section class="h-100 position-relative flex-grow-1 overflow-hidden">
+    <!-- Excle upload main container section start here -->
+    <section class="main-container overflow-auto px-3 pb-3 h-100" [ngClass]="{'disable-section' : isDisabledScreen}">
+      <div [hidden]="stepNumber === 5">
+        <div #multiStepWizard></div>
+      </div>
+      <div [hidden]="isHideImportAndReadComponent">
+        <div #importReadData></div>
+      </div>
+      <div *ngIf="stepNumber === 5 && !isImportedFile" class="status-success d-flex align-items-center w-100 rounded mt-3 p-2 text-white">
+        <div class="success-round d-flex justify-content-center align-items-center"></div>
+        <span class="pl-3">{{ totalImportCount }} team member(s) imported successfully. </span>
+      </div>
+      <div *ngIf="stepNumber === 5 && rejectedCount != 0 && !isImportedFile" class="status-danger d-flex justify-content-between align-items-center w-100 rounded mt-3 p-2 text-white">
+        <div class="d-flex align-items-center">
+          <div class="danger-round d-flex justify-content-center align-items-center"></div>
+          <span class="pl-3">{{ rejectedCount }} team member(s) failed.</span>
+        </div>
+        <span class="pl-3 cursor-pointer">
+          <a (click)="downloadFile()" class="text-decoration" title="Invalid Record File">Invalid Record File</a>
+        </span>
+      </div>
+      <div *ngIf="stepNumber === 5" class="d-flex justify-content-center pt-3">
+        <button type="button" title="Back to Team Member List" class="btn btn-secondary text-uppercase shadow-sm text-white rounded-pill"
+          (click)="backToEmployee()">
+          BACK TO TEAM MEMBER LIST</button>
+      </div>
+      <div #reviewEmployees></div>
+      <section class="d-flex justify-content-end mt-3" *ngIf="stepNumber === 2">
+        <button type="button" title="Review New Team Members" class="btn btn-secondary text-uppercase rounded-pill" (click)="reviewNewEmployees()">review new team members</button>
+      </section>
+      <div #mismatchData></div>
+
+      <div *ngIf="newEmpCount == 0 && stepNumber == 3" class="d-flex align-items-center status-success rounded mt-3 p-2 text-white">
+        <span class="pl-2"> No new Team Members found. </span>
+      </div>
+      <div *ngIf="mismatchCount == 0 && stepNumber == 4" class="d-flex align-items-center status-success rounded mt-3 p-2 text-white">
+        <span class="pl-2"> No mismatch records found. </span>
+      </div>
+      <section class="d-flex justify-content-end pt-3" *ngIf="stepNumber == 4 || stepNumber == 3">
+        <button type="button" *ngIf="(!isClickOnNext && stepNumber == 3) || stepNumber == 4" title="Skip" (click)="clickOnSkipReplace()"
+          class="btn btn-secondary text-uppercase rounded-pill mr-3">skip</button>
+        <section class="d-flex justify-content-end pt-3" *ngIf="stepNumber == 3 && isClickOnNext">
+          <button type="button" title="Next" class="btn btn-secondary text-uppercase rounded-pill mr-3" (click)="loadMismatchRecordScreen()">Next</button>
+        </section>
+        <button type="button" *ngIf="stepNumber == 3 && !isClickOnNext" [disabled]="newEmpCount === 0" [ngClass]="{'disabled-item':newEmpCount == 0}"
+          (click)="clickOnStartImport();" class="btn btn-secondary text-uppercase rounded-pill" title="Start & Import">Start & import</button>
+        <button type="button" *ngIf="stepNumber == 4" class="btn btn-secondary text-uppercase rounded-pill" title="Import & Replace"
+          [disabled]="mismatchCount === 0" [ngClass]="{'disabled-item':mismatchCount == 0}" (click)="clickOnImportReplace();">import & replace</button>
+      </section>
+    </section>
+    <!-- Excle upload main container section end here -->
+  </section>
+</section>

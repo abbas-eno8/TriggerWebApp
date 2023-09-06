@@ -1,0 +1,79 @@
+<div class="rounded white-bg shadow-sm p-3 widgets-box d-flex flex-column flex-grow-1 xs-mb-3">
+        <div class="d-flex justify-content-between">
+            <div class="dark-text font-semibold font-md">My Direct Reports {{selectedYearBinding}} </div>
+            <div class="d-flex flex-nowrap align-items-center xs-d-none">
+                <span class="icon icon-dragdrop mr-2 cursor-move d-flex align-items-center" title="Move" *ngIf="role !== 'TriggerAdmin'"></span>
+                <trigger-tooltip [pageTitle]="pageTitle" [bulbTootlip]="bulbTootlip"></trigger-tooltip>
+                <span class="icon icon-close cursor-pointer" title="Close" (click)="onclickremoveTile()"
+                    *ngIf="role !== 'TriggerAdmin'"></span>
+            </div>
+        </div>
+        <section class="d-flex align-items-center mb-1" *ngIf="stackPercentageOfIP" [style.width.%]="stackPercentageOfIP">
+            <section class="d-flex justify-content-between align-items-center flex-nowrap w-100">
+                <div class="graph-line bg-secondary d-flex align-items-center w-100 cursor-pointer"
+                    *ngIf="statckTotalCountOfIP > 0" (click)="callgoToEmployeeListPage('IP')">
+                    <div class="text-white px-2">{{statckTotalCountOfIP}}</div>
+                </div>
+                <div class="graph-line bg-secondary d-flex align-items-center w-100 cursor-pointer"
+                    *ngIf="statckTotalCountOfIP <= 0">
+                    <div class="text-white px-2">{{statckTotalCountOfIP}}</div>
+                </div>
+    
+                <div
+                    class="rounded-circle d-flex align-items-center justify-content-center bg-secondary graph-icon-container">
+                    <div class="icon icon-time text-white d-flex align-items-center"></div>
+                </div>
+            </section>
+        </section>
+        <section class="d-flex align-items-center mb-1" *ngIf="stackPercentageOfA" [style.width.%]="stackPercentageOfA">
+            <section class="d-flex justify-content-between align-items-center flex-nowrap w-100">
+                <div class="graph-line bg-secondary-dark d-flex align-items-center w-100 cursor-pointer"
+                    (click)="callgoToEmployeeListPage('A')">
+                    <div class="text-white px-2">{{statckTotalCountOfA}}</div>
+                </div>
+                <div class="rounded-circle d-flex align-items-center justify-content-center bg-secondary-dark graph-icon-container">
+                    <div class="icon icon-trophy text-white d-flex align-items-center"></div>
+                </div>
+            </section>
+        </section>
+        <section class="d-flex align-items-center mb-1" *ngIf="stackPercentageOfB" [style.width.%]="stackPercentageOfB">
+            <section class="d-flex justify-content-between align-items-center flex-nowrap w-100">
+                <div class="graph-line bg-info-light d-flex align-items-center w-100 cursor-pointer"
+                    (click)="callgoToEmployeeListPage('B')">
+                    <div class="text-white px-2">{{statckTotalCountOfB}}</div>
+                </div>
+                <div
+                    class="rounded-circle d-flex align-items-center justify-content-center bg-info-light graph-icon-container">
+                    <div class="icon icon-reward text-white d-flex align-items-center"></div>
+                </div>
+            </section>
+        </section>
+        <section class="d-flex align-items-center mb-1" *ngIf="stackPercentageOfC" [style.width.%]="stackPercentageOfC">
+            <section class="d-flex justify-content-between align-items-center flex-nowrap w-100">
+                <div class="graph-line bg-info d-flex align-items-center w-100 cursor-pointer"
+                    (click)="callgoToEmployeeListPage('C')">
+                    <div class="text-white px-2">{{statckTotalCountOfC}}</div>
+                </div>
+                <div
+                    class="rounded-circle d-flex align-items-center justify-content-center bg-info graph-icon-container">
+                    <div class="icon icon-like text-white d-flex align-items-center"></div>
+                </div>
+            </section>
+        </section>
+        <section class="d-flex align-items-center mb-1" *ngIf="stackPercentageOfRP" [style.width.%]="stackPercentageOfRP">
+            <section class="d-flex justify-content-between align-items-center flex-nowrap w-100">
+                <div class="graph-line bg-warning d-flex align-items-center w-100 cursor-pointer"
+                    (click)="callgoToEmployeeListPage('RP')">
+                    <div class="text-white px-2">{{statckTotalCountOfRP}}</div>
+                </div>
+                <div class="rounded-circle d-flex align-items-center justify-content-center bg-warning graph-icon-container">
+                    <div class="icon icon-turnover text-white d-flex align-items-center"></div>
+                </div>
+            </section>
+        </section>
+        <trigger-direct-reports-to-date-progressive-common-graph
+            (callgoToEmployeeListPage)="callgoToEmployeeListPage($event)"
+            [pieStatckTotalCountOfIP]="pieStatckTotalCountOfIP" [pieStatckTotalCountOfA]="pieStatckTotalCountOfA"
+            [pieStatckTotalCountOfB]="pieStatckTotalCountOfB" [pieStatckTotalCountOfC]="pieStatckTotalCountOfC"
+            [pieStatckTotalCountOfRP]="pieStatckTotalCountOfRP" [isShowIPGrade]="isShowIPGrade"></trigger-direct-reports-to-date-progressive-common-graph>
+    </div>

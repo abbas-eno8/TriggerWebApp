@@ -1,0 +1,51 @@
+$font-family-base: 'Montserrat',
+sans-serif;
+$mat-font-family: $font-family-base;
+$font-family-sans-serif: true;
+$headings-font-weight: true;
+$font-size-base: 14px;
+$icon-font-family: "trigger";
+$transition-base: all 0.5s ease-in-out;
+
+$display1-size: 9rem;
+$display2-size: 7rem;
+$display3-size: 4rem;
+$display4-size: 2rem;
+
+$font-weight-light: 400;
+$font-weight-normal: 500;
+$font-weight-bold: 600;
+$font-weight-bolder: 700;
+
+$font-weight-base: $font-weight-normal;
+$cursor: ("cursor-pointer": pointer,
+    "cursor-nodrop": no-drop,
+    "cursor-move": move,
+    "cursor-default": default,
+);
+$font-weight: ("font-light": 400,
+    "font-medium": 500,
+    "font-semibold": 600,
+    "font-bold": 700,
+);
+//border-radius
+$border-radius: .25rem;
+$lg-border-radius: 30px;
+
+// //breakpoints for responsive design
+$grid-breakpoints: (
+    "xs": 0,
+    "xs-wide": 480px,
+    "sm": 576px,
+    "sm-small": 767px,
+    "md": 768px,
+    "lg": 992px,
+    "lg-landscape": 1023px,
+    "lg-mini": 1199px,
+    "xl": 1200px,
+    "xl-wide": 1599px,
+    "xxl": 1650px,
+);
+
+//for retina                                                              
+$retina: "only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx)";

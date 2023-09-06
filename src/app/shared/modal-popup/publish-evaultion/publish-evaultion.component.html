@@ -1,0 +1,177 @@
+<section [formGroup]="formGroup" class="white-bg rounded lg-dialog-container d-flex flex-column">
+  <section class="mail-content-tab d-flex flex-column flex-grow-1 overflow-hidden">
+    <ul class="nav nav-tabs border-0 position-relative py-3 px-3" role="tablist">
+      <li class="nav-item"><a class="nav-link font-semibold text-center text-uppercase active" data-toggle="tab"
+          href="#Email">Email Preview</a></li>
+      <li class="nav-item"><a class="nav-link font-semibold text-center text-uppercase" data-toggle="tab"
+          href="#Comments">Comments</a></li>
+      <span class="icon icon-close cursor-pointer" id="publish-modal-close" title="Close"
+        (click)="onClickCancel()"></span>
+    </ul>
+    <section class="overflow-auto h-100 tab-content white-bg px-3 pt-0">
+      <section class="tab-pane h-100 rounded-bottom h-100 fade active show" id="Email">
+        <!---->
+        <section class=" flex-grow-1 template-container px-2">
+          <div [innerHTML]="dynamicContent"></div>
+        </section>
+      </section>
+      <section class="tab-pane h-100 template-container rounded-bottom pt-0 px-3 h-100" id="Comments">
+        <!---->
+
+        <div>
+          <label class="mb-2" for="Performance">Performance</label>
+          <section class="text-area-container mb-2">
+            <textarea formControlName="performance" id="Performance" class="mt-2 pb-0 form-control w-100 "
+              (keydown.enter)="$event.preventDefault()"></textarea>
+            <section class="d-flex justify-content-end align-items-center mb-2 pt-0">
+              <button
+                *ngIf="formGroup.get('performanceFileName').value != '' && !formGroup.get('isDeletePerformance').value"
+                type="button" class="btn bg-transparant p-0 text-primary font-sm mr-2"
+                [title]="formGroup.get('performanceFileName').value" (click)="preview('performanceModel')">
+                {{ formGroup.get('performanceFileName').value | ellipsis : 30 }}
+              </button>
+              <button *ngIf="formGroup.get('isDeletePerformance').value" type="button"
+                class="btn bg-transparant p-0 text-primary font-sm mr-1"
+                [title]="formGroup.get('performanceFileName').value">
+                {{ formGroup.get('performanceFileName').value | ellipsis : 30 }}
+              </button>
+              <div class="position-relative">
+                <button type="button"
+                  class="btn bg-transparant icon icon-paper-clip text-primary d-flex align-items-center"
+                  (click)="openCustomFileChooser('performanceModel')" title="Attachment" #focusOnField></button>
+              </div>
+              <button *ngIf="formGroup.get('isDeletePerformance').value" type="button"
+                class="icon icon-bin mr-1 btn bg-transparent d-flex align-items-center cursor-pointer" title="Delete"
+                (click)="deleteAttachment('performanceModel')"></button>
+            </section>
+          </section>
+          <div class="d-flex font-light align-items-center w-100 py-2">
+            <div>Share performance comments with team member when sharing evalution summary.</div>
+            <div class="d-flex align-items-center pr-2 xs-mb-3 pl-3">
+              <label class="md-switch">
+                <input type="checkbox" formControlName="isPerformanceCommentSend" 
+                  [checked]="performanceChecked()" (click)="isPerformanceCheckBox = true"
+                  [attr.disabled]="(!formGroup.get('performance').value ? 'disabled' : null) || (!sendSpark ? 'disabled' : null)">
+                <span class="md-slider round"></span>
+              </label>
+              <div class="ml-2 dark-text">No/Yes</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <label class="mb-2" for="Attitude">Attitude</label>
+          <section class="text-area-container mb-2">
+            <textarea formControlName="attitude" id="Attitude" class="mt-2 pb-0 form-control w-100 "
+              (keydown.enter)="$event.preventDefault()"></textarea>
+            <section class="d-flex justify-content-end align-items-center mb-2 pt-0">
+              <button *ngIf="formGroup.get('attitudeFileName').value != '' && !formGroup.get('isDeleteAttitude').value"
+                type="button" class="btn bg-transparant p-0 text-primary font-sm mr-2"
+                [title]="formGroup.get('attitudeFileName').value" (click)="preview('attitudeModel')">
+                {{ formGroup.get('attitudeFileName').value | ellipsis : 30 }}
+              </button>
+              <button *ngIf="formGroup.get('isDeleteAttitude').value" type="button"
+                class="btn bg-transparant p-0 text-primary font-sm mr-1"
+                [title]="formGroup.get('attitudeFileName').value">
+                {{ formGroup.get('attitudeFileName').value | ellipsis : 30 }}
+              </button>
+              <div class="position-relative">
+                <button type="button"
+                  class="btn bg-transparant icon icon-paper-clip text-primary d-flex align-items-center"
+                  (click)="openCustomFileChooser('attitudeModel')" title="Attachment" #focusOnField></button>
+              </div>
+              <button *ngIf="formGroup.get('isDeleteAttitude').value" type="button"
+                class="icon icon-bin mr-1 btn bg-transparent d-flex align-items-center cursor-pointer" title="Delete"
+                (click)="deleteAttachment('attitudeModel')"></button>
+            </section>
+          </section>
+          <div class="d-flex align-items-center w-100 py-2">
+            <div>Share attitude comments with team member when sharing evalution summary.</div>
+            <div class="d-flex align-items-center pr-2 xs-mb-3 pl-3">
+              <label class="md-switch">
+                <input type="checkbox" formControlName="isAttitudeCommentSend"
+                  [checked]="attitudeChecked()" (click)="isAttitudeChecked = true"
+                  [attr.disabled]="(!formGroup.get('attitude').value ? 'disabled' : null) || (!sendSpark ? 'disabled' : null)">
+                <span class="md-slider round"></span>
+              </label>
+              <div class="ml-2 dark-text">No/Yes</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <label class="mb-2" for="Maintenance">Maintenance</label>
+          <section class="text-area-container mb-2">
+            <textarea formControlName="maintenance" id="Maintenance" class="mt-2 pb-0 form-control w-100 "
+              (keydown.enter)="$event.preventDefault()"></textarea>
+            <section class="d-flex justify-content-end align-items-center mb-2 pt-0">
+              <button
+                *ngIf="formGroup.get('maintenanceFileName').value != '' && !formGroup.get('isDeleteMaintenance').value"
+                type="button" class="btn bg-transparant p-0 text-primary font-sm mr-2"
+                [title]="formGroup.get('maintenanceFileName').value" (click)="preview('maintenanceModel')">
+                {{ formGroup.get('maintenanceFileName').value | ellipsis : 30 }}
+              </button>
+              <button *ngIf="formGroup.get('isDeleteMaintenance').value" type="button"
+                class="btn bg-transparant p-0 text-primary font-sm mr-1"
+                [title]="formGroup.get('maintenanceFileName').value">
+                {{ formGroup.get('maintenanceFileName').value | ellipsis : 30 }}
+              </button>
+              <div class="position-relative">
+                <button type="button"
+                  class="btn bg-transparant icon icon-paper-clip text-primary d-flex align-items-center"
+                  (click)="openCustomFileChooser('maintenanceModel')" title="Attachment" #focusOnField></button>
+              </div>
+              <button *ngIf="formGroup.get('isDeleteMaintenance').value" type="button"
+                class="icon icon-bin mr-1 btn bg-transparent d-flex align-items-center cursor-pointer" title="Delete"
+                (click)="deleteAttachment('maintenanceModel')"></button>
+            </section>
+          </section>
+          <div class="d-flex align-items-center w-100 py-2">
+            <div>Share maintenance comments with team member when sharing evalution summary.</div>
+            <div class="d-flex align-items-center pr-2 xs-mb-3 pl-3">
+              <label class="md-switch">
+                <input type="checkbox" formControlName="isMaintenanceCommentSend"
+                  [checked]="maintenanceChecked()" (click)="isMaintenanceChecked = true"
+                  [attr.disabled]="(!formGroup.get('maintenance').value ? 'disabled' : null) || (!sendSpark ? 'disabled' : null)">
+                <span class="md-slider round"></span>
+              </label>
+              <div class="ml-2 dark-text">No/Yes</div>
+            </div>
+          </div>
+        </div>
+        <div class="pb-2">
+          <label class="mb-2" for="General">General</label>
+          <section class="text-area-container mb-2">
+            <textarea formControlName="general" id="General" class="mt-2 pb-0 form-control border-0 w-100 "
+              (keydown.enter)="$event.preventDefault()"></textarea>
+            <section class="d-flex justify-content-end align-items-center pt-0">
+              <button *ngIf="formGroup.get('generalFileName').value != '' && !formGroup.get('isDeleteGeneral').value"
+                type="button" class="btn bg-transparant p-0 text-primary font-sm mr-2"
+                [title]="formGroup.get('generalFileName').value" (click)="preview('generalModel')">
+                {{ formGroup.get('generalFileName').value | ellipsis : 30 }}
+              </button>
+              <button *ngIf="formGroup.get('isDeleteGeneral').value" type="button"
+                class="btn bg-transparant p-0 text-primary font-sm mr-1"
+                [title]="formGroup.get('generalFileName').value">
+                {{ formGroup.get('generalFileName').value | ellipsis : 30 }}
+              </button>
+              <div class="position-relative">
+                <button type="button"
+                  class="btn bg-transparant icon icon-paper-clip text-primary d-flex align-items-center"
+                  (click)="openCustomFileChooser('generalModel')" title="Attachment" #focusOnField></button>
+              </div>
+              <button *ngIf="formGroup.get('isDeleteGeneral').value" type="button"
+                class="icon icon-bin mr-1 btn bg-transparent d-flex align-items-center cursor-pointer" title="Delete"
+                (click)="deleteAttachment('generalModel')"></button>
+            </section>
+          </section>
+        </div>
+      </section>
+    </section>
+  </section>
+
+  <footer class="d-flex justify-content-end mb-0 px-3 py-3 px-3">
+    <button type="button" class="btn secondary-light-btn rounded-pill mr-2 btn-sm text-uppercase" title="Cancel"
+      (click)="onSave()">Don’t Send Email</button>
+    <button type="button" class="btn btn-secondary rounded-pill btn-sm text-uppercase" title="Send"
+      (click)="onPublish()">Send Email</button>
+  </footer>
+</section>

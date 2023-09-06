@@ -1,0 +1,16 @@
+<section class="position-relative bg-primary w-100 h-100">
+  <div class="right-top-img w-100 position-absolute"></div>
+  <section class="d-flex justify-content-center align-items-center h-100">
+    <section class="box-container white-bg rounded shadow-sm w-100 mx-4 d-flex justify-content-center align-items-center flex-column p-3">
+      <img src="/assets/images/trigger-sign-in-logo.png" class="mb-3" alt="Trigger">
+      <div class="dark-text text-center mb-3 font-sm">Want to download the application?</div>
+      <section class="d-flex align-items-center">
+        <button type="submit" class="btn btn-sm secondary-light-btn text-uppercase rounded mr-2 cursor-pointer" title="No" (click)="onClickNo()">No</button>
+        <button type="submit" class="btn btn-sm btn-secondary text-uppercase rounded cursor-pointer" title="Yes">
+          <a [href]="deviceLink" target="_blank">Yes</a>
+        </button>
+      </section>
+    </section>
+  </section>
+  <div class="left-bottom-img"></div>
+</section>

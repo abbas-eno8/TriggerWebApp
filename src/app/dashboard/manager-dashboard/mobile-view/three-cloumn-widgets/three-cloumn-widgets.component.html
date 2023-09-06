@@ -1,0 +1,44 @@
+<section class="d-none xs-d-block">
+  <section class="d-flex justify-content-between w-100 my-3 white-bg p-3 rounded">
+    <section class="d-flex flex-column col-6 px-0">
+      <section class="d-flex mb-4">
+        <div class="icon-container bg-primary d-flex justify-content-center align-items-center text-white mt-3">
+          <span class="icon icon-chart text-white"></span>
+        </div>
+        <div class="px-2">
+          <div class="text-primary font-bold display-3" (click)="onclickgoToNumberOfDirectReport()">{{ noOfTodatDirectReport }}</div>
+          <div class="dark-text font-semibold font-xs">Total Number Of Direct Reports Today</div>
+        </div>
+      </section>
+      <section class="d-flex">
+        <div class="icon-container bg-primary d-flex justify-content-center align-items-center text-white mt-3">
+          <span class="icon icon-chart text-white"></span>
+        </div>
+        <div class="px-2">
+          <div class="text-primary font-bold display-3" (click)="onclickgoToNumberOfMyOrganization()">{{ noOfMyOrgToday }}</div>
+          <div class="dark-text font-semibold font-xs">Total Number Of My Organization Today</div>
+        </div>
+      </section>
+    </section>
+    <section class="d-flex flex-column col-6 px-0">
+      <section class="d-flex mb-4">
+        <div class="icon-container d-flex justify-content-center align-items-center text-white mt-3" [ngClass]="bgAvgScoreOfTodayDirectReportClass">
+          <span class="icon icon-graph text-white"></span>
+        </div>
+        <div class="px-2">
+          <div class="font-bold display-3" [ngClass]="avgScoreOfTodayDirectReportClass">{{ avgScoreOfTodayDirectReport }}</div>
+          <div class="dark-text font-semibold font-xs">Avarage Score Of My Direct Reports Today</div>
+        </div>
+      </section>
+      <section class="d-flex">
+        <div class="icon-container d-flex justify-content-center align-items-center text-white mt-3" [ngClass]="bgavgScoreOfOrgTodayClass">
+          <span class="icon icon-graph text-white"></span>
+        </div>
+        <div class="px-2">
+          <div class="font-bold display-3" [ngClass]="avgScoreOfOrgTodayClass">{{ avgScoreOfOrgToday }}</div>
+          <div class="dark-text font-semibold font-xs">Avarage Score Of My Organization Today</div>
+        </div>
+      </section>
+    </section>
+  </section>
+</section>

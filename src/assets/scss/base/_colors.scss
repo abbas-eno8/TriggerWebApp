@@ -1,0 +1,72 @@
+//colors
+$transparent: transparent;
+$white: #fff;
+$black: #000000;
+
+//for primary colors
+$primary: #697d9f;
+$primary-light: rgba(122,131,164,.85);
+$primary-light-50: #c8ccd4;
+$primary-light-60: #ebedf7;
+$primary-dark: #b7c0d1;
+
+//for secondary colors
+$secondary: #6e71c6;
+$secondary-light: #a6b6d0;
+$secondary-3: rgba(0, 0, 0, 0.03);
+$secondary-5: rgba(0,0,0,.54);
+$body-bg: #f5f6fa;
+$secondary-dark: #808080;
+
+//for warning colors
+$warning: #f39c12;
+
+//for success colors
+$success: #17c4a2;
+$success-light: rgba(23, 196, 162, 0.73);
+
+//for dark colors
+$dark: #404040;
+
+//for info colors
+$info: #3a97eb;
+$info-dark: #9b59b6;
+$info-light: #0eaed1;
+
+//for danger colors
+$danger: #FF0000;
+$danger-light: rgba(255, 0, 0, 0.52);
+
+//for border 
+$border: #dcdfef;
+$border2: rgba(0,0,0,.125);
+
+//shdow
+$box-shadow: rgba(105, 125, 159, 0.25);
+$success-box-shadow: rgba(40, 167, 69, 0.41);
+$danger-box-shadow: rgba(255, 0, 0, 0.53);
+$active-menu-shadow: rgba(151, 108, 108, 0.075);
+
+//spinner
+$spinner-bg: rgba(0, 0, 0, 0.6);
+
+$theme-colors: ( 
+  "primary": $primary,
+  "primary-light-50": $primary-light-50,
+  "primary-light": $primary-light,
+  "primary-dark": $primary-dark,  
+  "secondary": $secondary,
+  "secondary-light": $secondary-light,
+  "secondary-dark": $secondary-dark,
+  "success": $success,
+  "warning": $warning,
+  "dark": $dark,
+  "danger": $danger,  
+  "info": $info,
+  "info-light": $info-light,
+  "info-dark": $info-dark,
+);
+
+
+
+

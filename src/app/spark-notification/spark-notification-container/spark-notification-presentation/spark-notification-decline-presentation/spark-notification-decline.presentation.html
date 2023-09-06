@@ -1,0 +1,14 @@
+<section class="white-bg p-3 rounded lg-dialog-container">
+  <form (ngSubmit)="submitRejection()" [formGroup]="rejectionForm">
+    <label class="mb-2 text-uppercase dark-text font-sm font-semibold"> Remark <span
+        class="text-danger">*</span></label>
+    <textarea class="form-textarea form-control w-100 rounded mb-3" formControlName="remark" required (keypress)="avoidBlankSpace($event)"
+      [ngClass]="{'border-danger': (rejectionForm.get('remark').touched || rejectionForm.get('remark').dirty) && !rejectionForm.get('remark').valid || isInvalidField }">
+  </textarea>
+    <div class="d-flex justify-content-end mb-0">
+      <button type="button" class="btn secondary-light-btn rounded-pill mr-2 btn-sm text-uppercase" title="Cancel"
+        (click)="cancelRejection()">Cancel</button>
+      <button type="submit" class="btn btn-secondary rounded-pill btn-sm text-uppercase" title="Submit">submit</button>
+    </div>
+  </form>
+</section>

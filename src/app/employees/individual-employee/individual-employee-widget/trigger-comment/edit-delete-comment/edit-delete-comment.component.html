@@ -1,0 +1,129 @@
+<!-- edit delete comment modal section start here -->
+<section class="d-flex justify-content-between allign-items-center py-2">
+    <h1 class="dark-text">Edit Comment</h1>
+</section>
+<form class="comment-edit-form"  [formGroup]="remarksForm" >
+    <section class="mt-2">
+        <div class="form-select mb-1">
+            <label for="Performance">Performance</label>
+        </div>
+        <section class="d-flex flex-column textarea-container rounded">
+            <div class="right-date-time-container secondary-dark-text text-right">
+                <DateTimeStamp #dateTimeStamp></DateTimeStamp>
+            </div>
+            <textarea class="form-textarea form-control border-0 w-100" formControlName="performance" (keydown.enter)="$event.preventDefault()"></textarea>
+        </section>
+        <section class="d-flex justify-content-end align-items-center mt-2">
+            <button *ngIf="remarksForm.get('performanceFileName').value != '' && !remarksForm.get('isDeletePerformance').value" type="button"
+                class="btn bg-transparant p-0 text-primary font-sm mr-2" [title]="remarksForm.get('performanceFileName').value" (click)="preview('performanceModel')">
+                {{ remarksForm.get('performanceFileName').value | ellipsis : 30 }}
+            </button>
+            <button *ngIf="remarksForm.get('isDeletePerformance').value" type="button" class="btn bg-transparant p-0 text-primary font-sm mr-2"
+                [title]="remarksForm.get('performanceFileName').value">
+                {{ remarksForm.get('performanceFileName').value | ellipsis : 30 }}
+            </button>
+            <div class="position-relative upload-btn-wrapper">
+                <button type="button"
+                    class="btn bg-transparant icon icon-paper-clip text-primary d-flex align-items-center"
+                    (click)="openCustomFileChooser('performanceModel')" title="Attachment" #focusOnField></button>
+            </div>
+            <button *ngIf="remarksForm.get('isDeletePerformance').value" type="button"
+                class="icon icon-bin mr-1 btn bg-transparent d-flex align-items-center cursor-pointer" title="Delete"
+                (click)="deleteAttachment('performanceModel')"></button>
+        </section>
+    </section>
+    <section class="mt-1">
+        <div class="form-select mb-1">
+            <label for="Attitude">Attitude</label>
+        </div>
+        <section class="d-flex flex-column textarea-container rounded">
+            <div class="right-date-time-container secondary-dark-text text-right">
+                <DateTimeStamp #dateTimeStamp></DateTimeStamp>
+            </div>
+            <textarea class="form-textarea form-control border-0 w-100" formControlName="attitude" (keydown.enter)="$event.preventDefault()"></textarea>
+        </section>
+        <section class="d-flex justify-content-end align-items-center mt-2">
+            <button *ngIf="remarksForm.get('attitudeFileName').value != '' && !remarksForm.get('isDeleteAttitude').value" type="button"
+                class="btn bg-transparant p-0 text-primary font-sm mr-2" [title]="remarksForm.get('attitudeFileName').value" (click)="preview('attitudeModel')">
+                {{ remarksForm.get('attitudeFileName').value | ellipsis : 30 }}
+            </button>
+            <button *ngIf="remarksForm.get('isDeleteAttitude').value" type="button" class="btn bg-transparant p-0 text-primary font-sm mr-2"
+                [title]="remarksForm.get('attitudeFileName').value">
+                {{ remarksForm.get('attitudeFileName').value | ellipsis : 30 }}
+            </button>
+            <div class="position-relative upload-btn-wrapper">
+                <button type="button"
+                    class="btn bg-transparant icon icon-paper-clip text-primary d-flex align-items-center"
+                    (click)="openCustomFileChooser('attitudeModel')" title="Attachment" #focusOnField></button>
+            </div>
+            <button *ngIf="remarksForm.get('isDeleteAttitude').value" type="button"
+                class="icon icon-bin mr-1 btn bg-transparent d-flex align-items-center cursor-pointer" title="Delete"
+                (click)="deleteAttachment('attitudeModel')"></button>
+        </section>
+    </section>
+    <section class="mt-1">
+        <div class="form-select mb-1">
+            <label for="Maintanance">Maintenance</label>
+        </div>
+        <section class="d-flex flex-column textarea-container rounded">
+            <div class="right-date-time-container secondary-dark-text text-right">
+                <DateTimeStamp #dateTimeStamp></DateTimeStamp>
+            </div>
+            <textarea class="form-textarea form-control border-0 w-100" formControlName="maintenance" (keydown.enter)="$event.preventDefault()"></textarea>
+        </section>
+        <section class="d-flex justify-content-end align-items-center mt-2">
+            <button *ngIf="remarksForm.get('maintenanceFileName').value != '' && !remarksForm.get('isDeleteMaintenance').value" type="button"
+                class="btn bg-transparant p-0 text-primary font-sm mr-2" [title]="remarksForm.get('maintenanceFileName').value" (click)="preview('maintenanceModel')">
+                {{ remarksForm.get('maintenanceFileName').value | ellipsis : 30 }}
+            </button>
+            <button *ngIf="remarksForm.get('isDeleteMaintenance').value" type="button" class="btn bg-transparant p-0 text-primary font-sm mr-2"
+                [title]="remarksForm.get('maintenanceFileName').value">
+                {{ remarksForm.get('maintenanceFileName').value | ellipsis : 30 }}
+            </button>
+            <div class="position-relative upload-btn-wrapper">
+                <button type="button"
+                    class="btn bg-transparant icon icon-paper-clip text-primary d-flex align-items-center"
+                    (click)="openCustomFileChooser('maintenanceModel')" title="Attachment" #focusOnField></button>
+            </div>
+            <button *ngIf="remarksForm.get('isDeleteMaintenance').value" type="button"
+                class="icon icon-bin mr-1 btn bg-transparent d-flex align-items-center cursor-pointer" title="Delete"
+                (click)="deleteAttachment('maintenanceModel')"></button>
+        </section>
+    </section>
+    <section class="mt-1 mb-2">
+        <div class="form-select mb-1">
+            <label for="General">General</label>
+        </div>
+        <section class="d-flex flex-column textarea-container rounded">
+            <div class="right-date-time-container secondary-dark-text text-right">
+                <DateTimeStamp #dateTimeStamp></DateTimeStamp>
+            </div>
+            <textarea class="form-textarea form-control border-0 w-100" formControlName="general" (keydown.enter)="$event.preventDefault()"></textarea>
+        </section>
+        <section class="d-flex justify-content-end align-items-center mt-2">
+            <button *ngIf="remarksForm.get('generalFileName').value != '' && !remarksForm.get('isDeleteGeneral').value" type="button"
+                class="btn bg-transparant p-0 text-primary font-sm mr-2" [title]="remarksForm.get('generalFileName').value" (click)="preview('generalModel')">
+                {{ remarksForm.get('generalFileName').value | ellipsis : 30 }}
+            </button>
+            <button *ngIf="remarksForm.get('isDeleteGeneral').value" type="button" class="btn bg-transparant p-0 text-primary font-sm mr-2"
+                [title]="remarksForm.get('generalFileName').value">
+                {{ remarksForm.get('generalFileName').value | ellipsis : 30 }}
+            </button>
+            <div class="position-relative upload-btn-wrapper">
+                <button type="button"
+                    class="btn bg-transparant icon icon-paper-clip text-primary d-flex align-items-center"
+                    (click)="openCustomFileChooser('generalModel')" title="Attachment" #focusOnField></button>
+            </div>
+            <button *ngIf="remarksForm.get('isDeleteGeneral').value" type="button"
+                class="icon icon-bin mr-1 btn bg-transparent d-flex align-items-center cursor-pointer" title="Delete"
+                (click)="deleteAttachment('generalModel')"></button>
+        </section>
+    </section>
+</form> 
+<footer class="d-flex justify-content-end mt-4">
+    <button type="button" class="btn secondary-light-btn rounded-pill mr-2 btn-sm text-uppercase" title="Cancel"
+        (click)="cancel()">Cancel</button>
+    <button type="submit" class="btn btn-secondary text-uppercase rounded-pill btn-sm"
+        title="Submit" (click)="updateCommet()">submit</button>
+</footer>
+<!-- edit delete comment modal section end here -->

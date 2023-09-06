@@ -1,0 +1,39 @@
+@import "~assets/scss/base/variables";
+@import "~assets/scss/base/colors";
+@import "~bootstrap/scss/mixins/breakpoints";
+@import "~assets/scss/base/mixins";
+
+.mat-cell:nth-child(5),
+.mat-header-cell:nth-child(5) {
+    flex: 0 0 7%;
+    justify-content: center;
+}
+
+.no-records-container {
+    height: calc(100% - 75px);
+    top: 58px;
+}
+
+.mat-cell,
+.mat-footer-cell,
+.mat-header-cell {
+    min-height: 100%;
+}
+
+.input-search {
+    & input {
+        padding-right: 2rem;
+    }
+}
+
+::-webkit-input-placeholder {
+    color: var(--text-secondary-dark);
+}
+
+:-ms-input-placeholder {
+    color: var(--text-secondary-dark);
+}
+
+::placeholder {
+    color: var(--text-secondary-dark);
+}

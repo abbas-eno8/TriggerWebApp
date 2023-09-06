@@ -1,0 +1,30 @@
+@import "~assets/scss/base/variables";
+@import "~assets/scss/base/colors";
+@import "~assets/scss/base/mixins";
+.upload-btn-wrapper {
+    @include size(20px, 20px);
+    overflow: visible;
+    margin: unset;
+    & input[type="file"] {
+        margin-top: -4px;
+        @include position(absolute, auto, auto, auto, auto);
+        opacity: 0;
+        display: block;
+        cursor: pointer;
+        @include size(24px, 24px);
+    }
+}
+
+.icon-paper-clip {
+    padding: 0;
+}
+
+.form-textarea {
+    padding: 0 10px 10px 10px;
+    min-height: 60px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    &:focus {
+        box-shadow: none;
+    }
+}

@@ -1,0 +1,48 @@
+@import "~assets/scss/base/variables";
+@import "~assets/scss/base/colors";
+@import "~assets/scss/base/mixins";
+@import "~bootstrap/scss/mixins/breakpoints";
+
+.font-xs {
+  font-size: 13px;
+}
+
+.modal-body-container {
+  @include media-breakpoint-down('sm-small') {
+    height: 10rem;
+  }
+}
+.img-container {
+  @include size(110px, 110px);
+  & img {
+    max-width: auto;
+    width: auto;
+    height: auto;
+  }
+}
+.table-cell-width {
+  min-width: 140px;
+  @include media-breakpoint-down('sm-small') {
+      min-width: 90px;
+  }
+}
+.feild-bottom {
+  margin-bottom: 2px;
+}
+// ::ng-deep .mat-dialog-container {
+//   background: none;
+//   color:inherit;
+// }
+
+.comment-icon-wrapper {
+  min-width: 31px;
+}
+
+.font-icon-dont-send {
+  font-size: 16px;
+
+  &:before {
+      color: #697d9f !important;
+      padding-left: 5px;
+  }
+}

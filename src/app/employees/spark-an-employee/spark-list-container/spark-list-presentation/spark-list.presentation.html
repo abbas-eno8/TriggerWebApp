@@ -1,0 +1,30 @@
+<section class="d-flex flex-column h-100">
+    <!-- Header section start here -->
+    <header class="d-flex justify-content-between align-items-center p-3">
+        <div class="dark-text font-xl font-semibold">
+            Spark
+        </div>
+        <trigger-tooltip [pageTitle]="48"></trigger-tooltip>
+    </header>
+    <!-- Header section end here -->
+    <section class="h-100 flex-grow-1 overflow-hidden position-relative">
+        <!-- main container section start here -->
+        <section class="flex-grow-1 px-3 pb-3 h-100 overflow-auto main-container">
+            <!-- form container start here -->
+            <section class="white-bg rounded shadow-sm" [ngClass]="{'p-3 mb-3':isSparkAddable}">
+                <div class="dark-text font-lg font-semibold" *ngIf="isSparkAddable">
+                    {{addSparkLabel}}
+                </div>
+                <ng-container #addSparkRef></ng-container>
+            </section>
+            <!-- form container end here -->
+            <!-- list section start here -->
+            <section class="white-bg rounded position-relative h-100 overflow-hidden flex-grow-1" *ngIf="isSparkViewable">
+                <trigger-spark-widget-ui [sparkDetailBySelectedRoute]="sparkDetailBySelectedRoute" [baseResponse]="baseResponse" (loadSparkByTab)="loadSparkByTab($event)" (addReply)="addReply($event)" [updateSpark]="updateSpark">
+                </trigger-spark-widget-ui>
+            </section>
+            <!-- list section end here -->
+        </section>
+        <!-- main container section end here -->
+    </section>
+</section>

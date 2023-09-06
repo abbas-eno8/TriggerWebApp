@@ -1,0 +1,59 @@
+<section class="d-none xs-d-block">
+  <section class="white-bg rounded w-100 mb-3">
+    <section class="d-flex align-items-center justify-content-between">
+      <section class="col-6 widget-box-height d-flex justify-content-center align-items-center flex-column px-2 py-4 right-border bottom-border">
+        <div class="icon icon-graph"></div>
+        <div class="display-3 font-bold py-3" [ngClass]="lastScoreRankClass"> {{lastScoreRank}}</div>
+        <div class="dark-text font-semibold font-xs text-center mt-auto">Current Score</div>
+        <div class="secondary-dark-text text-center font-xs mb-1">({{lastAssessedDate}})</div>
+      </section>
+      <section class="col-6 widget-box-height d-flex justify-content-center align-items-center px-2 py-4 flex-column bottom-border">
+        <div class="icon icon-graph"></div>
+        <div class="display-3 font-bold py-3" [ngClass]="currentYrAvgScoreRankClass">{{currentYrAvgScoreRank}}</div>
+        <div class="dark-text font-semibold font-xs text-center mt-auto">Average Score</div>
+        <div class="secondary-dark-text text-center font-xs mb-1 white-space">(Current Calendar Year)</div>
+      </section>
+    </section>
+    <section class="d-flex align-items-center justify-content-between">
+      <section class="col-6 widget-box-height d-flex justify-content-center align-items-center flex-column right-border p-2">
+        <div class="icon icon-graph"></div>
+        <div class="d-flex mb-2">
+          <div class="px-1">
+            <div class="display-3 font-bold text-center text-primary">{{actualRating}}</div>
+            <div class="font-semibold font-xs text-center text-primary">Current Year</div>
+          </div>
+          <div class="px-1">
+            <div class="display-3 font-bold text-center text-secondary">{{lastYearActualRating}}</div>
+            <div class="font-semibold font-xs text-center text-secondary">Last Year</div>
+          </div>
+        </div>
+        <div class="box-height">
+            <div class="dark-text font-semibold font-xs text-center">Number of Actual Ratings Completed</div>
+            <div class="secondary-dark-text text-center font-xs">(Current Calendar Year Compared to Last Calendar Year)
+            </div>
+        </div>
+      </section>
+      <section class="col-6 widget-box-height p-2 d-flex justify-content-center align-items-center flex-column">
+        <div class="icon icon-graph"></div>
+        <div class="d-flex mb-2">
+          <div class="px-1">
+            <div class="display-3 font-bold text-center" [ngClass]="currentYrAvgScoreRankClass">
+              {{currentYrAvgScoreRank}}</div>
+            <div class="font-semibold font-xs text-center text-primary">Current Year</div>
+          </div>
+          <div class="px-1">
+            <div class="display-3 font-bold text-center" [ngClass]="lyrAvgScoreRankClass">
+              {{lyrAvgScoreRank}}
+            </div>
+            <div class="font-semibold font-xs text-center text-secondary">Last Year</div>
+          </div>
+        </div>
+        <div class="box-height">
+            <div class="dark-text font-semibold font-xs text-center">Average Score</div>
+            <div class="secondary-dark-text text-center font-xs">(Current Calendar Year Compared to Last Calendar Year)
+            </div>
+        </div>
+      </section>
+    </section>
+  </section>
+</section>

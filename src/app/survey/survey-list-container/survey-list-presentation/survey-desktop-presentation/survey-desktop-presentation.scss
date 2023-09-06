@@ -1,0 +1,55 @@
+@import "~assets/scss/base/variables";
+@import "~assets/scss/base/colors";
+@import "~assets/scss/base/mixins";
+@import "~bootstrap/scss/mixins/breakpoints";
+
+.data-table-header {
+    padding-right: 17px;
+    // background-color: $primary-light-50;
+    background-color: var(--bg-list-header);
+    & thead {
+        & tr {
+            & th:nth-child(5) {
+                text-align: center;
+            }
+
+            .active-survey-last-child {
+                min-width: 135px;
+                max-width: 135px;
+              
+            }
+
+            .survey-last-child {
+                min-width: 70px;
+                max-width: 70px;
+                text-align: center;
+            }
+        }
+    }
+}
+
+.data-table-body {
+    height: 100%;
+    overflow-y: scroll;
+
+    & tbody {
+        & tr {
+
+            .active-survey-last-child {
+                min-width: 135px;
+                max-width: 135px;
+               
+            }
+
+            .survey-last-child {
+                min-width: 70px;
+                max-width: 70px;
+                text-align: center;
+            }
+        }
+    }
+}
+
+.text-align-start{
+    text-align: start !important;
+}

@@ -1,0 +1,50 @@
+<section class="white-bg rounded xl-dialog-container">
+    <!-- <div class="field-border-bottom"></div> -->
+    <header class="text-secondary font-semibold font-lg p-3">{{ surveyForm.name }}</header>
+    <section class="overflow-auto height-77">
+        <div *ngIf="!!surveyForm.description" class="dark-text border p-2 font-light rounded font-md mx-3 mb-3">
+             <trigger-read-more [text]='surveyForm.description' [maxLength]="150"></trigger-read-more>
+        </div>
+        <section class="px-3" *ngFor="let questions of surveyForm.question; let i = index">
+            <section class="d-flex font-md font-semibold mb-2" id="strikeout{{questions.id}}"
+                [ngClass]="questions.dynamicClass">
+                <div class="num-field"> {{ i+1 }}.</div>
+                <div> {{ questions.question }}</div>
+                <span *ngIf="questions.isMandatory" class="text-danger pl-1 font-md">*</span>
+            </section>
+            <section class="d-flex flex-wrap question-type w-100">
+                <section class="d-flex flex-column flex-grow-1 col-lg-3 col-md-3 col-sm-12 col-xs-12 p-0"
+                    *ngFor="let answers of questions.answers;"
+                    [ngClass]="{'col-lg-12 col-md-12 col-sm-12': questions.selectionTypeId === 3}">
+                    <section class="position-relative mb-3" *ngIf="questions.selectionTypeId === 1">
+                        <label class="custom-radiobutton">
+                            <span class="pl-2">{{ answers.answers }}</span>
+                            <input type="radio" [checked]="isChecked(answers.id, questions.id)"
+                                (keydown.enter)="onChangeRadioButton(answers)" (change)="onChangeRadioButton(answers)">
+                            <span class="radio-checked"></span>
+                        </label>
+                    </section>
+                    <section class="d-flex align-items-center mb-3" *ngIf="questions.selectionTypeId === 2">
+                        <input type="checkbox" class="bg-custom-checkbox" [value]="answers.id"
+                            id="questions{{answers.id}}" [checked]="isChecked(answers.id, questions.id)"
+                            (change)="onChangeCheckbox($event.target.checked, answers.id, questions.id)"
+                            (keydown.enter)="onChangeCheckbox($event.target.checked, answers.id, questions.id)">
+                        <label for="questions{{answers.id}}"></label>
+                        <label for="questions{{answers.id}}" class="pl-2 dark-text"> {{ answers.answers }}</label>
+                    </section>
+                    <section class="w-100" *ngIf="questions.selectionTypeId === 3">
+                        <textarea class="form-textarea form-control w-100 rounded p-2 mb-3" placeholder=""
+                            (change)="onChangeTextArea($event, answers.questionId)"
+                            [value]="getTextValue(answers.questionId)"></textarea>
+                    </section>
+                </section>
+            </section>
+        </section>
+    </section>
+    <footer class="text-right p-3 flex-shrink-0">
+        <button type="button" title="Cancel" class="btn secondary-light-btn text-uppercase mr-3 rounded-pill"
+            (click)="onClickCancel()" [disabled]="isDisabledCancelButton">cancel</button>
+        <button *ngIf="!isDisabledSubmitBtn" type="submit" title="Submit"
+            class="btn btn-secondary text-uppercase rounded-pill" (click)="onClickSubmit()">submit</button>
+    </footer>
+</section>

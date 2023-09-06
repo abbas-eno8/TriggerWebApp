@@ -1,0 +1,88 @@
+<section class="d-flex flex-column h-100 overflow-hidden rounded">
+  <section class="data-table-header position-relative" id="data-table-header">
+    <table class="w-100 font-semibold">
+      <thead>
+        <tr>
+          <th>
+            <div class="d-flex align-items-center justify-content-center">
+              <mat-checkbox *ngIf="isDisplayMasterCheckbox"
+                (change)="memberPresenter.onCheckMasterCheckbox($event.checked)" [(ngModel)]="isCheckedMasterCheckbox">
+              </mat-checkbox>
+            </div>
+          </th>
+          <th *ngFor="let column of columns; let i = index" [ngClass]="column.widthClass">
+            <div class="d-flex align-items-center">
+              <div class="">{{ column.column }}</div>
+              <div class="cursor-pointer flex-shrink-0" (click)="memberPresenter.sort(column.property)"
+                [ngClass]="memberPresenter.getDirecionIcon(column.property)"></div>
+            </div>
+          </th>
+          <th class="text-center">action</th>
+        </tr>
+      </thead>
+    </table>
+  </section>
+  <section class="data-table-body" id="mainDiv" (scroll)="scrollService.onScroll($event)"
+    (scroll)="scrollService.onWindowScroll()">
+    <table class="w-100">
+      <tbody>
+        <tr *ngFor="let member of filterTeamMembers; let i = index">
+          <td>
+            <div class="d-flex align-items-center justify-content-center"
+              [ngClass]="{'item-status-supported': member.empStatus === 2, 'item-status-on-leave' : member.empStatus === 3}">
+              <mat-checkbox (change)="memberPresenter.onCheck($event.checked, i, member.empId)" *ngIf="!member.isMailSent"
+                [(checked)]="member.isChecked" [disabled]="!member.email"></mat-checkbox>
+              <label for="item"></label>
+            </div>
+            <div *ngIf="member.isMailSent && !member.isPasswordGenerated && member.empStatus"
+              class="icon icon-prohibited-access text-primary text-center"></div>
+          </td>
+          <td *ngFor="let col of columns; let c = index" [ngClass]="col.widthClass">
+            <div>
+              <span *ngIf="(col.property !== 'trending') ">{{ member[col.property] }} </span>
+              <span *ngIf="(col.property === 'trending')" class="icon pl-3" [ngClass]="{'font-icon-Up' : member[col.property] === 1,
+               'font-icon-Down' : member[col.property] === 2, 'font-icon-Steady' : member[col.property] === 3 }">
+              </span>
+            </div>
+          </td>
+          <td>
+            <section class="d-flex justify-content-center align-items-center">
+              <div class="dropdown list-action-dropdown">
+                <button type="button" class="btn border-0 bg-transparent dropdown-toggle d-flex align-items-center"
+                  data-toggle="dropdown" [disabled]="member.isDisabledAction">
+                  <span class="icon icon-click d-flex align-items-center"></span>
+                </button>
+                <div id="action-dropdown" class="dropdown-menu toggle-dropdown-menu border-0 shadow-sm">
+                  <a>
+                    <button class="icon icon-edit-1 mr-1 btn bg-transparent d-flex align-items-center" title="Edit"
+                      *ngIf="member.isEditable" (click)="memberPresenter.redirectedToEditMember(member.empId)"></button>
+                  </a>
+                  <a>
+                    <button class="icon icon-bin mr-1 btn bg-transparent" title="Delete" *ngIf="member.isDeletable"
+                      (click)="memberPresenter.openModalForDeleteTeamMember(member.empId)"></button>
+                  </a>
+                  <a>
+                    <button class="icon icon-business-man mr-1 btn bg-transparent" title="Evaluate Employee"
+                      *ngIf="(member.isTriggerEmployee && member.empStatus !== 2)"
+                      (click)="memberPresenter.redirectedToEvaluateTeamMember(member.empId, member.managerLastAssessedDate, member.isTriggerSent)"></button>
+                  </a>
+                  <a>
+                    <button class="icon icon-user-setting mr-1 btn bg-transparent" title="Team Member Dashboard"
+                      *ngIf="(member.isDisplayEmployeeDashboard && member.empStatus !== 2)"
+                      (click)="memberPresenter.redirectedToEmployeeDashboard(member.empId, member.ratingCompleted, member.isTriggerSent)"></button>
+                  </a>
+                  <a>
+                    <button class="icon icon-spark mr-1 btn bg-transparent" title="Spark Team Member"
+                      *ngIf="!isSuperAdmin && ((isAdmin || member.isSparkViewable || member.isSparkAddable) && member.empStatus !== 2) && (member.email !== userData.email)"
+                      (click)="memberPresenter.redirectedToSparkAnEmployee(member)">
+                     </button>
+                  </a>
+                </div>
+              </div>
+            </section>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+</section>

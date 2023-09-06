@@ -1,0 +1,70 @@
+<section class="rounded white-bg shadow-sm widgets-box d-flex flex-column flex-grow-1">
+    <header class="d-flex justify-content-between px-3 pt-3">
+        <div class="dark-text font-semibold font-md">Work Location Information
+        </div>
+        <div class="d-flex flex-nowrap align-items-center xs-d-none">
+            <span class="icon icon-dragdrop mr-2 cursor-move d-flex align-items-center" title="Move"></span>
+            <trigger-tooltip [pageTitle]="72">
+            </trigger-tooltip>
+            <span class="icon icon-close cursor-pointer" title="Close" (click)="onclickremoveTile()"></span>
+        </div>
+    </header>
+    <section class="d-flex flex-wrap px-3">
+        <section class="col-xl-6 col-md-6 col-sm-12 col-xs-12 p-0 d-flex flex-xs-wrap">
+            <section class="font-semibold font-sm rounded d-flex flex-column flex-grow-1">
+                <section class="font-semibold font-md pr-3 pb-2 text-secondary">
+                    Team Members and Locations
+                </section>
+                <section class="font-semibold font-sm list-content-container overflow-auto flex-grow-1 xs-mb-3">
+                    <section class="d-flex flex-column list-items" [ngClass]="selectedEmployeeId === workLocation.empId ? 'active' : ''" (click)="onClickHistory(workLocation)" *ngFor="let workLocation of todayWorkLocationHistory; let i = index">
+                        <section class="position-relative cursor-pointer p-2">
+                            <section class="d-flex align-items-center">
+                                <div class="sm-user-profile-img mr-2 d-flex align-items-center shadow-sm justify-content-center rounded-circle">
+                                    <div class="font-semibold text-secondary font-lg" *ngIf="!workLocation.profileImage">
+                                        {{ workLocation.profilename }}
+                                    </div>
+                                    <img [src]="workLocation.profileImage" class="img-fluid" alt="avatar" *ngIf="!!workLocation.profileImage">
+                                </div>
+                                <div class="col-4 p-0"> {{ workLocation.name }} </div>
+                                <div class="mb-1 pl-2 pt-2"> {{ workLocation.location }}</div>
+                                <!-- <div class="mb-1 pl-2 pt-2">Head Office 1 </div> -->
+                                <div class="d-flex justify-content-end justify-content-end font-xs ml-auto mt-auto right-time-status-container">{{ workLocation.date }}</div>
+                            </section>
+                        </section>
+                    </section>
+                </section>
+            </section>
+            <section class="separator-border xs-mb-3"></section>
+        </section>
+        <section class="col-xl-6 col-md-6 col-sm-12 col-xs-12 p-0 pl-3 xs-pl-0">
+            <section class="font-semibold font-sm rounded d-flex flex-column flex-grow-1">
+                <section class="font-semibold font-md pr-3 pb-2 text-secondary">
+                    {{ selectedName }}
+                </section>
+                <section class="overflow-auto list-content-container">
+                    <section *ngIf="todayWorkLocationPastHistory?.length > 0">
+                        <section class="d-flex justify-content-between list-items py-2 pr-2" *ngFor="let history of todayWorkLocationPastHistory">
+                            <section class="d-flex align-items-center w-100">
+                                <div class="icon icon-location-1 text-primary"></div>
+                                <div class="pl-2 d-flex w-100">
+                                    <div class="col-4 p-0">{{ history.workDate | date: 'MM-dd-yyyy' }}</div>
+                                    <div class="pl-2">
+                                        {{ history.workLocation }}
+                                    </div>
+                                    <!-- <div class="pl-2">
+                                        Head Office 2
+                                    </div> -->
+                                </div>
+                            </section>
+                            <button type="button" class="btn bg-transparent icon icon-notepad text-primary" [disabled]="!history.surveySubmissionId" (click)="openSubmittedForm(history.surveyId, history.surveySubmissionId)">
+                            </button>
+                        </section>
+                    </section>
+                </section>
+            </section>
+        </section>
+    </section>
+    <section class="loader-container" *ngIf="showLoader">
+        <div class="loader">Loading...</div>
+    </section>
+</section>

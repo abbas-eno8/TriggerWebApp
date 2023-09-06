@@ -1,0 +1,162 @@
+<!-- search section start here -->
+<section class="pb-3">
+  <section class="w-100 d-flex wrap-block justify-content-between align-items-center">
+    <div class="w-100 d-flex position-relative input-search">
+      <input type="search" class="w-100 form-control" placeholder="Search Clients..."
+        [(ngModel)]="searchText" (keyup)="searchClients($event.target.value)">
+      <div class="icon icon-search-1 text-primary d-flex align-items-center p-2"></div>
+    </div>
+  </section>
+</section>
+<!-- search section end here -->
+<!--  table container start here -->
+<section class="flex-grow-1 rounded shadow-sm overflow-auto" id="mainDIV" (scroll)="scrollService.onWindowScroll()">
+  <ng-container>
+    <mat-table [dataSource]="dataSource" matSort matSortDisableClear>
+
+      <ng-container matColumnDef="companyId">
+        <mat-header-cell *matHeaderCellDef>
+          <div class="text-uppercase">CLIENT ID</div>
+          <div class="ml-1">
+            <div class="cursor-pointer" (click)="sortData('companyId','asc')"
+              [ngClass]="isSortingDirecion('companyId')"></div>
+          </div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <span>{{row.companyId}}</span>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="companyName">
+        <mat-header-cell *matHeaderCellDef>
+          <div class="text-uppercase">COMPANY NAME
+          </div>
+          <div class="ml-1">
+            <div class="cursor-pointer" (click)="sortData('companyName','asc')"
+              [ngClass]="isSortingDirecion('companyName')"></div>
+          </div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <span>{{row.companyName.charAt(0).toUpperCase() + row.companyName.slice(1)}}</span>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="industryType">
+        <mat-header-cell *matHeaderCellDef>
+          <div class="text-uppercase">
+            COMPANY/INDUSTRY TYPE
+          </div>
+          <div class="ml-1">
+            <div class="cursor-pointer" (click)="sortData('industryType','asc')"
+              [ngClass]="isSortingDirecion('industryType')"></div>
+          </div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <span>{{ row.industryType }}</span>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="city">
+        <mat-header-cell *matHeaderCellDef>
+          <div class="text-uppercase">CITY</div>
+          <div class="ml-1">
+            <div class="cursor-pointer" (click)="sortData('city','asc')" [ngClass]="isSortingDirecion('city')"></div>
+          </div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <span>{{row.city}}</span>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="state">
+        <mat-header-cell *matHeaderCellDef>
+          <div class="text-uppercase">STATE</div>
+          <div class="ml-1">
+            <div class="cursor-pointer" (click)="sortData('state','asc')" [ngClass]="isSortingDirecion('state')"></div>
+          </div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <span>{{row.state}}</span>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="zipcode">
+        <mat-header-cell *matHeaderCellDef>
+          <div class="text-uppercase">ZIP</div>
+          <div class="ml-1">
+            <div class="cursor-pointer" (click)="sortData('zipcode','asc')" [ngClass]="isSortingDirecion('zipcode')">
+            </div>
+          </div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <span>{{row.zipcode}}</span>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="phoneNo1">
+        <mat-header-cell *matHeaderCellDef>
+          <div class="text-uppercase">PHONE NUMBER</div>
+          <div class="ml-1">
+            <div class="cursor-pointer" (click)="sortData('phoneNo1','asc')" [ngClass]="isSortingDirecion('phoneNo1')">
+            </div>
+          </div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <span>{{row.phoneNo1}}</span>
+        </mat-cell>
+      </ng-container>
+
+
+      <ng-container matColumnDef="action">
+        <mat-header-cell *matHeaderCellDef>
+          <div class="text-uppercase text-center">Action</div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <section class="text-center d-flex justify-content-center align-items-center">
+            <div class="dropdown list-action-dropdown">
+              <button type="button" class="btn border-0 bg-transparent dropdown-toggle d-flex align-items-center"
+                data-toggle="dropdown">
+                <span class="icon icon-click d-flex align-items-center"></span>
+              </button>
+              <div id="action-dropdown" class="dropdown-menu toggle-dropdown-menu border-0 shadow-sm">
+                <a>
+                  <button class="icon icon-edit-1 mr-1 btn bg-transparent d-flex align-items-center"
+                    (click)="goToEditClientPage(row.compId)" title="Edit"></button>
+                </a>
+                <a>
+                  <button class="icon icon-bin mr-1 btn bg-transparent" (click)="openDeleteClientModal(row.compId)"
+                    title="Delete"></button>
+                </a>
+                <a>
+                  <button class="icon icon-info mr-1 btn bg-transparent"
+                    (click)="goToCompanyDashboard(row.compId,row.companyName.charAt(0).toUpperCase() + row.companyName.slice(1),row.compImgPath,row.contractStartDate,row.contractEndDate,row.gracePeriod)"
+                    title="Dashboard"></button>
+                </a>
+              </div>
+            </div>
+          </section>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row [ngClass]="{'highlight': index%2 == 1}"
+        *matRowDef="let row; columns: displayedColumns;let index = index">
+      </mat-row>
+    </mat-table>
+  </ng-container>
+</section>
+<!--  table container end here -->
+
+<!-- pagination footer section start here -->
+<footer class="d-flex justify-content-end align-items-center w-100 flex-wrap py-2">
+  <section class="text-right p-0 col-md-9 col-sm-12 pagination-container" (click)="openPaginationDropdown()">
+    <mat-paginator fixed [pageSizeOptions]="[50, 100, 150]" (page)="pageChanged($event)" showFirstLastButtons>
+    </mat-paginator>
+  </section>
+</footer>
+<!-- pagination footer section end here -->
+<!-- No records section start here -->
+<section class="no-records-container" *ngIf="isDisplayRecordsNotFound">
+  <trigger-no-records-found></trigger-no-records-found>
+</section>
+<!-- No records section end here -->

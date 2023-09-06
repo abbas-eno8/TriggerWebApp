@@ -1,0 +1,70 @@
+<section class="d-flex flex-column h-100">
+  <!-- header part start here -->
+  <header class="d-flex justify-content-between p-3 flex-shrink-0 flex-nowrap">
+    <section class="d-flex align-items-center">
+      <div class="dark-text font-xl font-semibold">
+        Team Members
+      </div>
+    </section>
+    <section class="d-flex align-items-center">
+      <button *ngIf="idDisplayBtn" type="button" title="Excel Upload"
+        class="btn btn-primary xs-btn text-uppercase mr-3 d-flex align-items-center rounded-pill"
+        (click)="presenter.redirectedToExcelUpload()">
+        <div class="icon icon-xls d-flex align-items-center text-white"></div>
+        <div class="pl-2 d-md-inline-flex d-none">Excel upload</div>
+      </button>
+      <button *ngIf="idDisplayBtn" type="button" title="New Team Member"
+        class="btn btn-primary xs-btn text-uppercase mr-3 d-flex align-items-center rounded-pill"
+        (click)="presenter.redirectedToEditMember(0)">
+        <div class="icon icon-add d-flex align-items-center text-white"></div>
+        <div class="pl-2 d-md-inline-flex d-none">New Team Member</div>
+      </button>
+      <trigger-tooltip [pageTitle]="pageTitle"></trigger-tooltip>
+    </section>
+  </header>
+  <!-- header part end here -->
+  <section class="d-flex justify-content-between align-items-center px-3 pb-3 flex-shrink-0">
+    <div class="d-flex w-100 position-relative input-search">
+      <input type="text" class="w-100 form-control" (keyup)="searchByText($event.target.value)"
+        placeholder="Search Team Members..." [(ngModel)]="searchKeywords">
+      <div class="icon icon-search-1 text-primary d-flex align-items-center p-2"></div>
+    </div>
+    <button type="button"
+      class="btn btn-icon white-bg d-flex justify-content-center align-items-center rounded mx-2 xs-btn p-2"
+      title="Advance Filter" (click)="onClickOpenCustonFilterModal()"
+      [attr.disabled]="isDisabledAdvancedFilter ? 'disabled' : null">
+      <div class="icon icon-filter"></div>
+    </button>
+    <section class="drag-container">
+      <button *ngIf="isTriggerAdmin && isTriggerAnEmployee" class="btn btn-transparent font-semibold xs-btn" title="Column Selection"
+        trigger-column-sorter-ui [(columns)]="customColumns" (click)="addClassByTheme()">
+        <mat-icon>view_column</mat-icon>
+      </button>
+    </section>
+  </section>
+  <section class="h-100 flex-grow-1 overflow-hidden position-relative">
+    <!-- main conrainer start here -->
+    <section class="d-flex flex-column overflow-hidden px-3 h-100 main-container">
+      <section class="h-100">
+        <ng-container #viewListRef></ng-container>
+      </section>
+    </section>
+    <!-- main conrainer end here -->
+  </section>
+  <footer class="d-flex justify-content-between align-items-center mt-auto px-3">
+    <section class="d-flex align-items-center pr-2">
+      <button type="button" *ngIf="!isDisabledAdvancedFilter && isListViewCreated"
+        class="btn btn-secondary text-uppercase text-center rounded-pill xs-btn d-flex align-items-center"
+        title="Send email" (click)="onClickSendMail()" [attr.disabled]="idDisabledSendMailButton ? 'disabled' : null">
+        <span class="icon icon-email text-white"></span>
+        <span class="pl-2 d-md-inline-flex d-none">send email</span>
+      </button>
+      <button *ngIf="isTriggerAdminOrAdmin" class="btn btn-secondary text-uppercase text-center rounded-pill xs-btn d-flex align-items-center ml-3"
+        type="button" title="Send email" (click)="exportAsXLSX()">
+        <span class="icon font-icon-export text-white"></span>
+        <span class="pl-2 d-md-inline-flex d-none">Export</span>
+      </button>
+    </section>
+    <ng-container #viewPaginationRef></ng-container>
+  </footer>
+</section>

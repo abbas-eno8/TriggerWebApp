@@ -1,0 +1,43 @@
+<section class="switch-overlay d-flex justify-content-sm-small-center"
+  [ngClass]="(dashboardButtonsStatus.isMyDashboard || dashboardButtonsStatus.isMyWall)? 'dashboard-overlay' : ''">
+  <div class="dropdown">
+    <a href="#" data-toggle="dropdown" class="btn btn-primary text-white dropdown-toggle d-flex align-items-center justify-contnet-between" role="button">
+      <span class="icon icon-dashboard text-white"></span>
+      <span class="pl-2 text-left">{{selectedDashboardName}}</span>
+    </a>
+    <ul class="dropdown-menu p-3 shadow-sm">
+      <li class="d-flex align-items-center" *ngIf="!isEmployeeRole">
+        <button type="button" [disabled]="isDisabledTeamMemberDashboard" [ngClass]="dashboardButtonsStatus.isManagerDashboard? 'active' : ''"
+          (click)="onClickManagerBtn()"
+          class="btn btn-default d-flex align-items-center flex-column justify-contnet-center col-6 cursor-pointer"
+          title="Truvelop Dashboard">
+          <div class=" icon icon-manager-dashboard pb-2"></div>
+          <div class="font-xs font-semibold text-center">Truvelop<br> Dashboard</div>
+        </button>
+        <button type="button" [disabled]="isDisabledTeamDashboard"
+          [ngClass]="dashboardButtonsStatus.isTeamDashoard? 'active' : ''" (click)="onClickTeamBtn()"
+          class="btn btn-default d-flex align-items-center flex-column justify-contnet-center col-6 cursor-pointer"
+          title="Team Dashboard">
+          <div class="icon icon-team-dashboard pb-2"></div>
+          <div class="font-xs font-semibold text-center">Team<br> Dashboard</div>
+        </button>
+      </li>
+      <li class="d-flex align-items-center">
+        <button type="button" [disabled]="isDisabledMyDashboard"
+          [ngClass]="dashboardButtonsStatus.isMyDashboard? 'active' : ''" (click)="onClickMyDashboardBtn()"
+          class="btn btn-default d-flex align-items-center flex-column justify-contnet-center col-6 cursor-pointer"
+          title="My Dashboard">
+          <div class="icon icon-dashboard-1 pb-2"></div>
+          <div class="font-xs font-semibold text-center">My <br>Dashboard</div>
+        </button>
+        <button type="button" [disabled]="isDisabledMyWall" [ngClass]="dashboardButtonsStatus.isMyWall? 'active' : ''"
+          (click)="onClickMyWall()"
+          class="btn btn-default d-flex align-items-center flex-column justify-contnet-center col-6 cursor-pointer"
+          title="Recognition Wall">
+          <div class="icon icon-wall pb-2"></div>
+          <div class="font-xs font-semibold text-center">Recognition <br>Wall</div>
+        </button>
+      </li>
+    </ul>
+  </div>
+</section>

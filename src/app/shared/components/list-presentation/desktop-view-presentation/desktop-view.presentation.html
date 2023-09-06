@@ -1,0 +1,39 @@
+<section class="d-flex flex-column h-100 overflow-hidden rounded">
+    <section class="data-table-header position-relative" id="data-table-header">
+        <table class="w-100 font-semibold">
+            <thead>
+                <tr>
+                    <th *ngFor="let column of columns; let i = index" [ngClass]="column.widthClass">
+                        <div class="d-inline-flex align-items-center">
+                            <div class="info-tooltip tooltip-list" [ngClass]="column.title? 'cursor-default' : ''">
+                                {{ column.column }}
+                                <span class="tooltiptext font-semibold" *ngIf="column.title"> {{ column.title }} </span>
+                            </div>
+                            <div class="cursor-pointer" *ngIf="column.isSortable"
+                                (click)="presenter.sort(column.property)"
+                                [ngClass]="presenter.getDirecionIcon(column.property)"></div>
+                        </div>
+                    </th>
+                    <th class="text-center" *ngIf="isDisplayActions">action</th>
+                </tr>
+            </thead>
+        </table>
+    </section>
+    <section class="data-table-body" id="mainDiv" (scroll)="scrollService.onScroll($event)"
+        (scroll)="scrollService.onWindowScroll()">
+        <table class="w-100">
+            <tbody>
+                <tr *ngFor="let record of list; let i = index">
+                    <td *ngFor="let col of columns; let c = index" [ngClass]="col.widthClass">
+                        <div>
+                            <read-more [text]='record[col.property]' [maxLength]="115"></read-more>
+                        </div>
+                    </td>
+                    <td *ngIf="isDisplayActions">
+                        <trigger-actions-ui [record]="record"></trigger-actions-ui>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+</section>

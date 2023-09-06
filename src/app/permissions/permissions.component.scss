@@ -1,0 +1,110 @@
+@import "~assets/scss/base/variables";
+@import "~assets/scss/base/colors";
+@import "~bootstrap/scss/mixins/breakpoints";
+@import "~assets/scss/base/mixins";
+.sm-select-dropdown {
+    & select {
+        width: 165px;
+    }
+}
+.card-body {
+    & table {
+        & thead tr {
+            // border-bottom: 1px solid $border;
+            border-bottom: 1px solid var(--brand-border);
+            & th {
+                text-transform: uppercase;
+                padding: 10px 0;
+                text-align: center;
+                // color: $dark;
+                color: var(--dark-text);
+                font-weight: $font-weight-bold;
+
+                @include media-breakpoint-down('xl') {
+                    font-size: 14px;
+                }
+
+                @include media-breakpoint-down('sm-small') {
+                    font-size: 11px;
+                    padding: 5px 5px;
+                }
+            }
+
+            & th:nth-child(1) {
+                text-align: left;
+                // border-bottom: 1px solid $border;
+                border-bottom: 1px solid var(--brand-border);
+            }
+
+            & th:nth-child(2n+2) {
+                // background-color: $body-bg;
+                background-color: var(--bg-list-even);
+            }
+        }
+
+        & tbody {
+            & tr {
+                // border-bottom: 1px solid $border;
+                border-bottom: 1px solid var(--brand-border);
+                & td {
+                    padding: 10px 0;
+                    text-align: center;
+                    vertical-align: middle;
+                    @include media-breakpoint-down('xl') {
+                        font-size: 14px;
+                    }
+
+                    @include media-breakpoint-down('sm-small') {
+                        font-size: 12px;
+                        padding: 5px 5px;
+                        height: 45px;
+                    }
+                }
+
+                & td:nth-child(1) {
+                    text-align: left;
+                    // border-bottom: 1px solid $border;
+                    border-bottom: 1px solid var(--brand-border);
+                }
+
+                & td:nth-child(2n+2) {
+                    // background-color: $body-bg;
+                    background-color: var(--bg-list-even);
+                }
+            }
+
+            & tr:last-child {
+                border-bottom: 0;
+            }
+        }
+    }
+}
+
+.system-config-scroller {
+    margin-left: 350px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    @include media-breakpoint-down('sm-small') { 
+        margin-left: 250px;
+    }
+    @include media-breakpoint-down('sm') { 
+        margin-left: 150px;
+    }
+    & .system-config-table {
+        & .system-config-sticky-col {
+            @include position(absolute, auto, auto, auto, 0);
+            width: 350px;
+            @include media-breakpoint-down('sm-small') { 
+                width: 250px;
+            }
+            @include media-breakpoint-down('sm') { 
+                width: 150px;
+            }
+        }
+
+        & .system-config-width {
+            max-width: 150px;
+            min-width: 150px;
+        }
+    }
+}

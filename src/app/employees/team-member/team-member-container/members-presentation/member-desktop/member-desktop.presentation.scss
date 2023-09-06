@@ -1,0 +1,138 @@
+@import "~assets/scss/base/variables";
+@import "~assets/scss/base/colors";
+@import "~assets/scss/base/mixins";
+@import "~bootstrap/scss/mixins/breakpoints";
+
+.overflow-auto {
+    overflow-x: auto !important;
+}
+
+.data-table-header {
+    padding-right: 17px;
+    // background-color: $primary-light-50;
+    background-color: var(--bg-list-header);
+    & thead {
+        & tr {
+            & th:nth-child(1) {
+                width: 50px;
+                min-width: 50px;
+                max-width: 50px;
+
+                @include media-breakpoint-down("xl-wide") {
+                    // min-width: 35px;
+                    // max-width: 35px;
+                }
+            }
+            & th {
+                padding: 15px 4px;
+                @include media-breakpoint-down("xl-wide") {
+                    font-size: 11px;
+                }
+            }
+
+            & th:last-child {
+                width: 84px;
+                min-width: 84px;
+                max-width: 84px;
+
+                @include media-breakpoint-down("xl-wide") {
+                    //     min-width: 86px;
+                    //     max-width: 86px;
+                }
+            }
+        }
+    }
+}
+
+.data-table-body {
+    height: 100%;
+    overflow-y: scroll;
+    & tbody {
+        & tr {
+            & td:nth-child(1) {
+                width: 50px;
+                min-width: 50px;
+                max-width: 50px;
+
+                @include media-breakpoint-down("xl-wide") {
+                    //     min-width: 35px;
+                    //    max-width: 35px;
+                }
+            }
+
+            & td {
+                padding: 15px 4px;
+                @include media-breakpoint-down("xl-wide") {
+                    font-size: 12px;
+                }
+            }
+
+            & td:last-child {
+                width: 84px;
+                min-width: 84px;
+                max-width: 84px;
+
+                @include media-breakpoint-down("xl-wide") {
+                    //      min-width: 86px;
+                    //       max-width: 86px;
+                }
+            }
+        }
+    }
+}
+.normal-column-width {
+    min-width: 180px;
+    max-width: 180px;
+    @include media-breakpoint-down("xl-wide") {
+        min-width: 100px;
+        max-width: 100px;
+    }
+}
+.id-column-width {
+    width: 40px;
+    min-width: 100px;
+    max-width: 100px;
+    @include media-breakpoint-down("xl-wide") {
+        min-width: 150px;
+        max-width: 150px;
+    }
+}
+.position-column-width {
+    min-width: 120px;
+    max-width: 120px;
+    @include media-breakpoint-down("xl-wide") {
+        min-width: 100px;
+        max-width: 100px;
+    }
+}
+.evaluat-column-width {
+    min-width: 155px;
+    max-width: 155px;
+    @include media-breakpoint-down("xl-wide") {
+        min-width: 120px;
+        max-width: 120px;
+    }
+}
+.rating-label {
+    max-width: none;
+}
+
+.table-layout-fixed {
+    table-layout: fixed;
+}
+.font-icon-Up {
+    color: #a1ddaa;
+}
+.font-icon-Down {
+    color: #fe9198;
+}
+.font-icon-Steady {
+    color: #f8db8f;
+}
+.font-icon-Steady {
+    font-size: 12px;
+}
+.font-icon-Up,
+.font-icon-Down {
+    font-size: 14px;
+}

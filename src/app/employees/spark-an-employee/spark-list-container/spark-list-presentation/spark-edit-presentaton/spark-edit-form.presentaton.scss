@@ -1,0 +1,46 @@
+@import "~assets/scss/base/variables";
+@import "~assets/scss/base/colors";
+@import "~assets/scss/base/mixins";
+.icon-edit-1 {
+    &:hover {
+        background-position: -371px -51px;
+    }
+}
+
+.icon-delete {
+    &:hover {
+        background-position: -352px -51px;
+    }
+}
+
+.upload-btn-wrapper {
+    overflow: visible;
+    top: 0;
+    height: 22px;
+    line-height: normal;
+    width: 30px;
+    margin: 0;
+    right: 0;
+}
+
+.upload-btn-wrapper input[type="file"] {
+    width: 22px;
+}
+
+.cursor-defult {
+    cursor: default !important;
+}
+
+.icon-paper-clip {
+    padding: 0;
+}
+
+.form-textarea {
+    padding: 0 10px 10px 10px;
+    min-height: 60px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    &:focus {
+        box-shadow: none;
+    }
+}

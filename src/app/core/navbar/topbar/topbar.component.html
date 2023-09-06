@@ -1,0 +1,103 @@
+<nav class="nav-wrapper d-flex justify-content-between shadow-sm">
+    <!-- toogle menu button section start here -->
+    <section class="d-flex align-items-center">
+        <div class="d-flex align-items-center btn bg-transparent">
+            <label for="toggle-sidebar" class="icon icon-toggle-menu mb-0 cursor-pointer"></label>
+        </div>
+    </section>
+    <!-- toogle menu button section end here -->
+    <section class="d-flex align-items-center">
+        <section class="pr-3 info-tooltip pt-2">
+            <a href="https://knowledge.truvelop.com/truvelop-tips" target="_blank">
+                <img src="/assets/images/dashboard/covid-19.png" alt="covid-19">
+            </a>
+            <div class="tooltiptext font-medium">
+                Truvelop Tips
+            </div>
+        </section>
+        <section *ngIf="isNotificationViewCreated">
+            <trigger-notification></trigger-notification>
+        </section>
+
+        <!-- dropdown section end here -->
+        <div class="d-flex mr-3 align-items-center" *ngIf="clientResponse.isRedirectToClientDashboard">
+            <div class="d-flex">
+                <span class="xs-d-none pr-2 dark-text">You are looking into</span>
+                <span class="font-semibold font-sm text-secondary">{{ clientResponse.clientName }},</span>
+            </div>
+            <div class="xs-d-none">
+                <a class="text-capitalize text-secondary text-decoration font-semibold pl-1 cursor-pointer"
+                    (click)=logoutFormDashboard() title="Logout">Logout</a>
+            </div>
+            <div class="d-none xs-d-block">
+                <a class="icon icon-logout pl-1 cursor-pointer text-secondary" (click)=logoutFormDashboard()
+                    title="Logout"></a>
+            </div>
+            <div class="border-left xs-d-none ml-2"></div>
+        </div>
+        <section class="position-relative" *ngIf="clientResponse.userRole !== 'TriggerAdmin'">
+            <div
+                class="user-profile-img mr-3 d-flex align-items-center shadow-sm justify-content-center rounded-circle">
+                <div class="font-lg font-bold text-info-dark"
+                    *ngIf="clientResponse.profilePic == '' || (clientResponse.isSrcValid)">
+                    {{ clientResponse.profileName }}
+                </div>
+                <img src="{{clientResponse.profilePic}}" class="img-fluid rounded-circle" alt="avatar"
+                    *ngIf="!!clientResponse.profilePic && (!clientResponse.isSrcValid)" (error)="onError()">
+                <div class="overlay cursor-pointer d-flex justify-content-center align-items-center">
+                    <span class="icon icon-pen" (click)="goToUserProfile()"></span>
+                </div>
+            </div>
+        </section>
+        <section class="position-relative" *ngIf="clientResponse.userRole === 'TriggerAdmin'">
+            <div
+                class="user-profile-img mr-3 d-flex align-items-center shadow-sm justify-content-center rounded-circle">
+                <div class="font-lg font-bold text-info-dark">
+                    {{ clientResponse.profileName }}
+                </div>
+            </div>
+        </section>
+        <div class="dropdown">
+            <button class="p-0 btn btn-transparent dropdown-toggle primary-text font-semibold" type="button"
+                id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="xs-d-none">{{ clientResponse.firstName }} {{ clientResponse.lastName }}</span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-right shadow-sm border-0" role="menu" aria-labelledby="dropdownMenu">
+                <li>
+                    <a class="dropdown-item cursor-pointer field-border-bottom dark-text"
+                        href="https://knowledge.trigger123.com/new-features" target="_blank" title="New Features">New
+                        Features
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item cursor-pointer field-border-bottom dark-text"
+                        href="https://knowledge.trigger123.com/" target="_blank" title="Knowledge Center">Knowledge
+                        Center</a>
+                </li>
+                <li>
+                    <a class="dropdown-item cursor-pointer field-border-bottom dark-text"
+                        href="https://knowledge.truvelop.com/spanish-resources" target="_blank"
+                        title="Recursos en españo">Recursos en español</a>
+                </li>
+                <li>
+                    <a class="dropdown-item cursor-pointer field-border-bottom dark-text"
+                        href="https://knowledge.trigger123.com/user-guide" target="_blank" title="User Guide">User Guide
+                    </a>
+                </li>
+                <li>
+                    <div class="dropdown-item cursor-pointer field-border-bottom dark-text" (click)="changePassword()"
+                        title="Change Password">Change Password
+                    </div>
+                </li>
+                <li *ngIf="clientResponse.userRole !== 'TriggerAdmin'">
+                    <div (click)="redirectToContactUs()"
+                        class="dropdown-item cursor-pointer field-border-bottom dark-text" title="Contact Us">Contact Us
+                    </div>
+                </li>
+                <li>
+                    <div (click)="logout()" class="dropdown-item cursor-pointer dark-text" title="Logout">Logout</div>
+                </li>
+            </ul>
+        </div>
+    </section>
+</nav>

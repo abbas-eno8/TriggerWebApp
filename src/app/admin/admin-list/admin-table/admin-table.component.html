@@ -1,0 +1,133 @@
+<!-- search section start here -->
+<section class="pb-3">
+    <section class="w-100 d-flex wrap-block justify-content-between align-items-center">
+        <div
+            class="left-radius-input position-relative input-search d-flex justify-content-between align-items-center xs-mb-3 col-md-8 col-sm-12 p-0">
+            <input type="text" class="w-100 border-0 pl-2 client-search-input" placeholder="Search Admins..."
+                [(ngModel)]="searchText" (keyup)="searchAdmins($event.target.value)">
+            <div class="icon icon-search-1 mx-2 text-primary d-flex align-items-center p-2"></div>
+            <div class="bg-field d-flex justify-content-center align-items-center h-100"><span
+                    class="separator-border d-md-inline-flex d-none"></span></div>
+        </div>
+        <div class="right-radius-input d-flex justify-content-end align-items-center col-md-4 col-sm-12 p-0">
+            <div class="dark-text font-md pl-2 py-2 bg-field">Client:</div>
+            <div class="search-select-dropdown">
+                <select class="border-0 cursor-pointer" name="" id="" [(ngModel)]="selectedClient"
+                    (change)="onChangeClient(selectedClient)">
+                    <option value="0" class="select-emp">All Clients</option>
+                    <option *ngFor="let data of clientData" value={{data.compId}}> {{data.companyName}}</option>
+                </select>
+            </div>
+        </div>
+    </section>
+</section>
+<!-- search section end here -->
+<!--  table container start here -->
+<section class="flex-grow-1 rounded shadow-sm overflow-auto" id="mainDIV" (scroll)="scrollService.onWindowScroll()">
+    <ng-container>
+        <mat-table [dataSource]="dataSource" matSort matSortDisableClear>
+
+            <ng-container matColumnDef="employeeId">
+                <mat-header-cell *matHeaderCellDef>
+                    <div class="text-uppercase">ID</div>
+                    <div class="ml-1">
+                        <div class="cursor-pointer" (click)="sortData('employeeId','asc')"
+                            [ngClass]="isSortingDirecion('employeeId')"></div>
+                    </div>
+                </mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                    <span>{{row.employeeId}}</span>
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="lastName">
+                <mat-header-cell *matHeaderCellDef>
+                    <div class="text-uppercase">NAME</div>
+                    <div class="ml-1">
+                        <div class="cursor-pointer" (click)="sortData('lastName','asc')"
+                            [ngClass]="isSortingDirecion('lastName')"></div>
+                    </div>
+                </mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                    <span>{{row.firstName.charAt(0).toUpperCase() + row.firstName.slice(1) + " " + row.lastName}}</span>
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="companyName">
+                <mat-header-cell *matHeaderCellDef>
+                    <div class="text-uppercase">
+                        CLIENT
+                    </div>
+                    <div class="ml-1">
+                        <div class="cursor-pointer" (click)="sortData('companyName','asc')"
+                            [ngClass]="isSortingDirecion('companyName')"></div>
+                    </div>
+                </mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                    <span>{{ row.companyName }}</span>
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="email">
+                <mat-header-cell *matHeaderCellDef>
+                    <div class="text-uppercase">EMAIL ADDRESS</div>
+                    <div class="ml-1">
+                        <div class="cursor-pointer" (click)="sortData('email','asc')"
+                            [ngClass]="isSortingDirecion('email')"></div>
+                    </div>
+                </mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                    <span>{{row.email}}</span>
+                </mat-cell>
+            </ng-container>
+
+
+            <ng-container matColumnDef="action">
+                <mat-header-cell *matHeaderCellDef>
+                    <div class="text-uppercase text-center">Action</div>
+                </mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                    <section class="text-center d-flex justify-content-center align-items-center">
+                        <div class="dropdown list-action-dropdown">
+                            <button type="button"
+                                class="btn border-0 bg-transparent dropdown-toggle d-flex align-items-center"
+                                data-toggle="dropdown">
+                                <span class="icon icon-click d-flex align-items-center"></span>
+                            </button>
+                            <div id="action-dropdown" class="dropdown-menu toggle-dropdown-menu border-0 shadow-sm">
+                                <a>
+                                    <button class="icon icon-edit-1 mr-1 btn bg-transparent d-flex align-items-center"
+                                        (click)="goToEditEmployeePage(row.empId, row.companyId)" title="Edit"></button>
+                                </a>
+                                <a>
+                                    <button class="icon icon-bin mr-1 btn bg-transparent"
+                                        (click)="openDeleteAdminModal(row.empId,row.companyId)" title="Delete"></button>
+                                </a>
+                            </div>
+                        </div>
+                    </section>
+                </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row [ngClass]="{'highlight': index%2 == 1}"
+                *matRowDef="let row; columns: displayedColumns;let index = index">
+            </mat-row>
+        </mat-table>
+    </ng-container>
+</section>
+<!--  table container end here -->
+
+<!-- pagination footer section start here -->
+<footer class="d-flex justify-content-end align-items-center pl-3 w-100 flex-wrap py-2">
+    <section class="text-right p-0 col-md-9 col-sm-12 pagination-container" (click)="openPaginationDropdown()">
+        <mat-paginator fixed [pageSizeOptions]="[50, 100, 150]" (page)="pageChanged($event)" showFirstLastButtons>
+        </mat-paginator>
+    </section>
+</footer>
+<!-- pagination footer section end here -->
+<!-- No records section start here -->
+<section class="no-records-container" *ngIf="isDisplayRecordsNotFound">
+    <trigger-no-records-found></trigger-no-records-found>
+</section>
+<!-- No records section end here -->

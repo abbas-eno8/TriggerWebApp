@@ -1,0 +1,153 @@
+.btn {
+    font-size: 14px;
+    font-weight: $font-weight-normal;
+    padding: 0;
+    @include media-breakpoint-down("md") {
+        font-size: 13px;
+    }
+    @include media-breakpoint-down("sm") {
+        font-size: 12px;
+    }
+    &:disabled {
+        cursor: no-drop;
+        opacity: 0.5;
+    }
+    &.rounded-right-0 {
+        @include border-right-radius(0);
+    }
+    &.rounded-left-0 {
+        @include border-left-radius(0);
+    }
+}
+//rounded class
+.btn-primary {
+    padding: 10px 15px;
+    min-width: 157px;
+    @include media-breakpoint-down("lg-mini") {
+        padding: 10px 10px;
+    }
+}
+.btn-basic {
+    @extend .btn-primary;
+    border: 2px solid var(--brand-border);
+    background-color: var(--bg-btn-basic);
+    color: var(--dark-text);
+    @include media-breakpoint-down("xl") {
+        padding: 8px 6px;
+        min-width: 124px;
+        font-size: 12px;
+    }
+    @include media-breakpoint-down("lg-mini") {
+        min-width: 60px;
+        padding: 6px;
+    }
+    @include media-breakpoint-down("sm-small") {
+        min-width: 45px;
+    }
+    &.active {
+        background-color: var(--bg-active-basic);
+        color: $white;
+    }
+    &:hover {
+        background-color: $primary;
+        color: $white;
+    }
+    &:disabled {
+        background-color: $primary-light-50;
+        color: $dark;
+    }
+    &:not(:disabled):not(.disabled).active {
+        background-color: var(--bg-active-basic);
+    }
+}
+.btn-secondary {
+    @extend .btn-primary;
+    min-width: 130px;
+    @include media-breakpoint-down("sm-small") {
+        min-width: 110px;
+        max-height: 40px;
+    }
+}
+.secondary-light-btn {
+    @extend .btn-secondary;
+    background-color: var(--secondary-light);
+    color: $white;
+    border: 0;
+    &:hover {
+        color: $white;
+        background-color: var(--secondary-light);
+    }
+}
+.btn-danger-light {
+    padding: 10px 15px;
+    background-color: $danger-light;
+    color: $white;
+    &:hover {
+        color: $white;
+        background-color: $danger-light;
+    }
+}
+.btn-sm {
+    min-width: 85px;
+}
+.mat-raised-button {
+    font-family: $font-family-base;
+    min-width: 88px !important;
+    &.btn-outline-secondary {
+        &:hover {
+            background-color: $transparent;
+            border: 1px solid $secondary;
+            color: $secondary;
+        }
+    }
+    &.btn-outline-danger {
+        &:hover {
+            background-color: $transparent;
+            border: 1px solid $danger;
+            color: $danger;
+        }
+    }
+    &.btn-outline-success {
+        &:hover {
+            background-color: $transparent;
+            border: 1px solid $success;
+            color: $success;
+        }
+    }
+    @include media-breakpoint-down("sm-small") {
+        min-width: auto !important;
+    }
+}
+.btn-xs-primary {
+    min-width: 60px;
+    height: 33px;
+    background-color: $primary;
+}
+.btn-xs-secondary {
+    @extend .btn-xs-primary;
+    background-color: $secondary;
+}
+
+// Spark button style
+.xs-btn {
+    &.btn-primary,
+    .btn-secondary {
+        min-width: auto;
+        @include media-breakpoint-down("sm") {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 7px 20px;
+            min-height: 37px;
+        }
+    }
+}
+.new-post-btn {
+    box-shadow: 0 1px 13px 0 $box-shadow;
+    background-color:  var(--bg-btn-basic);
+    color: var(--dark-text);
+    &:focus,&:hover {
+        box-shadow: 0 1px 13px 0 $box-shadow;
+        color: var(--dark-text);
+    }
+}

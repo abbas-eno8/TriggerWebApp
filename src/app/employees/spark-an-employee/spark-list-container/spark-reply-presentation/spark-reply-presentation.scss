@@ -1,0 +1,110 @@
+@import "~assets/scss/base/variables";
+@import "~assets/scss/base/colors";
+@import "~bootstrap/scss/mixins/breakpoints";
+@import "~assets/scss/base/mixins";
+
+.spark-container {
+    background-color: var(--brand-lightContainer);
+    border: 2px solid var(--brand-border);
+}
+
+.wall-comment-box {
+    background-color: var(--brand-border2);
+}
+
+.reply-textarea.form-control {
+    margin-left: 0;
+    border: 2px solid var(--brand-border2);
+    padding-right: 38px;
+    overflow: auto;
+}
+
+.widgets-tab {
+    & .nav-tabs {
+        border-bottom: 4px solid $primary;
+
+        & .nav-item {
+            margin-bottom: 0;
+        }
+
+        & .nav-link.active {
+            background-color: $primary;
+            border: 0;
+            color: $white;
+            position: relative;
+
+            &:after {
+                border-top: 0;
+                width: 0;
+                height: 0;
+                border-left: 12px solid $transparent;
+                border-right: 12px solid $transparent;
+                border-top: 12px solid $primary;
+                content: '';
+                @include position(absolute, 40px, 45%, auto, auto);
+            }
+        }
+    }
+}
+
+.chatbox-curve-right {
+    background-image: none;
+    @include size(13px, 12px);
+    background-color: var(--bg-list-odd);
+    position: absolute;
+    bottom: 0;
+    right: 0;
+
+    &:after {
+        content: '';
+        @include size(13px, 12px);
+        background-color: var(--brand-lightContainer);
+        position: absolute;
+        bottom: 0;
+        border-radius: 0 0 0 25px;
+        right: -4px
+    }
+}
+
+.chatbox-curve-left {
+    background-image: none;
+    @include size(13px, 12px);
+    background-color: var(--brand-border2);
+    position: absolute;
+    bottom: 0;
+    right: auto;
+    left: 0;
+
+    &::before {
+        content: '';
+        @include size(13px, 12px);
+        background-color: var(--brand-lightContainer);
+        position: absolute;
+        bottom: 0;
+        border-radius: 0 0 25px 0;
+        right: 4px
+    }
+}
+
+.separator-border {
+    margin: 0 0.5rem;
+
+    @include media-breakpoint-down('xs-wide') {
+        display: none;
+    }
+}
+
+.attachment {
+    position: absolute;
+    top: 0;
+    right: 8px;
+}
+
+.replay-attachment {
+    font-size: 18px;
+}
+
+.spark-attached-file-wrapper {
+    margin-right: 58px;
+    margin-top: 8px;
+}

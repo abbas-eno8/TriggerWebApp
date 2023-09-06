@@ -1,0 +1,36 @@
+<!-- Add attribute modal section start here -->
+<div class="mb-3">
+  <h1 mat-dialog-title>{{ model.title }}</h1>
+</div>
+<form action="#" method="post" class="form" role="form" novalidate [formGroup]="addAttributeForm">
+  <div class="form-select mb-3">
+    <select class="w-100 rounded cursor-pointer" [ngClass]="isDropdownValid('dimensionId')"
+      formControlName="dimensionId">
+      <option value="0">Select Attribute Type </option>
+      <option *ngFor="let dimension of model.dimensionsType" value={{dimension.id}} title="{{ dimension.dimension }}">{{
+        dimension.dimension | ellipsis : 45}}
+      </option>
+    </select>
+  </div>
+  <input type="text" type="text" class="rounded form-control mb-2" formControlName="dimensionValues"
+    [ngClass]="isInputValid('dimensionValues')" autocomplete="off" (paste)="onPaste('dimensionValues', $event)"
+    (keypress)="onInput('dimensionValues', $event)">
+</form>
+<footer mat-dialog-actions class="d-flex justify-content-between mb-0">
+  <div class="d-flex align-items-center">
+    <label class="md-switch">
+      <input type="checkbox" [checked]="attributeModel.isManagerAccess" 
+      (change)="attributeModel.isManagerAccess = !attributeModel.isManagerAccess">
+      <span class="md-slider round"></span>
+    </label>
+    <div class="ml-2 dark-text">Enable Manager Role Dashboard</div>
+  </div>
+  <div>
+    <button type="button" class="btn secondary-light-btn rounded-pill mr-2 btn-sm text-uppercase" [mat-dialog-close]
+      title="Cancel">Cancel</button>
+    <button type="button" class="btn btn-secondary rounded-pill btn-sm text-uppercase" [title]="model.operation"
+      (click)="onClickBtn()">
+      {{ model.operation }}</button>
+  </div>
+</footer>
+<!-- Add attribute modal section end here -->

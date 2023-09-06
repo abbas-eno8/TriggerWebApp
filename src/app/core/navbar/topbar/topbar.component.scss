@@ -1,0 +1,27 @@
+@import "~assets/scss/base/variables";
+@import "~assets/scss/base/colors";
+@import "~bootstrap/scss/mixins/breakpoints";
+@import "~assets/scss/base/mixins";
+.btn {
+    box-shadow: none;
+    font-weight: $font-weight-bold;
+}
+.icon-spark {
+    color: $primary-light-50;
+}
+
+.info-tooltip {
+    margin-right: 0;
+    &:before {
+        display: none;
+    }
+
+    & .tooltiptext {
+        right: 0;
+        width: 155px;
+        top: 50px;
+    }
+    & img {
+        width: 30px;
+    }
+}

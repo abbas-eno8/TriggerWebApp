@@ -1,0 +1,42 @@
+@import "~assets/scss/base/variables";
+@import "~assets/scss/base/colors";
+@import "~bootstrap/scss/mixins/breakpoints";
+@import "~assets/scss/base/mixins";
+
+.info-tooltip {
+    margin-right: 0;
+
+    &:before {
+        display: none;
+    }
+}
+
+.image-wrapper {
+    // margin: 0 auto;
+    padding: 0.24rem 0.2rem;
+    margin: 0 auto;
+    @include media-breakpoint-down('sm-small') {
+        padding: 3px 0.5px;
+    }
+    & img {
+        max-width: 100%;
+        transition: transform 0.3s ease-in-out;
+
+        @include media-breakpoint-down('sm-small') {
+            max-width: 88%;
+        }
+    }
+
+    &:hover img {
+        transform: scale(1.2);
+    }
+}
+
+.emojis-parent-img {
+    &.emojis-child-img {
+        @include position(relative, auto, 7px, auto, auto);
+    }
+    // & img {
+    //     width: 30px;
+    // }
+}

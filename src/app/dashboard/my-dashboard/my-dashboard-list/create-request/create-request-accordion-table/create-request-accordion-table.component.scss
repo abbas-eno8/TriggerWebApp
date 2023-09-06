@@ -1,0 +1,32 @@
+@import "~assets/scss/base/variables";
+@import "~assets/scss/base/mixins";
+@import "~bootstrap/scss/mixins/breakpoints";
+@import "~assets/scss/base/colors";
+
+.mat-cell:nth-child(1),
+.mat-header-cell:nth-child(1) {
+    flex: 0 0 20%;
+    justify-content: center;
+    align-items: center;
+    @include media-breakpoint-down('xs-wide') {
+        flex: 0 0 42%;
+    }
+}
+
+.mat-cell:nth-child(2),
+.mat-header-cell:nth-child(2) {
+    flex: auto;
+}
+
+.mat-cell:nth-child(3),
+.mat-header-cell:nth-child(3) {
+    flex: 0 0 5%;
+}
+.bg-danger-light, .bg-success-light {
+    width: 92px;
+}
+.mat-header-cell {
+    @include media-breakpoint-down('sm-small') {
+       font-size: 10px;
+    }
+}

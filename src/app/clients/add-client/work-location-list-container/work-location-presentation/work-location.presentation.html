@@ -1,0 +1,43 @@
+<section class="light-bg shadow-sm mx-2 my-3 rounded field-border">
+  <header class="d-flex justify-content-between flex-shrink-0 flex-nowrap p-3">
+    <section class="d-flex align-items-center text-secondary font-semibold font-lg">
+      Active Work Locations
+    </section>
+    <section class="d-flex align-items-center">
+      <button type="button" title="New Work Location" (click)="openAddLocationPopup();"
+        class="btn btn-primary xs-btn text-uppercase rounded-pill d-flex align-items-center justify-content-center">
+        <div class="icon icon-add text-white"></div>
+        <div class="pl-2 d-md-inline-flex d-none">New Work Location</div>
+      </button>
+      <!-- <trigger-tooltip [pageTitle]="71"></trigger-tooltip> -->
+    </section>
+  </header>
+  <section class="d-flex flex-column px-3 flex-shrink-0">
+    <div class="d-flex align-items-center w-100 position-relative input-search pb-3">
+      <input type="text" class="w-100 form-control" (keyup)="filterRecordsBySerachText($event.target.value)"
+        placeholder="Search Work Location...">
+      <div class="icon icon-search-1 text-primary d-flex align-items-center p-2"></div>
+    </div>
+  </section>
+  <section *ngIf="!isNoRecordFound" class="px-3 list-content-container overflow-auto">
+    <section class="d-flex justify-content-between align-items-center p-3 list-items"
+      *ngFor="let workLocation of _workLocations; let i = index">
+      <div class="text-primary font-md">
+        {{ workLocation.workLocation }}
+      </div>
+      <div class="d-flex align-items-center flex-nowrap">
+        <a>
+          <button class="icon icon-edit-1 btn bg-transparent pr-1" title="Edit"
+            (click)="editLocationPopup(workLocation);"></button>
+        </a>
+        <a>
+          <button class="icon icon-bin mr-1 btn bg-transparent" title="Delete"
+            (click)="deletePopup(workLocation.workLocationId);"></button>
+        </a>
+      </div>
+    </section>
+  </section>
+  <section *ngIf="isNoRecordFound" class="list-content-container">
+    <trigger-no-records-found></trigger-no-records-found>
+  </section>
+</section>

@@ -1,0 +1,12 @@
+@import "~assets/scss/base/variables";
+@import "~assets/scss/base/colors";
+@import "~assets/scss/base/mixins";
+
+.tooltip-list .tooltiptext {
+    left: 55%;
+    margin-left: -55px;
+    &:after {
+        right: 0;
+        left: 12px;
+    }
+}

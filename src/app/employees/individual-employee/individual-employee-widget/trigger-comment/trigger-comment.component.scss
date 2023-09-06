@@ -1,0 +1,35 @@
+@import "~assets/scss/base/variables";
+@import "~assets/scss/base/colors";
+@import "~bootstrap/scss/mixins/breakpoints";
+@import "~assets/scss/base/mixins";
+
+.btn-primary {
+    min-width: 175px;
+
+    @include media-breakpoint-down('xl') {
+        min-width: 157px;
+    }
+}
+
+.icon-eye-1,
+.icon-edit-1,
+.icon-bin {
+    @include media-breakpoint-down('xs') {
+        font-size: 17px;
+    }
+}
+
+.content .comment-category:not(:last-child) {
+    border-bottom: 1px solid #dee2e6;
+}
+
+.font-icon-send {
+    font-size: 18px;
+}
+
+.font-icon-dont-send {
+    font-size: 18px;
+    &:before {
+        color: #697d9f !important;
+    }
+}

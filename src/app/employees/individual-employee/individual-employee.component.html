@@ -1,0 +1,177 @@
+<section class="d-flex flex-column h-100 position-relative">
+    <!-- header part start here -->
+    <header
+        class="p-3 flex-shrink-0 d-flex justify-content-sm-small-center justify-content-between align-items-center flex-wrap">
+        <section class="dark-text font-xl font-semibold xs-mb">
+            {{employeeName}}
+        </section>
+        <section class="d-flex align-items-center custom-ml-auto flex-wrap justify-content-sm-small-center pl-3">
+            <button type="button" class="btn btn-primary rounded text-uppercase xs-mb" title="Generate Report"
+                (click)="openPFDSelectionModalPopup()" [disabled]="!isEnableGeneratePDFButton">Generate Report</button>
+            <div class="mx-3 d-flex position-relative input-search align-items-center flex-column">
+                <input class="form-control" placeholder="Find Team Member" type="search" [(ngModel)]="searchEmployee">
+                <div class="icon icon-search-1 text-primary p-2"></div>
+                <div class="w-100 rounded">
+                    <ul class="employee-search-list" *ngIf="!!searchEmployee">
+                        <li class="cursor-pointer" *ngFor="let employee of employeeList"
+                            (click)="changeEmployee(employee.empId, employee.ratingCompleted, employee)">
+                            {{employee.firstName}} {{employee.lastName}}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="xs-d-none">
+                <trigger-tooltip [pageTitle]="pageTitle"></trigger-tooltip>
+            </div>
+        </section>
+    </header>
+    <!-- header part end here -->
+    <section class="h-100 position-relative flex-grow-1 overflow-hidden">
+        <!--graph widget main container section start here -->
+        <section class="h-100 overflow-auto px-3 pb-3 main-container">
+            <section class="grid w-100 employee-widget-grid-container">
+                <div class="d-flex flex-column h-100">
+                    <mat-accordion multi="true">
+                        <mat-expansion-panel class="rounded" [expanded]="isDisplayScoreReportingView" #score
+                            *ngIf="isDisplayScoreReportingView">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Score Reporting
+                                </mat-panel-title>
+                                <mat-icon
+                                    class="icon icon-pluse text-primary d-flex align-items-center justify-content-end"
+                                    *ngIf="!score.expanded"></mat-icon>
+                                <mat-icon
+                                    class="icon icon-minus text-primary d-flex align-items-center justify-content-end"
+                                    *ngIf="score.expanded"></mat-icon>
+                            </mat-expansion-panel-header>
+                            <ng-container #summaryReportingcontainerRef></ng-container>
+                        </mat-expansion-panel>
+
+                        <mat-expansion-panel class="rounded"
+                            [expanded]="!isDisplayScoreReportingView && isDisplaySummaryReportingView" #summary
+                            *ngIf="isDisplaySummaryReportingView">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Summary Reporting
+                                </mat-panel-title>
+                                <mat-icon
+                                    class="icon icon-pluse text-primary d-flex align-items-center justify-content-end"
+                                    *ngIf="!summary.expanded"></mat-icon>
+                                <mat-icon
+                                    class="icon icon-minus text-primary d-flex align-items-center justify-content-end"
+                                    *ngIf="summary.expanded"></mat-icon>
+                            </mat-expansion-panel-header>
+                            <ng-container #managerActioncontainerRef></ng-container>
+                        </mat-expansion-panel>
+
+                        <mat-expansion-panel class="rounded"
+                            [expanded]="!isDisplayScoreReportingView && !isDisplaySummaryReportingView && isDisplayDetailedReportingView"
+                            #detailed *ngIf="isDisplayDetailedReportingView">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Detailed Reporting 
+                                </mat-panel-title>
+                                <mat-icon
+                                    class="icon icon-pluse text-primary d-flex align-items-center justify-content-end"
+                                    *ngIf="!detailed.expanded"></mat-icon>
+                                <mat-icon
+                                    class="icon icon-minus text-primary d-flex align-items-center justify-content-end"
+                                    *ngIf="detailed.expanded"></mat-icon>
+                            </mat-expansion-panel-header>
+                            <ng-container #detailedReportingcontainerRef></ng-container>
+                        </mat-expansion-panel>
+
+                        <mat-expansion-panel class="rounded"
+                            [expanded]="!isDisplayScoreReportingView && !isDisplaySummaryReportingView && !isDisplayDetailedReportingView && isDisplayContextualReportingView"
+                            #contexual *ngIf="isDisplayContextualReportingView">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Contextual Reporting
+                                </mat-panel-title>
+                                <mat-icon
+                                    class="icon icon-pluse text-primary d-flex align-items-center justify-content-end"
+                                    *ngIf="!contexual.expanded"></mat-icon>
+                                <mat-icon
+                                    class="icon icon-minus text-primary d-flex align-items-center justify-content-end"
+                                    *ngIf="contexual.expanded"></mat-icon>
+                            </mat-expansion-panel-header>
+                            <section class="d-flex flex-wrap w-100 px-2">
+                                <!-- <section class="col-xl-6 col-sm-12 mb-3 px-2">
+                                    <section class="mb-3">
+                                        <ng-container #contextualReportingcontainerRef></ng-container>
+                                    </section>
+                                    <section>
+                                        <ng-container #managerActioncontainerRef></ng-container>
+                                    </section>
+                                </section>
+                                <section class="col-xl-12 col-sm-12 mb-3 px-2"
+                                    *ngIf="sparkAnEmployee.isSparkViewable || sparkAnEmployee.isSparkAddable">
+                                    <ng-container #sparkcontainerRef></ng-container>
+                                </section> -->
+
+                                <!-- for spark and comment -->
+                                <section class="my-dashboard-list-tab h-100 flex-grow-1 overflow-hidden"
+                                    *ngIf="sparkAnEmployee.isSparkViewable || sparkAnEmployee.isSparkAddable">
+                                    <ul class="nav nav-tabs" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link font-semibold active" data-toggle="tab" href="#sparks"
+                                                (click)="createSparkWidget()">Sparks</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link font-semibold" data-toggle="tab"
+                                                href="#comments">Comments</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link font-semibold" data-toggle="tab"
+                                                href="#reports">Reports</a>
+                                        </li>
+                                    </ul>
+                                    <section class="tab-content white-bg mb-3">
+                                        <section id="sparks" class="tab-pane h-100 rounded-bottom active">
+                                            <ng-container #sparkcontainerRef></ng-container>
+                                        </section>
+                                        <section id="comments" class="tab-pane h-100 rounded-bottom fade">
+                                            <ng-container #contextualReportingcontainerRef></ng-container>
+                                        </section>
+
+                                        <section id="reports" class="tab-pane h-100 rounded-bottom fade p-3">
+                                            <ng-container #reportsContainerRef></ng-container>
+                                        </section>
+                                    </section>
+                                </section>
+
+                                <!-- for comment -->
+                                <section class="my-dashboard-list-tab h-100 flex-grow-1 overflow-hidden"
+                                    *ngIf="!sparkAnEmployee.isSparkViewable && !sparkAnEmployee.isSparkAddable">
+                                    <ul class="nav nav-tabs" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link font-semibold active" data-toggle="tab"
+                                                href="#comments">Comments</a>
+                                        </li>
+                                    </ul>
+                                    <section class="tab-content white-bg mb-3">
+                                        <section id="comments" class="tab-pane h-100 rounded-bottom active">
+                                            <ng-container #contextualReportingcontainerRef></ng-container>
+                                        </section>
+                                    </section>
+                                </section>
+                            </section>
+
+                            <!-- <section class="d-flex flex-wrap"
+                                *ngIf="!sparkAnEmployee.isSparkViewable && !sparkAnEmployee.isSparkAddable">
+                                <section class="col-xl-6 col-sm-12 mb-3 px-2">
+                                    <ng-container #contextualReportingcontainerRef></ng-container>
+                                </section>
+                                <section class="col-xl-6 col-sm-12 mb-3 px-2">
+                                    <ng-container #managerActioncontainerRef></ng-container>
+                                </section>
+                            </section> -->
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                </div>
+            </section>
+        </section>
+        <!--graph widget main container section end here -->
+    </section>
+</section>

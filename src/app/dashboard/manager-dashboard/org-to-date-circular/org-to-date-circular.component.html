@@ -1,0 +1,33 @@
+<!-- widget graph section start here -->
+<div class="rounded white-bg shadow-sm p-3 widgets-box d-flex flex-column flex-grow-1 xs-mb-3">
+    <div class="d-flex justify-content-between">
+        <div class="dark-text font-semibold font-md">My Organization {{selectedYearBinding}} </div>
+        <div class="d-flex flex-nowrap align-items-center xs-d-none">
+            <span class="icon icon-dragdrop mr-2 cursor-move d-flex align-items-center" title="Move" *ngIf="role !== 'TriggerAdmin'"></span>
+            <trigger-tooltip [pageTitle]="pageTitle" [bulbTootlip]="bulbTootlip"></trigger-tooltip>
+            <span class="icon icon-close cursor-pointer" title="Close" (click)="onclickremoveTile()"
+                *ngIf="role !== 'TriggerAdmin'"></span>
+        </div>
+    </div>
+    <div class="d-flex">
+        <div class="dark-text font-xs">Evaluation Completed: </div>
+        <div class="text-secondary font-semibold pl-1 font-xs">{{triggerCompleted}}</div>
+    </div>
+    <div class="d-flex">
+        <div class="dark-text font-xs">Yet to Evaluate: </div>
+        <span class="text-secondary font-semibold pl-1 font-xs"
+            *ngIf="noOfMyOrgToday - triggerCompleted >= 0">{{noOfMyOrgToday - triggerCompleted}}</span>
+        <span class="text-secondary font-semibold pl-1 font-xs"
+            *ngIf="noOfMyOrgToday - triggerCompleted < 0">0</span>
+    </div>
+    <div>
+        <div id="circularContainer" style="min-width: 270px;height: 270px;">
+        </div>
+        <trigger-org-to-date-circular-common-graph (callonClickmyOrgToDate)="callonClickmyOrgToDate($event)"
+            [totalCountOfIP]="totalCountOfIP" [totalCountOfA]="totalCountOfA" [totalCountOfB]="totalCountOfB"
+            [totalCountOfC]="totalCountOfC" [totalCountOfRP]="totalCountOfRP" [isShowIPGrade]="isShowIPGrade">
+        </trigger-org-to-date-circular-common-graph>
+    </div>
+</div>
+<!-- Here style tag given for set height, because when we added below class insted of style tag it is created issue in 320Px responsive width. -->
+<!-- widget graph section end here -->

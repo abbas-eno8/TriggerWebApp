@@ -1,0 +1,131 @@
+<!-- tab main section start here -->
+<section class="my-dashboard-list-tab h-100 flex-grow-1 overflow-hidden" *ngIf="userData.roleId !== 5">
+  <ul class="nav nav-tabs" role="tablist">
+    <li class="nav-item">
+      <a class="nav-link font-semibold active" data-toggle="tab" href="#myrequest" (click)="loadMyRequest()">Assigned To
+        Me</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link font-semibold" data-toggle="tab" href="#createrequest" (click)="loadCreateRequest()">My
+        Request</a>
+    </li>
+  </ul>
+
+  <section class="tab-content white-bg h-100 mb-3">
+    <section id="myrequest" class="tab-pane h-100 active" *ngIf="userData.roleId !== 5">
+      <!-- approve pending status section start here -->
+      <section class="d-flex align-items-center w-100 p-3 flex-xs-wrap">
+        <section class="d-flex xs-mb-3 flex-grow-1 position-relative input-search">
+          <input class="w-100 form-control" type="search" type="search"
+            (keyup)="filterItem($event.target.value,'MyRequest')" [(ngModel)]="searchText"
+            placeholder="Search Request...">
+          <div class="icon icon-search-1 text-primary p-2"></div>
+        </section>
+        <section class="d-flex align-items-center pl-3 ml-auto">
+          <button type="button" class="btn btn-outline-success font-semibold mr-3" title="Recent"
+            (click)="filteredByStatus('OnGoing','MyRequest')" [ngClass]="isActiveOngoing ?'active': ''">Recent</button>
+          <button type="button" class="btn btn-outline-danger font-semibold" title="Previous"
+            (click)="filteredByStatus('History','MyRequest')"
+            [ngClass]="isActiveHistory ?'active': ''">Previous</button>
+        </section>
+      </section>
+      <!-- approve pending status section end here -->
+      <section class="h-100">
+        <section class="mat-elevation-z8 w-100 h-100">
+          <section class="h-100 px-3" *ngIf="!isAccordianTable && isMyRequestAiCalled && myRequestList.length > 0">
+            <trigger-my-request-table class="d-flex flex-column table-container" [myRequestList]="myRequestList">
+            </trigger-my-request-table>
+          </section>
+          <section class="h-100 px-3 my-dashboard-accordion-list"
+            *ngIf="isAccordianTable && isMyRequestAiCalled && myRequestList.length > 0">
+            <trigger-my-request-accordion-table class="d-flex flex-column table-container"
+              [myRequestList]="myRequestList">
+            </trigger-my-request-accordion-table>
+          </section>
+          <section class="h-100" *ngIf="isMyRequestAiCalled && myRequestList.length === 0">
+            <trigger-no-records-found></trigger-no-records-found>
+          </section>
+        </section>
+      </section>
+    </section>
+    <section id="createrequest" class="tab-pane h-100 fade">
+      <!-- approve pending status section start here -->
+      <section class="d-flex align-items-center w-100 p-3 flex-xs-wrap">
+        <section class="d-flex xs-mb-3 flex-grow-1 position-relative input-search">
+          <input class="w-100 form-control" type="search" type="search"
+            (keyup)="filterItem($event.target.value,'CreateRequest')" [(ngModel)]="searchText"
+            placeholder="Search Request...">
+          <div class="icon icon-search-1 text-primary p-2"></div>
+        </section>
+        <section class="d-flex align-items-center pl-3 ml-auto">
+          <button type="button" class="btn btn-outline-success font-semibold  mr-3" title="Recent"
+            (click)="filteredByStatus('OnGoing','CreateRequest')"
+            [ngClass]="isActiveOngoing ?'active': ''">Recent</button>
+          <button type="button" class="btn btn-outline-danger font-semibold" title="Previous"
+            (click)="filteredByStatus('History','CreateRequest')"
+            [ngClass]="isActiveHistory ?'active': ''">Previous</button>
+        </section>
+      </section>
+      <!-- approve pending status section end here -->
+      <section class="h-100">
+        <section class="mat-elevation-z8 w-100 h-100">
+          <section class="h-100 px-3"
+            *ngIf="!isAccordianTable && isCreateRequestAiCalled && createRequestList.length > 0">
+            <trigger-create-request-table class="d-flex flex-column table-container"
+              [createRequestList]="createRequestList">
+            </trigger-create-request-table>
+          </section>
+          <section class="h-100 px-3 my-dashboard-accordion-list"
+            *ngIf="isAccordianTable && isCreateRequestAiCalled && createRequestList.length > 0">
+            <trigger-create-request-accordion-table class="d-flex flex-column table-container"
+              [createRequestList]="createRequestList">
+            </trigger-create-request-accordion-table>
+          </section>
+          <section class="h-100" *ngIf="isCreateRequestAiCalled && createRequestList.length === 0">
+            <trigger-no-records-found></trigger-no-records-found>
+          </section>
+        </section>
+      </section>
+    </section>
+  </section>
+</section>
+
+<!-- Create request UI -->
+<section class="h-100 flex-grow-1 overflow-hidden" *ngIf="userData.roleId === 5">
+  <div class="font-semibold font-md dark-text white-bg label-width px-3 pt-3 pb-1 rounded-top">My Request</div>
+  <!-- approve pending status section start here -->
+  <section class="d-flex align-items-center justify-content-between w-100 flex-xs-wrap white-bg p-3 rounded-right">
+    <section class="d-flex xs-mb-3 flex-grow-1 position-relative input-search">
+      <input class="w-100 form-control" type="search" type="search"
+        (keyup)="filterItem($event.target.value,'CreateRequest')" [(ngModel)]="searchText"
+        placeholder="Search Request...">
+      <div class="icon icon-search-1 text-primary p-2"></div>
+    </section>
+    <section class="d-flex align-items-center pl-3 ml-auto">
+      <button type="button" class="btn btn-outline-success font-semibold  mr-3" title="Recent"
+        (click)="filteredByStatus('OnGoing','CreateRequest')" [ngClass]="isActiveOngoing ?'active': ''">Recent</button>
+      <button type="button" class="btn btn-outline-danger font-semibold" title="Previous"
+        (click)="filteredByStatus('History','CreateRequest')"
+        [ngClass]="isActiveHistory ?'active': ''">Previous</button>
+    </section>
+  </section>
+  <!-- approve pending status section end here -->
+  <section class="h-100 white-bg mb-3 rounded-bottom">
+    <section class="mat-elevation-z8 w-100 h-100">
+      <section class="h-100 px-3" *ngIf="!isAccordianTable && isCreateRequestAiCalled && createRequestList.length > 0">
+        <trigger-create-request-table class="d-flex flex-column table-container"
+          [createRequestList]="createRequestList">
+        </trigger-create-request-table>
+      </section>
+      <section class="h-100 px-3 my-dashboard-accordion-list"
+        *ngIf="isAccordianTable && isCreateRequestAiCalled && createRequestList.length > 0">
+        <trigger-create-request-accordion-table class="d-flex flex-column table-container"
+          [createRequestList]="createRequestList">
+        </trigger-create-request-accordion-table>
+      </section>
+      <section class="h-100" *ngIf="isCreateRequestAiCalled && createRequestList.length === 0">
+        <trigger-no-records-found></trigger-no-records-found>
+      </section>
+    </section>
+  </section>
+</section>

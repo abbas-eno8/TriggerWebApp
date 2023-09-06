@@ -1,0 +1,31 @@
+.mat-cell:nth-child(1),
+.mat-header-cell:nth-child(1) {
+    justify-content: center;
+    align-items: center;
+    flex: 0 0 12%;
+}
+
+// .mat-cell:nth-child(6),
+// .mat-header-cell:nth-child(6) {
+//     justify-content: center;
+//     align-items: center;
+//     flex: 0 0 6%;
+// }
+.bg-danger-light,
+.bg-success-light {
+    width: 92px;
+}
+
+.mat-cell,
+.mat-footer-cell,
+.mat-header-cell {
+    min-height: 100%;
+}
+
+.mat-row {
+    align-items: flex-start;
+}
+
+.mat-cell {
+    margin: 14px 0;
+}

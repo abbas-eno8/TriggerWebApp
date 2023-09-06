@@ -1,0 +1,16 @@
+<section class="lg-dialog-container p-3">
+    <div class="mb-3">
+        <h1 class="dark-text"> {{ pageTitle }}</h1>
+    </div>
+    <form>
+        <input [(ngModel)]="workLocation" [ngModelOptions]="{standalone: true}" [pattern]="pattern"
+            autofocus="true" type="text" class="form-control mb-3" [placeholder]="pageTitle"
+            (keydown.enter)="onClickSubmitButton()" maxlength="50">
+    </form>
+    <footer class="d-flex justify-content-end">
+        <button type="button" (click)="onClickCancelButton()"
+            class="btn secondary-light-btn rounded-pill mr-2 btn-sm text-uppercase" title="Cancel">Cancel</button>
+        <button type="button" (click)="onClickSubmitButton()"
+            class="btn btn-secondary rounded-pill btn-sm text-uppercase" title="Submit">Submit</button>
+    </footer>
+</section>

@@ -1,0 +1,12 @@
+@import "~assets/scss/base/variables";
+@import "~assets/scss/base/mixins";
+.footer-section {
+    margin-top: 35px;
+}
+.iframe-container {
+    height: calc(100% - 60px);
+}
+::ng-deep .mat-dialog-container {
+    background: none;
+    color:inherit;
+}

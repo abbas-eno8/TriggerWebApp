@@ -1,0 +1,66 @@
+@import "~assets/scss/base/variables";
+@import "~assets/scss/base/colors";
+@import "~bootstrap/scss/mixins/breakpoints";
+@import "~assets/scss/base/mixins";
+.text-comment {
+    color: $dark;
+}
+.mat-cell:nth-child(1),
+.mat-header-cell:nth-child(1) {
+    min-width: 40px;
+}
+.mat-cell:nth-child(2),
+.mat-header-cell:nth-child(2) {
+    flex: 0 0 36%;
+    @include media-breakpoint-down('sm-small') {
+        flex: 0 0 29%;
+    }
+}
+.mat-cell:nth-child(3),
+.mat-header-cell:nth-child(3) {
+    flex: auto;
+    @include media-breakpoint-down('sm-small') {
+        flex: 0 0 37%;
+    }
+}
+.mat-cell:nth-child(4),
+.mat-header-cell:nth-child(4) {
+    flex: 0 0 5%;
+    justify-content: center;
+
+    @include media-breakpoint-down('lg-mini') {
+        flex: 0 0 17%;
+    }
+
+    @include media-breakpoint-down('sm-small') {
+        flex: 0 0 17%;
+        min-width: 25px;
+    }
+}
+
+.mat-cell:nth-child(5),
+.mat-header-cell:nth-child(5) {
+    flex: 0 0 5%;
+    min-width: 35px;
+    justify-content: center;
+}
+
+.mat-row {
+    min-height: 48px;
+}
+
+.mat-expansion-panel-header {
+    align-items: flex-start;
+}
+.mat-cell {
+    align-items: flex-start;
+    padding: 14px 3px;
+}
+.mat-header-cell {
+    @include media-breakpoint-down('sm-small') {
+        font-size: 10px;
+    }
+}
+.mat-content {
+    align-items: flex-start !important;
+}

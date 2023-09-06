@@ -1,0 +1,96 @@
+<!-- header part start here -->
+<section class="d-flex flex-column h-100 position-relative">
+  <header class="p-3 flex-shrink-0 mt-3 d-flex justify-content-sm-small-center flex-sm-small-column flex-wrap">
+    <section class="d-none xs-d-block xs-mb-3 px-2">
+      <div class="d-flex justify-content-sm-small-center">
+        <div class="form-select position-relative">
+          <span class="select-form-label-text">Dashboard for</span>
+          <select dir="rtl" class="rounded-pill d-flex justify-content-end" (change)="onChangeYear()"
+          [(ngModel)]="selectedYear" name="selectedYear">
+            <option *ngFor="let year of years" value={{year.AssessedYear}} [title]="year.AssessedYear">
+              {{ year.AssessedYear }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </section>
+    <section class="d-flex justify-content-end justify-content-sm-small-center flex-sm-small-column w-100">
+      <section class="d-flex align-items-center mr-3">
+        <form class="form xs-d-none" novalidate>
+          <div class="d-flex xs-mb-3">
+            <div class="sm-select-dropdown">
+              <select class="cursor-pointer shadow-sm rounded-pill" (change)="onChangeYear()"
+              [(ngModel)]="selectedYear" name="selectedYear">
+              <option *ngFor="let year of years" value={{year.AssessedYear}} [title]="year.AssessedYear">
+                {{ year.AssessedYear }}
+              </option>
+              </select>
+            </div>
+          </div>
+        </form>
+      </section>
+      <section class="d-flex align-items-center d-flex justify-content-sm-small-center">
+        <div class="md-select-dropdown">
+          <select class="cursor-pointer shadow-sm white-bg rounded-pill" [(ngModel)]="selectedTeam"
+            (change)="onChangeTeam()">
+            <option *ngFor="let team of teams" value={{team.teamId}} [title]="team.team">
+              {{ team.team | ellipsis : 30}}
+            </option>
+          </select>
+        </div>
+        <div class="xs-d-none">
+          <trigger-tooltip [pageTitle]="pageTitle"></trigger-tooltip>
+        </div>
+      </section>
+    </section>
+
+    <!-- Widget Library section start here -->
+    <section class="xs-d-none">
+      <input class="toggle-sidebar" id="right-sidebar" type="checkbox" role="button" />
+      <div class="right-sidebar-container d-flex flex-column flex-grow-1">
+        <section class="d-flex">
+          <div class="arrow-left-container d-flex align-items-center justify-content-center cursor-pointer">
+            <label for="right-sidebar"
+              class="icon icon-arrow-right d-flex align-items-center justify-content-center text-white mb-0 cursor-pointer"></label>
+          </div>
+          <div class="text-white font-md overflow-hidden px-3 py-2">
+            Widget Library
+          </div>
+        </section>
+        <section class="overflow-auto h-100 position-relative">
+          <div class="mb-3 px-3 d-flex" *ngFor="let item of packeryArray; let i = index;">
+            <input type="checkbox" class="custom-checkbox" value="" id="{{item.widgetId}}" [checked]="item.isActive"
+              (change)="checkValue(item.tileSelector,$event.target.checked,i)">
+            <label for="{{item.widgetId}}"></label>
+            <label for="{{item.widgetActualName}}" class="pl-2 text-white ">{{item.widgetActualName}}</label>
+          </div>
+          <div class="d-flex justify-content-center mb-3">
+            <button class="btn btn-secondary rounded-pill text-uppercase" title="Submit"
+              (click)="submitCheckValue()">Submit</button>
+          </div>
+        </section>
+      </div>
+    </section>
+    <!-- Widget Library section end here -->
+  </header>
+  <!-- header part end here -->
+  <section class="h-100 position-relative flex-grow-1 overflow-hidden">
+    <!-- main graph and widget container start here -->
+    <section class="h-100 d-flex flex-column overflow-auto px-3 pb-3">
+      <section class="grid widget-grid-container">
+        <div class="h-100">
+          <div class="grid-sizer"></div>
+          <div class="gutter-sizer"></div>
+          <ng-container #teamsMobileView></ng-container>
+          <div class="col-xl-3 col-md-6 col-sm-12 grid-item px-0" id="team-average-score" data-item-id="1">
+            <ng-container #avrScore></ng-container>
+          </div>
+          <div class="col-xl-3 col-md-6 col-sm-12 grid-item px-0" id="team-average-score-by-day" data-item-id="2">
+            <ng-container #avrScoreByDay></ng-container>
+          </div>
+        </div>
+      </section>
+    </section>
+    <!-- main graph and widget container end here -->
+  </section>
+</section>

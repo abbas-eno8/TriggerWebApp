@@ -1,0 +1,42 @@
+@import "~assets/scss/base/variables";
+@import "~assets/scss/base/colors";
+@import "~bootstrap/scss/mixins/breakpoints";
+@import "~assets/scss/base/mixins";
+
+.mat-cell:nth-child(1),
+.mat-header-cell:nth-child(1) {
+    flex: 0 0 5%;
+    @include media-breakpoint-down('lg-mini') {
+        flex: 0 0 15%;
+    }
+
+    @include media-breakpoint-down('sm-small') {
+        flex: 0 0 20%;
+        min-width: 85px;
+    }
+}
+.mat-cell:nth-child(2),
+.mat-header-cell:nth-child(2) {
+    flex: auto;
+}
+.mat-cell:nth-child(3),
+.mat-header-cell:nth-child(3) {
+    flex: 0 0 5%;
+    justify-content: center;
+    @include media-breakpoint-down('lg-mini') {
+        flex: 0 0 15%;
+    }
+    @include media-breakpoint-down('sm-small') {
+        flex: 0 0 20%;
+        min-width: 65px;
+    }
+}
+.mat-cell:nth-child(4),
+.mat-header-cell:nth-child(4) {
+    flex: 0 0 5%;
+}
+::ng-deep .mat-expansion-panel-content {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden !important;
+}

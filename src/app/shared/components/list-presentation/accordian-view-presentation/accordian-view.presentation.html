@@ -1,0 +1,54 @@
+<section class="h-100 d-flex flex-column overflow-hidden">
+    <header class="list-header d-flex justify-content-between align-items-center rounded-top flex-shrink-0">
+        <div class="card-header-item font-semibold text-uppercase d-flex align-items-center">
+            <div>
+                {{ columns[0].column }}
+            </div>
+            <div class="ml-1 cursor-pointer" *ngIf="columns[0].isSortable" (click)="presenter.sort(columns[0].property)"
+                [ngClass]="presenter.getDirecionIcon(columns[0].property)"></div>
+        </div>
+        <div class="card-header-item font-semibold text-uppercase d-flex align-items-center">
+            <div> {{ columns[1].column }}
+            </div>
+            <div class="ml-1 cursor-pointer" *ngIf="columns[1].isSortable" (click)="presenter.sort(columns[1].property)"
+                [ngClass]="presenter.getDirecionIcon(columns[1].property)"></div>
+        </div>
+        <div class="card-header-item font-semibold text-uppercase text-center" *ngIf="isDisplayActions">action</div>
+        <div class="w-40px text-uppercase mr-3"></div>
+    </header>
+    <section class="overflow-auto card-accordion-container rounded-bottom h-100 shadow-sm" id="mainDIV"
+        (scroll)="scrollService.onWindowScroll()">
+        <section id="accordion" class="accordion">
+            <section class="card mb-0 border-0" *ngFor="let record of list; let i = index">
+                <div class="d-flex justify-content-between align-items-center card-container">
+                    <div class="card-header-item text-ellipsis d-flex align-items-center">
+                        <div>
+                            <read-more [text]='record[columns[0].property]' [maxLength]="115"></read-more>
+                        </div>
+                    </div>
+                    <div class="card-header-item text-ellipsis">
+                        <read-more [text]='record[columns[1].property]' [maxLength]="115"></read-more>
+                    </div>
+                    <div class="card-header-item" *ngIf="isDisplayActions">
+                        <trigger-actions-ui [record]="record"></trigger-actions-ui>
+                    </div>
+                    <div class="card-header collapsed p-0 text-center cursor-pointer bg-transparent"
+                        data-toggle="collapse" href="#collapseOne" [attr.data-target]="'#collapse' + i"
+                        [attr.aria-controls]="'collapse' + i">
+                    </div>
+                </div>
+
+                <div [id]="'collapse' + i" class="collapse" data-parent="#accordion">
+                    <div class="card-body px-3 py-2" *ngFor="let column of columns | slice:2 ; let idx = index">
+                        <span class="text-primary font-semibold tooltip-list info-tooltip"
+                            [ngClass]="column.title? 'cursor-default' : ''">{{ column.column }}
+                            <span class="tooltiptext">
+                                {{ column.title }} </span>
+                        </span> :
+                        <read-more [text]='record[column.property]' [maxLength]="115"></read-more>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </section>
+</section>

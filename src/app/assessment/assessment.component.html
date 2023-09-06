@@ -1,0 +1,181 @@
+<section class="d-flex flex-column h-100">
+    <!-- header part start here -->
+    <header class="d-flex justify-content-between p-3 flex-shrink-0 flex-wrap">
+        <section class="d-flex align-items-center">
+            <div class="dark-text font-xl font-semibold xs-mb-3">
+                Evaluate Team Member
+            </div>
+        </section>
+        <section class="d-flex align-items-center">
+            <div class="md-select-dropdown mr-3">
+                <select class="rounded-pill shadow-sm cursor-pointer" name="" id="" [(ngModel)]="selectedValue"
+                    (change)="changeEmployee(selectedValue)">
+                    <option value="0" selected>Select Team Member</option>
+                    <option *ngFor="let emp of employeeList" [value]="emp.empId">{{emp.firstName}} {{emp.lastName}}
+                    </option>
+                </select>
+            </div>
+            <trigger-tooltip [pageTitle]="pageTitle"></trigger-tooltip>
+        </section>
+    </header>
+    <!-- header part end here -->
+    <section class="h-100 flex-grow-1 overflow-hidden">
+        <!-- main conrainer start here -->
+        <section class="d-flex flex-column overflow-auto px-3 pb-3 h-100">
+            <div *ngIf="categories">
+                <form id="formId" [ngClass]="{'disable-section':isDisabled === 0}">
+                    <section *ngFor="let categoryObj of categories;let i=index">
+                        <section class="white-bg rounded shadow-sm p-3 mb-3">
+                            <div class="text-secondary font-semibold mb-2 font-lg">{{ categoryObj.category}} </div>
+                            <section *ngFor="let questionObj of categoryObj.questions;let ind=index">
+                                <section class="d-flex flex-nowrap mb-2 assessment-qun-container"
+                                    id="strikeout{{questionObj.id}}">
+                                    <div class="font-sm font-semibold">{{ind + 1}}.</div>
+                                    <div class="font-sm font-semibold pl-1">{{questionObj.questions}}
+                                    </div>
+                                    <trigger-tooltip [pageTitle]="categoryObj.category"
+                                        *ngIf="questionObj.isShowTooltip">
+                                    </trigger-tooltip>
+                                </section>
+                                <section class="d-flex justify-content-between flex-wrap py-3">
+                                    <div class="d-flex flex-nowrap align-items-center evaluate-form-field-container"
+                                        *ngFor="let answerObj of questionObj.answers;let index=index;">
+                                        <label class="custom-radiobutton position-relative">
+                                            <span class="pl-2">{{answerObj.answers}}</span>
+                                            <input type="radio"
+                                                (change)="checkRadioButton(i,ind,questionObj.id,answerObj.id)"
+                                                [value]="answerObj.id" [name]="questionObj.id.toString()" />
+                                            <span class="radio-checked"></span>
+                                        </label>
+                                    </div>
+                                </section>
+                                <section *ngIf="questionObj.isComment">
+                                    <section class="d-flex flex-column">
+                                        <section class="d-flex flex-column">
+                                            <section class="d-flex align-items-start mb-2">
+                                                <button type="button"
+                                                    class="btn d-flex justify-content-center align-items-center rounded icon-container"
+                                                    *ngIf="!questionObj.isCommentSectionShow"
+                                                    (click)="showHideTextArea(questionObj)" title="Expand">
+                                                    <span
+                                                        class="icon icon-pluse text-primary d-flex align-items-center"></span>
+                                                </button>
+                                                <button type="button"
+                                                    class="btn d-flex justify-content-center align-items-center rounded icon-container"
+                                                    *ngIf="questionObj.isCommentSectionShow"
+                                                    (click)="showHideTextArea(questionObj)" title="Collapse">
+                                                    <span
+                                                        class="icon icon-minus text-primary d-flex align-items-center"></span>
+                                                </button>
+                                                <div class="ml-3 d-flex flex-column textarea-container rounded w-100"
+                                                    *ngIf="questionObj.isCommentSectionShow">
+                                                    <div
+                                                        class="right-date-time-container secondary-dark-text text-right">
+                                                        <DateTimeStamp #dateTimeStamp></DateTimeStamp>
+                                                    </div>
+                                                    <div class="d-flex w-100">
+                                                        <textarea class="form-textarea form-control border-0 w-100"
+                                                            [autofocus]="true"
+                                                            [formControl]="assessmentForm.get('empassessmentdet').controls[i].controls[ind].get('remarks')"
+                                                            placeholder="Comments not visible to team member, internal notes unless share toggle is enabled"></textarea>
+                                                    </div>
+                                                </div>
+                                            </section>
+                                        </section>
+                                    </section>
+                                    <section class="d-flex align-items-center justify-content-between w-100">
+                                        <section
+                                            class="position-relative d-flex align-items-center justify-content-between rounded p-0 w-100">
+                                            <div class="d-flex align-items-center">
+                                                <button type="button"
+                                                    (click)="openCustomFileChooser('categoryAttachment', questionObj,i,ind)"
+                                                    class="btn border-0 icon icon-paper-clip text-primary d-flex align-items-center icon-container rounded"
+                                                    title="Attachment"></button>
+                                                <section class="text-primary font-sm pl-2 text-ellipsis"
+                                                    title="{{questionObj.attachedFile}}">
+                                                    {{ questionObj.attachedFile }}
+                                                </section>
+                                                <div class="icon icon-bin cursor-pointer pl-2" title="Delete"
+                                                    *ngIf="!!questionObj.attachedFile"
+                                                    (click)="deleteAttachment('categoryAttachment',questionObj,i,ind)">
+                                                </div>
+
+                                            </div>
+                                            <div class="d-flex align-items-center pl-3">
+                                                <div>{{categoryObj.isCommentShareText}}</div>
+                                                <div class="d-flex align-items-center pr-2 xs-mb-3 pl-3">
+                                                    <label class="md-switch">
+                                                        <input type="checkbox"
+                                                            [checked]="assessmentForm.get('empassessmentdet').controls[i].controls[ind].get('remarks').value ? false : null"
+                                                            [attr.disabled]="(!assessmentForm.get('empassessmentdet').controls[i].controls[ind].get('remarks').value ? 'disabled' : null) || (!isCommentSend ? 'disabled' : null)"
+                                                            [formControl]="assessmentForm.get('empassessmentdet').controls[i].controls[ind].get('isCommentSend')">
+                                                        <span class="md-slider round"></span>
+                                                    </label>
+                                                    <div class="ml-2 dark-text">No/Yes</div>
+                                                </div>
+                                            </div>
+                                        </section>
+
+                                    </section>
+                                </section>
+
+                            </section>
+
+                        </section>
+                    </section>
+                    <!-- gray container text area start here -->
+                    <div class="text-secondary font-semibold mb-2 font-lg">General Comment</div>
+                    <section class="w-100 d-flex position-relative flex-column">
+                        <section class="d-flex flex-column textarea-container rounded">
+                            <div class="right-date-time-container secondary-dark-text text-right">
+                                <DateTimeStamp #dateTimeStamp></DateTimeStamp>
+                            </div>
+                            <textarea class="form-textarea form-control border-0 w-100"
+                                [formControl]="assessmentForm.get('remarks')"
+                                placeholder="Visible to team member if Evaluation Summary is shared"></textarea>
+
+                        </section>
+
+                        <section class="d-flex align-items-center justify-content-between pt-2 flex-wrap">
+                            <section class="col-lg-6 col-sm-12 p-0 d-flex align-items-center xs-mb-3">
+                                <section class="position-relative d-flex align-items-center rounded p-0 width-55">
+                                    <button type="button" (click)="openCustomFileChooser('generalAttachment')"
+                                        class="btn border-0 icon icon-paper-clip text-primary d-flex align-items-center icon-container rounded"
+                                        title="Attachment"></button>
+                                    <section class="text-primary font-sm px-2 text-ellipsis"
+                                        title="{{generalAttachmentName}}">
+                                        {{generalAttachmentName}}
+                                    </section>
+                                </section>
+                                <section class="d-flex align-items-center justify-content-end"
+                                    *ngIf="!!generalAttachmentName">
+                                    <div class="icon icon-bin cursor-pointer" title="Delete"
+                                        (click)="deleteAttachment('generalAttachment')"></div>
+                                </section>
+                            </section>
+                            <section class="col-lg-6 col-sm-12 p-0 d-flex align-items-center justify-content-between flex-wrap">
+                                <div class="d-flex align-items-center pr-2 xs-mb-3">
+                                    <label class="md-switch">
+                                        <input type="checkbox" [formControl]="assessmentForm.get('sendTrigger')"
+                                            [checked]="sendTrigger" [attr.disabled]="!sendTrigger ? 'disabled' : null">
+                                        <span class="md-slider round"></span>
+                                    </label>
+                                    <div class="ml-2 dark-text">Send Summary</div>
+                                </div>
+                                <button type="button" title="SaveAsDraft" *ngIf="isDraftEvaluationPermission"
+                                    class="btn btn-secondary rounded-pill text-uppercase ml-auto mr-2"
+                                    [disabled]="isButtonDisabled"
+                                    (click)="saveEmployeeAssessment(selectedValue, 2)">Save As Draft</button>
+                                <button type="button" title="Submit"
+                                    class="btn btn-secondary rounded-pill text-uppercase" [disabled]="isButtonDisabled"
+                                    (click)="saveEmployeeAssessment(selectedValue, null)">Submit</button>
+                            </section>
+                        </section>
+                    </section>
+                    <!-- gray container text area end here -->
+                </form>
+            </div>
+        </section>
+        <!-- main conrainer end here -->
+    </section>
+</section>

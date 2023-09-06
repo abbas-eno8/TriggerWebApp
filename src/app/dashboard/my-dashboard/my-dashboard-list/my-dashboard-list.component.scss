@@ -1,0 +1,23 @@
+@import "~assets/scss/base/variables";
+@import "~assets/scss/base/colors";
+@import "~assets/scss/base/mixins";
+@import "~bootstrap/scss/mixins/breakpoints";
+.table-container {
+    height: 30rem;
+}
+
+.btn-outline-success,
+.btn-outline-danger {
+    border-width: 2px;
+    padding: 6px 10px;
+}
+
+.label-width {
+    width: 160px;
+}
+
+.flex-xs-wrap {
+    @include media-breakpoint-down('sm') {
+        flex-wrap: wrap;
+    }
+}

@@ -1,0 +1,10 @@
+@import "~assets/scss/base/variables";
+@import "~assets/scss/base/colors";
+@import "~bootstrap/scss/mixins/breakpoints";
+@import "~assets/scss/base/mixins";
+.graph-gread-text {
+    font-size: 1.9em;
+    @include media-breakpoint-down('xl') {
+        font-size: 1.2em;
+    }
+}

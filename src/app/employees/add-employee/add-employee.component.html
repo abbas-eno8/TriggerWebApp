@@ -1,0 +1,452 @@
+<section class="d-flex flex-column h-100">
+    <!-- header part start here -->
+    <trigger-child-header-view [pageTitle]="pageTitle"></trigger-child-header-view>
+    <!-- header part end here -->
+    <section class="h-100 position-relative flex-grow-1 overflow-hidden">
+        <!-- main container section start here -->
+        <section class="overflow-auto px-3 pb-3 h-100">
+            <section class="white-bg rounded shadow-sm p-1">
+                <form action="#" method="post" class="form" role="form" novalidate [formGroup]="AddEmployeeForm">
+                    <div class="text-secondary font-semibold mb-2 p-2 font-lg">Mandatory Fields:</div>
+                    <section class="row mx-0">
+                        <div *ngIf="isDisaplyEmployeeId" class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">Id
+                                <span class="text-danger">*</span>
+                            </label>
+                            <input type="text" class="rounded form-control" maxlength="10" formControlName="employeeId"
+                                pattern="^$|^[A-Za-z0-9]+"
+                                [ngClass]="{'border-danger': (AddEmployeeForm.get('employeeId').touched || AddEmployeeForm.get('employeeId').dirty) && !AddEmployeeForm.get('employeeId').valid }">
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">first name
+                                <span class="text-danger">*</span>
+                            </label>
+                            <input type="text" class="rounded form-control" value="" placeholder=""
+                                formControlName="firstName" maxlength="25"
+                                [ngClass]="{'border-danger': (AddEmployeeForm.get('firstName').touched || AddEmployeeForm.get('firstName').dirty) && !AddEmployeeForm.get('firstName').valid }"
+                                (keypress)="nameValidation($event)" ng-pattern-restrict>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">MIDDLE NAME
+                            </label>
+                            <input type="text" class="rounded form-control" value="" placeholder=""
+                                formControlName="middleName" maxlength="25"
+                                (keypress)="AlphabaticharOnlyWithNoSpace($event)">
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">LAST NAME
+                                <span class="text-danger">*</span>
+                            </label>
+                            <input type="text" class="rounded form-control" value="" placeholder=""
+                                formControlName="lastName" maxlength="25"
+                                [ngClass]="{'border-danger': (AddEmployeeForm.get('lastName').touched || AddEmployeeForm.get('lastName').dirty) && !AddEmployeeForm.get('lastName').valid }"
+                                (keypress)="nameValidation($event)" ng-pattern-restrict>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">prefix</label>
+                            <div class="form-select">
+                                <select class="rounded" name="" id="" formControlName="suffix">
+                                    <option value="0">Select prefix</option>
+                                    <option value="Capt.">Capt.</option>
+                                    <option value="Dr.">Dr.</option>
+                                    <option value="III">III</option>
+                                    <option value="Jr.">Jr.</option>
+                                    <option value="Mayor">Mayor</option>
+                                    <option value="Mr.">Mr.</option>
+                                    <option value="Mrs.">Mrs.</option>
+                                    <option value="Ms.">Ms.</option>
+                                    <option value="Sr.">Sr.</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">email address
+                                <span class="text-danger">*</span>
+                            </label>
+                            <input type="text" class="rounded form-control" maxlength="60" [attr.disabled]="true"
+                                *ngIf="isEmployeeInactive" formControlName="emailAddress"
+                                [ngClass]="{'border-danger': (AddEmployeeForm.get('emailAddress').touched || AddEmployeeForm.get('emailAddress').dirty) && !AddEmployeeForm.get('emailAddress').valid}"
+                                (keypress)="IgnoreSpace($event)" required />
+                            <input type="text" class="rounded form-control" maxlength="60" *ngIf="!isEmployeeInactive"
+                                formControlName="emailAddress"
+                                [ngClass]="{'border-danger': (AddEmployeeForm.get('emailAddress').touched || AddEmployeeForm.get('emailAddress').dirty) && !AddEmployeeForm.get('emailAddress').valid}"
+                                (keypress)="IgnoreSpace($event)" required />
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2 position-relative">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">phone number</label>
+                            <div class="d-flex">
+                                <div class="flag-select-dropdown p-0">
+                                    <mat-select name="callingCode" class=" callingCode form-control rounded-right-0 border-right-0 p-0 
+                                    "formControlName="callingCode" placeholder="Country" [(value)]="selected" [(ngModel)]="selected" [panelClass]="isDarkTheme ? 'mat-select-option-dark' : 'mat-select-option-light'">
+                                        <mat-select-trigger>
+                                            {{ selected }}
+                                        </mat-select-trigger>
+                                        <mat-option  *ngFor="let country of countryCodeList" [value]="country.countryObj.countryCode" (click)="onClickOpenCountryCode(country.countryObj.countryCode)">
+                                            <span>
+                                           <img height="24px" width="20px" [src]="country.countryObj.flag"/><span> {{country.countryObj.countryName}} </span> 
+                                           <span>{{country.countryObj.countryCode}}</span>
+                                        </span>
+                                        </mat-option>
+                                      </mat-select>
+                                    <!-- <mat-select formControlName="callingCode" [disabled]="true"
+                                        panelClass="example-panel" [placeholder]="AddEmployeeForm.value.callingCode"
+                                        class="callingCode form-control rounded-right-0 border-right-0 p-0"
+                                        (click)="onClickOpenCountryCode()">
+                                        <mat-option value="+1">
+                                            +1
+                                        </mat-option> -->
+                                        <!-- <mat-option *ngFor="let type of callingCode" [value]="type.callingCodes[0]">
+                                            <img class="img-flag" [src]="type.flag" alt="">
+                                            {{ type.callingCodes [0] }}
+                                        </mat-option> -->
+                                    <!-- </mat-select> -->
+                                </div>
+                                <input type="text" class="form-control border-left-0 rounded-left-0"
+                                    formControlName="phoneNo1" (keypress)="phoneNumberValidation($event)"
+                                    (paste)="pasteOnlyNumericEvent($event)" maxlength="15" minlength="7" />
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">position
+                                <span class="text-danger">*</span>
+                            </label>
+                            <input type="text" class="rounded form-control" formControlName="position" maxlength="50"
+                                [ngClass]="{'border-danger': (AddEmployeeForm.get('position').touched || AddEmployeeForm.get('position').dirty) && !AddEmployeeForm.get('position').valid }"
+                                (keypress)="avoidBlankSpace($event)"
+                                pattern="^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$">
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">date of hire
+                                <span class="text-danger">*</span>
+                            </label>
+                            <div class="calendar-input">
+                                <input type="text" class="rounded form-control cursor-pointer" 
+                                    [minDate]="minDate"
+                                    [maxDate]="maxDate"
+                                    onDrop="return false" onPaste="return false" maxlength="10"
+                                    formControlName="dateOfHire"
+                                    [bsConfig]="{ dateInputFormat: 'MM-DD-YYYY' , rangeInputFormat : 'MM-DD-YYYY' , containerClass: themeClass , showWeekNumbers: false}"
+                                    placeholder="MM-DD-YYYY"
+                                    [ngClass]="{'border-danger': (AddEmployeeForm.get('dateOfHire').touched || AddEmployeeForm.get('dateOfHire').dirty) && !AddEmployeeForm.get('dateOfHire').valid }"
+                                    bsDatepicker (keypress)="inputDateValidation($event)">
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">city
+                                <span class="text-danger">*</span>
+                            </label>
+                            <input type="text" value="" class="rounded form-control" formControlName="city"
+                                maxlength="30"
+                                [ngClass]="{'border-danger': (AddEmployeeForm.get('city').touched || AddEmployeeForm.get('city').dirty) && !AddEmployeeForm.get('city').valid }"
+                                (paste)="pasteOnlyAlphabaticEvent($event)" (keypress)="AlphabaticharOnly($event)"
+                                pattern="^[a-zA-Z ]*$" ng-pattern-restrict>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">state
+                                <span class="text-danger">*</span>
+                            </label>
+                            <input type="text" value="" class="rounded form-control" formControlName="state"
+                                maxlength="25"
+                                [ngClass]="{'border-danger': (AddEmployeeForm.get('state').touched || AddEmployeeForm.get('state').dirty) && !AddEmployeeForm.get('state').valid }"
+                                (paste)="pasteOnlyAlphabaticEvent($event)" (keypress)="AlphabaticharOnly($event)"
+                                pattern="^[a-zA-Z ]*$" ng-pattern-restrict>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">zip code
+                                <span class="text-danger">*</span>
+                            </label>
+                            <input type="text" value="" class="rounded form-control" formControlName="zip"
+                                [ngClass]="{'border-danger': (AddEmployeeForm.get('zip').touched || AddEmployeeForm.get('zip').dirty) && !AddEmployeeForm.get('zip').valid }"
+                                minlength="5" maxlength="15" (keypress)="zipcodeValidation($event)"
+                                (paste)="pasteOnlyNumericEvent($event)">
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">department name
+                                <span class="pl-1 text-danger">*</span>
+                            </label>
+                            <div class="form-select">
+                                <select class="w-100 rounded"
+                                    (change)="onClickAddNewDept(this.AddEmployeeForm.value.departmentName)"
+                                    formControlName="departmentName"
+                                    [ngClass]="{'border-danger': AddEmployeeForm.get('departmentName').touched && this.AddEmployeeForm.value.departmentName === '0'}">
+                                    <option value="0">Select department</option>
+                                    <option *ngFor="let type of ddlDepartment" value={{type.departmentId}}>
+                                        {{ type.department }}</option>
+                                    <option value="addNewDepartment">+ Add New Department</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">truvelop role
+                                <span class="text-danger">*</span>
+                            </label>
+                            <div class="form-select">
+                                <select class="w-100 rounded" [attr.disabled]="true" formControlName="triggerRole"
+                                    *ngIf="isEmployeeInactive" (change)="changeTriggerRole($event)" name="triggerRole"
+                                    [ngClass]="{'border-danger': AddEmployeeForm.get('triggerRole').touched && this.AddEmployeeForm.value.triggerRole === '0'}">
+                                    <option value="0">Select role</option>
+                                    <option *ngFor="let type of ddlTriggerRole" value={{type.roleId}}>
+                                        {{ type.role }}
+                                    </option>
+                                </select>
+                                <select class="w-100 rounded" *ngIf="!isEmployeeInactive" formControlName="triggerRole"
+                                    (change)="changeTriggerRole($event)" name="triggerRole"
+                                    [ngClass]="{'border-danger': AddEmployeeForm.get('triggerRole').touched && this.AddEmployeeForm.value.triggerRole === '0'}">
+                                    <option value="0">Select role</option>
+                                    <option *ngFor="let type of ddlTriggerRole" value={{type.roleId}}>
+                                        {{ type.role }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">REPORTING MANAGER
+                                <span class="text-danger" *ngIf="!isExecutive">*</span>
+                            </label>
+                            <div class="form-select">
+                                <select class="w-100 rounded" formControlName="manager"
+                                    [ngClass]="{'border-danger': AddEmployeeForm.get('manager').touched && AddEmployeeForm.value.manager === '0' && !isExecutive}">
+                                    <option value="0">Select manager</option>
+                                    <option *ngFor="let type of ddlManager" value={{type.empId}}>
+                                        {{ type.employeeId + " " +type.firstName + " " + type.lastName }}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">Protection Level
+                                <span class="text-danger">*</span>
+                            </label>
+                            <div class="form-select">
+                                <select class="w-100 rounded" formControlName="protectionLevel">
+                                    <option *ngFor="let level of protectionLevels" value={{level.dimensionElementId}}>
+                                        {{ level.dimensionElement }}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">status
+                                <span class="text-danger">*</span>
+                            </label>
+                            <div class="form-select">
+                                <select class="w-100 rounded" formControlName="employeeStatus"
+                                    (change)="onSelectInactive($event.target.value)">
+                                    <option *ngFor="let item of statusList" [value]='item.id'>
+                                        {{item.label}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">status
+                                <span class="text-danger">*</span>
+                            </label>
+                            <div class="d-flex flex-nowrap w-100 align-items-center mt-2">
+                                <div class="col-6 p-0 d-flex flex-nowrap align-items-center">
+                                    <label class="custom-radiobutton">
+                                        <span class="pl-2">Active</span>
+                                        <input type="radio" value='true' formControlName="employeeStatus"
+                                            (change)="onSelectInactive(true)">
+                                        <span class="radio-checked"></span>
+                                    </label>
+                                </div>
+                                <div class="col-6 p-0 d-flex flex-nowrap align-items-center">
+                                    <label class="custom-radiobutton">
+                                        <span class="pl-2">Inactive</span>
+                                        <input type="radio" value='false' formControlName="employeeStatus"
+                                            (change)="onSelectInactive(false)">
+                                        <span class="radio-checked"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div> -->
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">In Time
+                                <span class="text-danger">*</span>
+                            </label>
+                            <!-- <input type="text" class="rounded form-control" maxlength="5" [owlDateTimeTrigger]="dt4"
+                                [owlDateTime]="dt4" formControlName="inTime">
+                            <owl-date-time [pickerType]="'timer'" #dt4></owl-date-time> -->
+
+                            <div class="input-timepicker position-relative">
+                                <input type="text" class="rounded form-control cursor-pointer" placeholder="HH:MM"
+                                    formControlName="inTime" [ngxTimepicker]="inTimepicker" [format]="24"
+                                    (keypress)="inTimepicker">
+                            </div>
+                            <ngx-material-timepicker #inTimepicker
+                                [timepickerClass]="isDarkTheme ? 'timepickerDark' : 'timepicker'">
+                            </ngx-material-timepicker>
+                            <!-- <div class="ngx-timepicker-field-example position-relative">
+                                <ngx-timepicker-field [format]="24" [defaultTime]="'23:11'"></ngx-timepicker-field>
+                            </div> -->
+                            <!-- <ngx-material-timepicker #inTimepicker
+                                [timepickerClass]="isDarkTheme ? 'timepickerDark' : 'timepicker'">
+                            </ngx-material-timepicker> -->
+                            <!-- <timepicker formControlName="inTime"></timepicker> -->
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">Out Time
+                                <span class="text-danger">*</span>
+                            </label>
+                            <div class="input-timepicker position-relative">
+                                <input type="text" class="rounded form-control cursor-pointer" placeholder="HH:MM"
+                                    maxlength="5" formControlName="outTime" [ngxTimepicker]="outTimepicker"
+                                    [format]="24" (keypress)="outTimepicker">
+                            </div>
+                            <ngx-material-timepicker #outTimepicker
+                                [timepickerClass]="isDarkTheme ? 'timepickerDark' : 'timepicker'">
+                            </ngx-material-timepicker>
+                            <!-- <div class="ngx-timepicker-field-example position-relative">
+                                <ngx-timepicker-field [format]="24" [defaultTime]="'HH:MM'"></ngx-timepicker-field>
+                            </div> -->
+                        </div>
+
+                    </section>
+                    <div class="field-border-bottom"></div>
+                    <div class="text-secondary font-semibold mb-2 p-2 font-lg">Optional Fields:</div>
+                    <section class="d-flex flex-wrap">
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                            <label
+                                class="mb-2 text-uppercase dark-text font-sm font-semibold">EEO-1RACE/ETHNICITY</label>
+                            <div class="form-select">
+                                <select class="w-100 rounded" name="" id="" formControlName="ethnicity"
+                                    name="ethnicity">
+                                    <option value="0">Select ethnicity</option>
+                                    <option *ngFor="let type of ddlEthnicity" value={{type.id}}>
+                                        {{ type.raceOrEthnicity }}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">gender</label>
+                            <div class="form-select">
+                                <select class="w-100 rounded" formControlName="gender" name="gender">
+                                    <option *ngFor="let item of genderList" [value]="item.label">
+                                        {{ item.label }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- <div  class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">gender</label>
+                            <div class="d-flex flex-nowrap w-100 align-items-center mt-3">
+                                <div class="col-6 p-0 d-flex flex-nowrap align-items-center">
+                                    <label class="custom-radiobutton">
+                                        <span class="pl-2">Male</span>
+                                        <input type="radio" value='Male' formControlName="gender">
+                                        <span class="radio-checked"></span>
+                                    </label>
+                                </div>
+                                <div class="col-6 p-0 d-flex flex-nowrap align-items-center">
+                                    <label class="custom-radiobutton">
+                                        <span class="pl-2">Female</span>
+                                        <input type="radio" value='Female' formControlName="gender">
+                                        <span class="radio-checked"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div> -->
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">Career Level
+                            </label>
+                            <input type="text" value="" class="rounded form-control" formControlName="jobCategory"
+                                maxlength="25" (keypress)="avoidBlankSpace($event)">
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">job code</label>
+                            <input type="text" value="" class="rounded form-control" formControlName="jobCode"
+                                maxlength="25" (keypress)="avoidBlankSpace($event)">
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">job group</label>
+                            <input type="text" value="" class="rounded form-control" formControlName="jobGroup"
+                                maxlength="25" (keypress)="avoidBlankSpace($event)">
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">date in position
+                            </label>
+                            <div class="calendar-input">
+                                <input type="text" placeholder="MM-DD-YYYY" class="rounded form-control cursor-pointer"
+                                    [minDate]="minDate"
+                                    [maxDate]="maxDate" bsDatepicker formControlName="dateInPosition"
+                                    onDrop="return false" onPaste="return false"
+                                    [bsConfig]="{ dateInputFormat: 'MM-DD-YYYY', rangeInputFormat : 'MM-DD-YYYY', containerClass: themeClass, showWeekNumbers: false }"
+                                    placeholder="MM-DD-YYYY" placement="top" maxlength="10"
+                                    (keypress)="inputDateValidation($event)">
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">current salary
+                            </label>
+                            <input type="text" value="" class="rounded form-control" formControlName="currentSalary"
+                                (keypress)="numberOnly($event)" (paste)="pasteOnlyNumericEvent($event)" maxlength="10"
+                                [textMask]="{mask: numberMask, guide:false}" placeholder="$0,000,000">
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">date of last increase
+                            </label>
+                            <div class="calendar-input">
+                                <input type="text" placeholder="MM-DD-YYYY" class="rounded form-control cursor-pointer"
+                                    [minDate]="minDate" [maxDate]="maxDate" bsDatepicker 
+                                    formControlName="dateOfLastSalaryIncrease"
+                                    onDrop="return false" onPaste="return false"
+                                    [bsConfig]="{ dateInputFormat: 'MM-DD-YYYY' , rangeInputFormat : 'MM-DD-YYYY', containerClass: themeClass , showWeekNumbers: false}"
+                                    placeholder="MM-DD-YYYY" placement="top" maxlength="10"
+                                    (keypress)="inputDateValidation($event)">
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">date of birth
+                            </label>
+                            <div class="calendar-input">
+                                <input type="text" placeholder="MM-DD-YYYY" class="rounded form-control cursor-pointer"
+                                    [minDate]="minDate" [maxDate]="maxDate" placement="top" bsDatepicker 
+                                    onDrop="return false"
+                                    onPaste="return false" formControlName="dateOfBirth"
+                                    [bsConfig]="{ dateInputFormat: 'MM-DD-YYYY' , rangeInputFormat : 'MM-DD-YYYY', containerClass: themeClass, showWeekNumbers: false}"
+                                    placeholder="MM-DD-YYYY" onDrop="return false" onPaste="return false" maxlength="10"
+                                    (keypress)="inputDateValidation($event)">
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">location name
+                            </label>
+                            <input type="text" value="" class="rounded form-control" formControlName="locationName"
+                                maxlength="25" (keypress)="avoidBlankSpace($event)" pattern="^[a-zA-Z ]*$">
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">country name
+                            </label>
+                            <div class="form-select">
+                                <select class="w-100 rounded" name="" id="" formControlName="countryName"
+                                    name="countryName" (change)="changeCountry(this.AddEmployeeForm.value.countryName)">
+                                    <option value="0">Select country</option>
+                                    <option *ngFor="let type of ddlCountry" value={{type.countryId}}>
+                                        {{ type.country }}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3 px-2">
+                            <label class="mb-2 text-uppercase dark-text font-sm font-semibold">region
+                                <span class="text-danger" *ngIf="isRegionfieldMandatory">*</span>
+                            </label>
+                            <div class="form-select">
+                                <select class="w-100 rounded" name="" id="" formControlName="region" name="region">
+                                    <option value="0">Select region</option>
+                                    <option *ngFor="let type of ddlFilterRegion" value={{type.regionId}}>
+                                        {{ type.region }}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </section>
+                    <div class="d-flex justify-content-end pb-3 px-2">
+                        <button [routerLink]="['/team-members']" type="button" title="Cancel"
+                            class="btn secondary-light-btn text-uppercase mr-3 rounded-pill">cancel</button>
+                        <button type="submit" title="Save" class="btn btn-secondary text-uppercase rounded-pill"
+                            (click)="addEmployee()">save</button>
+                    </div>
+                </form>
+            </section>
+        </section>
+        <!-- main container section end  here -->
+    </section>
+</section>

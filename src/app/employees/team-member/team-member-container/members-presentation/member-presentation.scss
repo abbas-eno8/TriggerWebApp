@@ -1,0 +1,16 @@
+@import "~assets/scss/base/variables";
+@import "~assets/scss/base/colors";
+@import "~assets/scss/base/mixins";
+@import "~bootstrap/scss/mixins/breakpoints";
+.xs-btn {
+    min-width: 45px;
+}
+.btn-icon {
+    background-color: var(--bg-field);
+    border: 2px solid $primary;
+    height: 40px;
+    & .icon-filter {
+        font-size: 19px;
+        color: var(--primary-text);
+    }
+}

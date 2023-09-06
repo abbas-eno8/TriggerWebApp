@@ -1,0 +1,13 @@
+.head-tooltip {
+    right: 1rem;
+    top: 2rem;
+}
+
+.mat-expansion-panel {
+
+    overflow: hidden !important;
+
+    &.mat-expanded {
+        overflow: initial !important;
+    }
+}

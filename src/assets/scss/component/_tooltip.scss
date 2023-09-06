@@ -1,0 +1,285 @@
+.info-tooltip {
+    position: relative;
+    display: inline-block;
+    margin-right: 8px;
+
+    & b {
+        font-size: 14px;
+        font-weight: $font-weight-bold;
+    }
+
+    & .tooltiptext {
+        -webkit-transform: translateY(10px);
+        -moz-transform: translateY(10px);
+        -ms-transform: translateY(10px);
+        -o-transform: translateY(10px);
+        transform: translateY(10px);
+        -webkit-transition: all 0.25s ease-out;
+        -moz-transition: all 0.25s ease-out;
+        -ms-transition: all 0.25s ease-out;
+        -o-transition: all 0.25s ease-out;
+        transition: all 0.25s ease-out;
+        visibility: hidden;
+        background-color: $primary;
+        color: $white;
+        @include border-radius($border-radius);
+        padding: 10px;
+        z-index: 999;
+        font-size: 13px;
+        width: 290px;
+        @include position(absolute, 38px, -10px, auto, auto);
+        font-weight: $font-weight-light;
+
+        @include media-breakpoint-down("xl") {
+            right: -15px;
+            width: 195px;
+        }
+
+        @include media-breakpoint-down("lg-mini") {
+            width: 270px;
+        }
+
+        &:after {
+            width: 0;
+            height: 0;
+            border-left: 8px solid $transparent;
+            border-right: 8px solid $transparent;
+            border-bottom: 8px solid $primary;
+            content: "";
+            @include position(absolute, -8px, 12px, auto, auto);
+
+            @include media-breakpoint-down("xl") {
+                right: 18px;
+            }
+        }
+    }
+
+    &.show-bulb-icon {
+        &:before {
+            display: none;
+        }
+    }
+
+    &:before {
+        content: "\27";
+        font-family: $icon-font-family;
+        font-size: 20px;
+        color: var(--brand-icon);
+    }
+
+    //for header tooltip
+    &.info-tooltip-header {
+        &.info-tooltip {
+            margin-right: 0;
+        }
+
+        & .tooltiptext {
+            top: 45px;
+            right: -3px;
+            width: 290px;
+            &:after {
+                right: 13px;
+            }
+        }
+
+        &:before {
+            content: "\25";
+            color: var(--brand-icon);
+            font-size: 25px;
+        }
+    }
+    //for my-wall module
+    &.tooltip-emojis {
+        & .tooltiptext {
+            top: 30px;
+            left: 0;
+            width: 220px;
+            top: 43px;
+            @include media-breakpoint-down("sm-small") {
+                width: 180px;
+                left: -15px;
+                padding: 8px 5px;
+            }
+            &:after {
+                left: 13px;
+                @include media-breakpoint-down("sm-small") {
+                    left: 30px;
+                }
+            }
+        }
+        & img {
+            width: 28px;
+        }
+    }
+    &.likes-list-tooltip {
+        & .tooltiptext {
+            left: 0;
+            width: 130px;
+            cursor: default;
+            top: 50px;
+            @include media-breakpoint-down("sm-small") {
+                right: auto;
+            }
+            &:after {
+                left: 12px;
+                @include media-breakpoint-down("sm-small") {
+                    left: 30px;
+                    right: auto;
+                }
+            }
+            & img {
+                width: 25px;
+            }
+        }
+    }
+    &.comment-list-tooltip {
+        @extend .likes-list-tooltip;
+        & .tooltiptext {
+            left: auto;
+            width: 145px;
+            right: 0;
+            top: 38px;
+            &:after {
+                right: 12px;
+                left: auto;
+            }
+        }
+        & img {
+            width: 25px;
+        }
+    }
+    //for assessment page tooltip
+    &.info-tooltip-assessment {
+        margin-left: 10px;
+
+        & .tooltiptext {
+            top: 45px;
+            right: -70px;
+            width: 290px;
+
+            @include media-breakpoint-down("sm-small") {
+                right: -14px;
+                width: 235px;
+            }
+
+            &:after {
+                right: 75px;
+
+                @include media-breakpoint-down("sm-small") {
+                    right: 20px;
+                }
+            }
+        }
+
+        &:before {
+            content: "\25";
+            color: $secondary;
+            font-size: 25px;
+            font-family: $icon-font-family;
+        }
+    }
+
+    //for dashboard big tooltip
+    &.info-tooltip-dashboard-big {
+        & .tooltiptext {
+            top: 35px;
+            right: -10px;
+            width: 420px;
+
+            &:after {
+                right: 10px;
+            }
+
+            @include media-breakpoint-down("sm") {
+                width: 260px;
+            }
+        }
+    }
+    //for list tooltip
+    &.tooltip-list {
+        @extend .info-tooltip;
+        margin-right: 0;
+        &::before {
+            display: none;
+        }
+        & .tooltiptext {
+            width: 155px;
+            top: 36px;
+            word-break: break-word;
+            font-size: 12px;
+            font-weight: 600;
+        }
+    }
+    &.tooltip-settings {
+        & .tooltiptext {
+            top: 40px;
+            right: -6px;
+            width: 295px;
+            margin: 5px 0 0 0;
+
+            &:after {
+                right: 10px;
+            }
+        }
+
+        &:before {
+            content: "\25";
+            font-size: 25px;
+            font-family: $icon-font-family;
+        }
+    }
+
+    &:hover {
+        .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+            -webkit-transform: translateY(0px);
+            -moz-transform: translateY(0px);
+            -ms-transform: translateY(0px);
+            -o-transform: translateY(0px);
+            transform: translateY(0px);
+        }
+    }
+}
+
+.assessment-qun-container {
+    & .info-tooltip {
+        margin-top: -5px;
+    }
+}
+
+.user-avatar-container {
+    position: relative;
+    .user-avatar {
+        width: 54px;
+        height: 54px;
+        min-height: 54px;
+        min-width: 54px;
+        transition: 0.2s all ease-in-out;
+        &:not(:last-child):hover {
+            & + .user-avatar-block {
+                margin-left: 0;
+            }
+        }
+        &:last-child:hover {
+            & +.user-avatar-container-2 .user-avatar {
+                margin-left: 0 !important;
+            }
+        }
+    }
+    .user-avatar:not(:first-child) {
+        position: relative;
+        margin-left: -20px;
+    }
+}
+.user-avatar-container-2 {
+    .user-avatar {
+        margin-left: -20px;
+    }
+}
+.bulbtooltip{
+    a{
+        color: $warning !important;
+        text-decoration: underline;
+    }
+}

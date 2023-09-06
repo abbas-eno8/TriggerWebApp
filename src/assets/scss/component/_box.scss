@@ -1,0 +1,509 @@
+.status-success {
+    background-color: $success-light;
+    min-height: 40px;
+}
+
+.status-danger {
+    @extend .status-success;
+    background-color: $danger-light;
+}
+
+.success-round {
+    @include size(25px, 25px);
+    border-radius: 50%;
+    background-color: $success;
+
+    &:before {
+        content: "\50";
+        font-size: 14px;
+        color: $white;
+        font-family: $icon-font-family;
+    }
+}
+
+.danger-round {
+    @extend .success-round;
+    background-color: $danger;
+
+    &:before {
+        content: "\6f";
+    }
+}
+
+.box-disabled {
+    opacity: 0.5;
+    cursor: no-drop;
+    pointer-events: none;
+}
+
+//for page not found module
+.outer-border-container {
+    border: 3px solid $secondary-light;
+    min-width: 250px;
+
+    @include media-breakpoint-down("xl") {
+        min-width: 170px;
+    }
+
+    @include media-breakpoint-down("md") {
+        min-width: 90px;
+    }
+}
+
+.inner-border-container {
+    border: 2px solid $secondary-light;
+    margin: 5px;
+    min-height: 200px;
+
+    @include media-breakpoint-down("md") {
+        min-height: 130px;
+    }
+}
+
+//for user profile module
+.box-right-border {
+    border-right: 2px solid var(--brand-border);
+
+    @include media-breakpoint-down("md") {
+        border-right: 0;
+        border-right: 2px solid var(--brand-border);
+    }
+}
+
+.profile-box {
+    min-width: 150px;
+    max-width: 150px;
+
+    & .profile-circle {
+        border: 6px solid $white;
+        @include size(130px, 130px);
+        overflow: hidden;
+        margin: 0 auto;
+
+        & img {
+            overflow: hidden;
+            @include size(100%, 100%);
+        }
+    }
+}
+
+.btn-float {
+    @include size(32px, 32px);
+    @include transition();
+    background-color: $white;
+    border: 2px solid $secondary;
+    @include position(absolute, auto, 15px, 5px, auto);
+
+    &.icon-pen {
+        font-size: 18px;
+        color: $secondary;
+    }
+
+    &:hover {
+        background-color: $secondary;
+        color: $white;
+        @include transition();
+    }
+}
+
+.img-container {
+    min-width: 100px;
+    width: 120px;
+    overflow: hidden;
+    height: 70px;
+    border: 2px solid $secondary;
+
+    img {
+        max-width: 100%;
+        @include size(100%, 100%);
+        display: block;
+    }
+
+    .close-overlay {
+        @include position(absolute, -2px, auto, auto, 90%);
+        opacity: 0;
+        @include transition();
+
+        &:before {
+            content: "\6f";
+            font-family: $icon-font-family;
+            font-size: 10px;
+            color: $white;
+            padding: 8px 8px;
+            background-color: $secondary;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+    }
+
+    &:hover .close-overlay {
+        opacity: 1;
+    }
+}
+
+.wizard-container {
+    padding: 3rem;
+
+    @include media-breakpoint-down("sm-small") {
+        padding: 0;
+    }
+
+    @include media-breakpoint-down("lg") {
+        padding: 1rem;
+    }
+}
+
+.grid-sizer {
+    width: calc((100% - 60px) / 4);
+    height: 0;
+
+    @include media-breakpoint-down("lg-mini") {
+        width: calc((100% - 22px) / 2);
+    }
+}
+
+.widget-grid-container {
+    & .col-xl-3 {
+        width: calc((100% - 60px) / 4);
+
+        @include media-breakpoint-down("lg-mini") {
+            width: calc((100% - 22px) / 2);
+        }
+    }
+
+    & .col-xl-6 {
+        width: calc((100% - 22px) / 2);
+
+        @include media-breakpoint-down("lg") {
+            width: 100%;
+            max-width: 100%;
+        }
+    }
+
+    & .non-manager-widgets-box {
+        min-height: 250px;
+        height: 250px;
+    }
+}
+
+//common widget box for dashboard
+.widgets-box {
+    min-height: 400px;
+    height: 400px;
+
+    @include media-breakpoint-down("sm-small") {
+        min-height: 430px;
+        height: 430px;
+    }
+
+    &.spark-widget-box {
+        min-height: 616px;
+        height: 616px;
+    }
+
+    & .line-graph-header {
+        height: 40px;
+    }
+}
+
+//mat accordion scss start here
+.employee-widget-grid-container {
+    & .mat-accordion {
+        .mat-expansion-panel-header {
+            background-color: var(--bg-chips);
+            padding: 0 1rem;
+            @include transition();
+
+            &:hover {
+                background-color: var(--bg-chips);
+            }
+
+            &.mat-expanded {
+                &:hover {
+                    background-color: var(--bg-chips);
+                }
+            }
+        }
+    }
+
+    & .mat-expansion-panel {
+        border: 2px solid var(--brand-border2);
+        margin-bottom: 1rem;
+        @include border-radius($border-radius);
+
+        &:nth-child(odd) {
+            background-color: var(--bg-chips);
+        }
+
+        &:nth-child(even) {
+            background-color: var(--bg-chips);
+        }
+    }
+
+    & .mat-expansion-panel-spacing {
+        margin-bottom: 1rem;
+    }
+
+    & .mat-expansion-panel:not([class*="mat-elevation-z"]) {
+        box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+    }
+
+    & .mat-expansion-panel-body {
+        background-color: var(--bg-list-even);
+        display: flex;
+        flex-wrap: wrap;
+        padding: 1rem 0.5rem 0 0.5rem !important;
+    }
+
+    & .mat-expansion-panel-header-title {
+        color: $info;
+        font-weight: 600;
+    }
+
+    & .info-tooltip {
+        margin-right: 0;
+    }
+    & .show-bulb-icon {
+        margin-right: 6px;
+        margin-bottom: 6px;
+    }
+}
+
+.my-dashboard-accordion-list {
+    & .mat-accordion {
+        .mat-expansion-panel-header {
+            background-color: $transparent;
+            padding: 0 1rem;
+        }
+    }
+
+    & .mat-expansion-panel {
+        border: 2px solid $transparent;
+        margin-bottom: 0;
+        @include border-radius(0);
+
+        &:nth-child(odd) {
+            background-color: $body-bg;
+        }
+
+        &:nth-child(even) {
+            background-color: $white;
+        }
+    }
+
+    & .mat-expansion-panel-body {
+        background-color: $body-bg;
+    }
+}
+
+.box-text-height {
+    height: 205px;
+
+    @include media-breakpoint-down("xl") {
+        height: 168px;
+    }
+
+    @include media-breakpoint-down("lg-mini") {
+        height: 228px;
+    }
+
+    & .xs-label {
+        @include position(absolute, auto, 0, 10px, 0);
+    }
+
+    & .rating-width {
+        min-width: 105px;
+        max-width: 175px;
+    }
+}
+
+.box-height {
+    @include media-breakpoint-down("xs-wide") {
+        min-height: 50px;
+    }
+
+    @include media-breakpoint-down("xs") {
+        min-height: 90px;
+    }
+}
+
+.rounded-container {
+    @include size(55px, 55px);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid $border;
+    background-color: var(--bg-field);
+
+    & img {
+        width: 100%;
+        display: block;
+        height: 100%;
+    }
+
+    @include media-breakpoint-down("sm-small") {
+        @include size(40px, 40px);
+        min-width: 40px;
+        min-height: 40px;
+    }
+}
+
+//for accordion design
+.card {
+    border: 2px solid var(--brand-border);
+
+    & .card-header {
+        border-bottom: 0;
+        background-color: $body-bg;
+    }
+
+    & .card-body {
+        padding: 0;
+
+        &:nth-child(odd) {
+            background-color: $white;
+        }
+
+        &:nth-child(even) {
+            background-color: $body-bg;
+        }
+    }
+
+    & .icon-pluse,
+    .icon-minus {
+        font-size: 15px;
+        color: $primary;
+    }
+}
+
+//for excel upload wizard
+.file-upload-wizard {
+    padding: 3rem;
+
+    @include media-breakpoint-down("lg-mini") {
+        padding: 1.5rem;
+    }
+
+    @include media-breakpoint-down("md") {
+        padding: 0.5rem;
+    }
+}
+
+.excel-review-box {
+    margin: 0 3rem;
+    min-width: 300px;
+    min-height: 280px;
+
+    @include media-breakpoint-down("lg-mini") {
+        margin: 0 1.5rem;
+        min-height: 250px;
+    }
+
+    @include media-breakpoint-down("md") {
+        margin: 0 0.5rem;
+        min-width: 270px;
+        min-height: 250px;
+    }
+
+    & .wizard-box {
+        padding: 1.5rem 3rem 0 3rem;
+
+        @include media-breakpoint-down("lg-mini") {
+            padding: 0.5rem 2rem 0 2rem;
+        }
+
+        @include media-breakpoint-down("md") {
+            padding: 0.5rem 1.5rem 0 1.5rem;
+        }
+    }
+}
+
+.chatbox-curve {
+    content: "";
+    @include position(absolute, auto, auto, -6px, 0);
+    @include size(20px, 20px);
+    background-image: url("/assets/images/dashboard/corner_light.png");
+    background-repeat: no-repeat;
+}
+
+.chatbox-curve-dark {
+    @extend .chatbox-curve;
+    background-image: url("/assets/images/dashboard/corner_dark.png");
+}
+
+.wall-comment-box {
+    border-radius: 10px 10px 10px 0;
+    margin-left: 9px;
+}
+
+.wall-comment-box-right {
+    min-width: 240px;
+    margin-right: 9px;
+    border-radius: 10px 10px 0 10px;
+    background-color: var(--bg-list-odd);
+}
+
+.chatbox-right-container {
+    & .right-dark-chatbox-curve {
+        @extend .chatbox-curve;
+        @include position(absolute, auto, -6px, -6px, auto);
+        background-image: url("/assets/images/dashboard/right_corner_dark.png");
+    }
+
+    & .right-light-chatbox-curve {
+        @extend .right-dark-chatbox-curve;
+        background-image: url("/assets/images/dashboard/right_corner_light.png");
+    }
+}
+
+.comment-widgets-box {
+    min-height: 220px;
+    height: 220px;
+
+    @include media-breakpoint-down("lg-mini") {
+        min-height: auto;
+        height: auto;
+    }
+}
+
+//tab scss
+.my-dashboard-list-tab {
+    & .nav-tabs {
+        border-bottom: 1px solid var(--brand-border);
+
+        & .nav-link {
+            @include media-breakpoint-down("xs-wide") {
+                padding: 0.5rem 0.5rem;
+            }
+
+            &.active {
+                background-color: var(--bg-wizad);
+                border-color: var(--brand-border) var(--brand-border) $transparent;
+                color: var(--dark-text);
+            }
+
+            &:hover {
+                border-color: var(--brand-border) var(--brand-border) $transparent;
+            }
+        }
+    }
+
+    & .tab-content {
+        > .tab-pane {
+            border-left: 1px solid var(--brand-border);
+            border-right: 1px solid var(--brand-border);
+            border-bottom: 1px solid var(--brand-border);
+        }
+    }
+
+    & .btn-outline-success,
+    .btn-outline-danger {
+        border-width: 2px;
+        padding: 6px 10px;
+    }
+}
+
+.tab-content-container {
+    height: 20rem;
+}

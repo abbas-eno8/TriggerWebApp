@@ -1,0 +1,344 @@
+<section class="d-flex flex-column dashboard-container position-relative">
+    <!-- header part start here -->
+    <header [hidden]="!isDisplayOverlay"
+        class="p-3 d-flex justify-content-sm-small-center flex-wrap dashboard-header flex-shrik-0 xs-d-none">
+        <div class="position-absolute head-tooltip">
+            <trigger-tooltip [pageTitle]="70"></trigger-tooltip>
+        </div>
+    </header>
+    <header [hidden]="isDisplayOverlay" class="d-flex justify-content-between p-3 flex-shrink-0">
+        <section class="d-flex align-items-center">
+            <div class="dark-text font-xl font-semibold">
+                Recognition Wall
+            </div>
+        </section>
+        <button *ngIf="isNewPost" (click)="onNewNotification()" type="button"
+            class="new-post-btn btn border font-semibold d-flex align-items-center rounded-pill px-4">
+            New Post
+        </button>
+        <!-- tooltip start here -->
+        <trigger-tooltip [pageTitle]="70"></trigger-tooltip>
+    </header>
+    <!-- header part end here -->
+    <section class="flex-grow-1 overflow-hidden">
+        <section *ngIf="!isDisplayNoRecordFoundPage" class="overflow-auto px-3 h-100" infinite-scroll
+            [infiniteScrollDistance]="0.1" [infiniteScrollThrottle]="10" [scrollWindow]="false"
+            (scrolled)="onScrollDown($event)">
+            <section class="white-bg p-3 rounded shadow-sm mb-3"
+                *ngFor="let userSpark of userSparksList; let i = index; trackBy:trackByFn">
+
+                <section class="d-flex align-items-center" id="spark{{userSpark.groupId}}">
+                    <div class="user-avatar-container  d-flex align-items-center flex-shrink-0">
+                        <div *ngFor="let sparkProfile of userSpark.sparks | slice:0:3; let i = index; let isLast=last"
+                            class="user-avatar user-avatar-block lg-user-profile-img d-flex align-items-center justify-content-center rounded-circle font-semibold">
+                            <div class="font-semibold text-secondary font-lg" *ngIf="!sparkProfile.profileImage">
+                                {{ sparkProfile.profileName }}
+                            </div>
+                            <img [src]="sparkProfile.profileImage" class="img-fluid" alt="avatar"
+                                *ngIf="!!sparkProfile.profileImage">
+                        </div>
+                        <div class="user-avatar-container-2 user-avatar-block info-tooltip comment-list-tooltip"
+                            (click)="onSubSparks(userSpark.groupId)">
+                            <div (click)="openSparkUserModel(userSpark.groupId)"
+                                *ngIf="userSpark.sparks[0].sparkCount > 3" class="ml-2 text-secondary cursor-pointer">
+                                + {{userSpark.sparks[0].sparkCount - 3}}
+                            </div>
+
+                            <!-- Start Tooltip -->
+                            <div class="tooltiptext d-flex flex-column"
+                                *ngIf="userSpark.sparks[0].subSparks.length > 0">
+                                <div class="d-flex align-items-center rounded-circle pb-2"
+                                    *ngFor="let sparkProfile of userSpark.sparks[0].subSparks | slice: 3:userSpark.sparks[0].subSparks.length;">
+                                    <div class="tooltip-name-icon-block font-semibold rounded-circle border border-white p-1"
+                                        *ngIf="!sparkProfile.profileImage">
+                                        {{ sparkProfile.profileName }}
+                                    </div>
+                                    <img class="tooltip-name-icon-block rounded-circle border border-white"
+                                        [src]="sparkProfile.profileImage" *ngIf="!!sparkProfile.profileImage"
+                                        alt="avatar">
+                                    <div class="text-white font-medium font-xs pl-1"> {{ sparkProfile.name }} </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Tooltip -->
+                    </div>
+                    <section class="pl-2">
+                        <div class="dark-text font-md pb-1 font-semibold ">
+                            <div class="info-tooltip comment-list-tooltip">
+                                <span class="text-secondary"
+                                    *ngFor="let name of userSpark.sparks | slice:0:3; let i = index; let isFirst=first; let isLast=last;">
+                                    <span>{{name.name}}</span>
+                                    <span>
+                                        {{(userSpark.sparks[0].sparkCount > 3 && !isLast) ||
+                                        (userSpark.sparks[0].sparkCount === 3 && isFirst) ? ',' : '' }}
+                                    </span>
+                                    <span
+                                        *ngIf="((isFirst && userSpark.sparks.length === 2) || (i == 1 && userSpark.sparks.length === 3)) &&  userSpark.sparks[0].sparkCount <= 3"
+                                        class="dark-text">
+                                        and
+                                    </span>
+                                </span>
+                                <span *ngIf="userSpark.sparks[0].sparkCount > 3"> and
+                                    <span class="text-secondary cursor-pointer"
+                                        (click)="openSparkUserModel(userSpark.groupId)"
+                                        (mouseenter)="onSubSparks(userSpark.groupId)">
+                                        + {{ userSpark.sparks[0].sparkCount - 3}} others
+                                    </span>
+                                </span>
+                                <!-- Start Tooltip -->
+                                <div class="tooltiptext d-flex flex-column"
+                                    *ngIf="userSpark.sparks[0].subSparks.length > 0"
+                                    (mouseleave)="onLeaveSubSparks(userSpark.groupId)">
+                                    <div class="text-white font-medium font-xs pb-2"
+                                        *ngFor="let name of userSpark.sparks[0].subSparks | slice: 3:userSpark.sparks[0].subSparks.length;">
+                                        {{ name.name }}
+                                    </div>
+                                </div>
+                                <!-- End Tooltip -->
+                            </div>
+                            received recognition from
+                            <span class="text-secondary"
+                                *ngFor="let sparkByName of userSpark.sparks; let first = first;">
+                                {{ first ? sparkByName.sparkBy : '' }}
+                            </span>
+                        </div>
+                        <div *ngFor="let sparkDate of userSpark.sparks; let first = first;"
+                            class="secondary-dark-text font-sm d-flex flex-nowrap">
+                            <span> {{first ? (sparkDate.sparkDate | date:'MM/dd/yyyy h:mm:ss aaa') : '' }}</span>
+                            <span *ngIf="first" class="icon icon-globe pl-1"></span>
+                        </div>
+                    </section>
+                </section>
+
+
+                <div class="font-lg dark-text py-3 wall-comment" [innerHTML]="userSpark.sparks[0].spark | linkify"> </div>
+
+
+                <section class="py-3 border-section d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center position-relative">
+                        <trigger-tooltip-ui [userSpark]="userSpark.sparks[0]" [sparkGroupId]="userSpark.groupId"
+                            [commentId]="0" tooltipClass="likes-list-tooltip"
+                            (openReactionPopup)="openReactionPopup($event)">
+                        </trigger-tooltip-ui>
+                        <div *ngIf="!!userSpark.sparks[0].countReaction" class="separator-border ml-3"></div>
+                        <div class="cursor-default info-tooltip tooltip-emojis">
+                            <div class="d-flex align-items-center ml-3" (mouseenter)="onHoverReaction()">
+                                <div *ngIf="userSpark.sparks[0].isMyReactIdDefault" class="icon icon-like">
+                                </div>
+                                <div *ngIf="!userSpark.sparks[0].isMyReactIdDefault"><img
+                                        [src]="getEmoji(userSpark.sparks[0].myReactId)" alt="thumb">
+                                </div>
+                                <div [ngClass]="userSpark.sparks[0].myReactActiveClass"
+                                    class="font-semibold cursor-pointer pl-2 pt-1"
+                                    (click)="onClickLike(userSpark.groupId, userSpark.sparks[0].myReactId, userSpark.sparks[0].sparkId, 0)">
+                                    {{ userSpark.sparks[0].myReactName }}
+                                </div>
+                            </div>
+                            <trigger-tooltip-ui [reactions]="_reactions" [sparkGroupId]="userSpark.groupId"
+                                [sparkId]="userSpark.sparks[0].sparkId" [commentId]="0" [hoverReaction]="hoverReaction"
+                                (addReactionType)="addReactionType($event)">
+                            </trigger-tooltip-ui>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center info-tooltip comment-list-tooltip">
+                        <div class="icon icon-comment cursor-pointer"
+                            (click)="onClickCommentsCount(userSpark.groupId, userSpark.sparks[0].id, userSpark.sparks[0].sparkId)">
+                        </div>
+                        <div class="cursor-pointer">
+                            <span *ngIf="!!userSpark.sparks[0].countOfSparkComment"
+                                (click)="onClickCommentsCount(userSpark.groupId, userSpark.sparks[0].id, userSpark.sparks[0].sparkId)"
+                                class="dark-text font-semibold font-md pl-2">
+                                {{ userSpark.sparks[0].totalCount }}
+                            </span>
+                            <div class="tooltiptext d-flex flex-column" *ngIf="!!userSpark.sparks[0].totalCount ">
+                                <div class="text-white font-medium font-xs pb-2"
+                                    *ngFor="let comment of userSpark.sparks[0].commentTooltip; let i = index">
+                                    {{ comment.name }}
+                                </div>
+                                <i *ngIf="!!userSpark.sparks[0].moreCommentTooltipCount">and
+                                    {{ userSpark.sparks[0].moreCommentTooltipCount }} more...
+                                </i>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+
+                <!-- Start -->
+                <section class="d-flex flex-column mt-3" *ngIf="userSpark.sparks[0].isDisplayCommentSection">
+                    <section class="d-flex flex-column wall-comment"
+                        *ngFor="let comment of userSpark.sparks[0].comments; let c = index">
+                        <section class="d-flex" *ngIf="userSpark.sparks[0].sparkId === comment.sparkId">
+                            <section class="d-flex align-items-end">
+                                <div
+                                    class="user-profile-img rounded-circle d-flex justify-content-center align-items-center font-semibold">
+                                    <div class="font-semibold text-secondary font-lg" *ngIf="!comment.profileImage">
+                                        {{ comment.profileName }}
+                                    </div>
+                                    <img [src]="comment.profileImage" class="img-fluid" alt="avatar"
+                                        *ngIf="!!comment.profileImage">
+                                </div>
+                            </section>
+                            <section class="d-flex position-relative">
+                                <div class="wall-comment-box p-3 light-bg h-auto w-auto">
+                                    <div class="text-info font-semibold font-md mb-1">{{ comment.name }}</div>
+                                    <div class="dark-text" [innerHTML]="comment.comment | linkify">
+                                    </div>
+                                </div>
+                                <div [ngClass]="isDefaultTheme? 'chatbox-curve-dark' : 'chatbox-curve'"></div>
+                                <section class="d-flex align-items-end">
+                                    <trigger-tooltip-ui [userSpark]="comment" [sparkGroupId]="userSpark.groupId"
+                                        [commentId]="comment.commentId" tooltipClass="comment-list-tooltip"
+                                        (openReactionPopup)="openReactionPopup($event)">
+                                    </trigger-tooltip-ui>
+                                </section>
+                            </section>
+                        </section>
+                        <section class="d-flex flex-column pt-3">
+                            <section class="d-flex align-items-center pb-2 wall-info-container">
+                                <div class="secondary-dark-text font-sm">
+                                    {{ comment.date | date:'MM/dd/yyyy h:mm:ss aaa' }}
+                                </div>
+                                <div class="pl-2 cursor-default info-tooltip tooltip-emojis">
+                                    <span class="font-semibold cursor-pointer" (mouseenter)="onHoverReaction()"
+                                        (click)="onClickLike(userSpark.groupId, comment.myReactId, userSpark.sparks[0].sparkId, comment.commentId)"
+                                        [ngClass]="comment.myReactActiveClass">{{ comment.myReactName }}</span>
+                                    <trigger-tooltip-ui [hoverReaction]="hoverReaction" [reactions]="_reactions"
+                                        [sparkGroupId]="userSpark.groupId" [sparkId]="comment.sparkId"
+                                        [commentId]="comment.commentId" (addReactionType)="addReactionType($event)">
+                                    </trigger-tooltip-ui>
+                                </div>
+                                <div class="dark-text pl-2 font-semibold cursor-pointer"
+                                    (mousedown)="onFocusReply(comment.isFocusOnReplyTextbox,$event)"
+                                    (click)="onClickReply(userSpark.sparks[0].comments, comment, comment.commentId)">
+                                    Reply
+                                </div>
+                            </section>
+                            <section *ngIf="comment.isReplyGetting && !comment.isDisplayReplySection"
+                                (mousedown)="onFocusReply(comment.isFocusOnReplyTextbox,$event)"
+                                (click)="onClickReply(userSpark.sparks[0].comments, comment, comment.commentId)"
+                                class="comment-info-container d-flex align-items-center pt-2 pb-3">
+                                <div class="icon icon-replay pr-2"></div>
+                                <div
+                                    class="sm-user-profile-img text-secondary d-flex align-items-center justify-content-center rounded-circle font-semibold">
+                                    <div class="font-semibold text-secondary font-lg"
+                                        *ngIf="!comment.remarks[0].profileImage">
+                                        {{ comment.remarks[0].profileName }}
+                                    </div>
+                                    <img [src]="comment.remarks[0].profileImage" class="img-fluid" alt="avatar"
+                                        *ngIf="!!comment.remarks[0].profileImage">
+                                </div>
+                                <div class="font-medium text-info font-xs pl-2 cursor-pointer">
+                                    {{ comment.remarks[0].name }} replied
+                                    <span *ngIf="comment.remarks.length > 1"> and {{ comment.remarks.length - 1 }}
+                                        more
+                                        reply </span>
+                                </div>
+                            </section>
+                            <section class="d-flex flex-column w-100 wall-reply-container mb-3"
+                                *ngIf="comment.isDisplayReplySection">
+                                <section class="d-flex flex-column"
+                                    *ngFor="let remark of comment.remarks; let c = index">
+                                    <section class="d-flex align-items-end mb-3">
+                                        <section
+                                            class="user-profile-img rounded-circle d-flex justify-content-center align-items-center">
+                                            <div class="font-semibold text-secondary font-lg"
+                                                *ngIf="!remark.profileImage">
+                                                {{ remark.profileName }}
+                                            </div>
+                                           <img [src]="remark.profileImage" class="img-fluid" alt="avatar"
+                                                *ngIf="!!remark.profileImage">
+                                        </section>
+                                        <section class="d-flex position-relative">
+                                            <div class="wall-comment-box p-3 light-bg h-auto w-auto">
+                                                <span class="text-info font-semibold">{{ remark.name }}</span>
+                                                <span class="dark-text font-medium"  [innerHTML]="remark.comment | linkify"> </span>
+                                            </div>
+                                            <div [ngClass]="isDefaultTheme? 'chatbox-curve-dark' : 'chatbox-curve'">
+                                            </div>
+                                            <section class="d-flex align-items-end">
+                                                <trigger-tooltip-ui [userSpark]="remark"
+                                                    [sparkGroupId]="userSpark.groupId" [commentId]="remark.commentId"
+                                                    tooltipClass="comment-list-tooltip"
+                                                    (openReactionPopup)="openReactionPopup($event)">
+                                                </trigger-tooltip-ui>
+                                            </section>
+                                        </section>
+                                    </section>
+                                    <section class="d-flex align-items-center pb-3 wall-info-container">
+                                        <div class="secondary-dark-text font-sm">
+                                            {{ remark.date | date:'MM/dd/yyyy h:mm:ss aaa' }}
+                                        </div>
+                                        <div class="pl-2 cursor-default info-tooltip tooltip-emojis">
+                                            <span class="font-semibold cursor-pointer" (mouseenter)="onHoverReaction()"
+                                                (click)="onClickLike(userSpark.groupId, remark.myReactId, userSpark.sparks[0].sparkId, remark.commentId)"
+                                                [ngClass]="remark.myReactActiveClass">{{ remark.myReactName }}</span>
+                                            <trigger-tooltip-ui [hoverReaction]="hoverReaction" [reactions]="_reactions"
+                                                [sparkGroupId]="userSpark.groupId"
+                                                [sparkId]="userSpark.sparks[0].sparkId" [commentId]="remark.commentId"
+                                                (addReactionType)="addReactionType($event)">
+                                            </trigger-tooltip-ui>
+                                        </div>
+                                        <div class="dark-text pl-2 font-semibold cursor-pointer"
+                                            (mousedown)="onFocusReply(comment.isFocusOnReplyTextbox,$event)"
+                                            (click)="onClickReply(userSpark.sparks[0].comments,comment, comment.commentId)">
+                                            Reply
+                                        </div>
+                                    </section>
+                                </section>
+                                <section class="d-flex child-comment-container">
+                                    <section
+                                        class="user-profile-img rounded-circle d-flex justify-content-center align-items-center">
+                                        <div class="font-semibold text-secondary font-lg" *ngIf="!userProfile">
+                                            {{ userProfileName }}
+                                        </div>
+                                        <img [src]="userProfile" class="img-fluid" alt="avatar" *ngIf="!!userProfile">
+                                    </section>
+                                    <section class="position-relative w-100">
+                                        <textarea class="reply-textarea form-control from-textarea px-3 pt-3 pb-1"
+                                            placeholder="Write a reply..." [autofocus]="comment.isFocusOnReplyTextbox"
+                                            matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize"
+                                            cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5" [(ngModel)]="comment.model"
+                                            (keydown.enter)="onEnterComment($event, userSpark.groupId, userSpark.sparks[0].sparkId, comment.commentId)"></textarea>
+                                    </section>
+                                </section>
+                            </section>
+                        </section>
+                    </section>
+
+
+                    <section class="wall-comment pb-2" *ngIf="!!userSpark.sparks[0].moreCommentCount"
+                        (click)="onClickViewMoreComments(userSpark.sparks[0])">
+                        <i class="dark-text font-semibold cursor-pointer font-md">
+                            view {{ userSpark.sparks[0].moreCommentCount }} more comments...
+                        </i>
+                    </section>
+                    <section class="d-flex w-100">
+                        <div
+                            class="lg-user-profile-img d-flex align-items-center justify-content-center rounded-circle font-semibold">
+                            <div class="font-semibold text-secondary font-lg" *ngIf="!userProfile">
+                                {{ userProfileName }}
+                            </div>
+                            <img [src]="userProfile" class="img-fluid" alt="avatar" *ngIf="!!userProfile">
+                        </div>
+                        <section class="position-relative w-100 mt-2">
+                            <textarea autofocus="true" class="reply-textarea form-control from-textarea px-3 pt-3 pb-1"
+                                (mousedown)="onFocusComment(userSpark.sparks[0].comments)"
+                                placeholder="Write a comment..." matInput cdkTextareaAutosize
+                                #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"
+                                [(ngModel)]="userSpark.sparks[0].model"
+                                (keydown.enter)="onEnterComment($event, userSpark.groupId, userSpark.sparks[0].sparkId, 0)"></textarea>
+                        </section>
+                    </section>
+
+
+                </section>
+                <!--End -->
+
+            </section>
+        </section>
+        <section *ngIf="isDisplayNoRecordFoundPage" class="px-3 h-100">
+            <trigger-no-records-found></trigger-no-records-found>
+        </section>
+    </section>
+</section>

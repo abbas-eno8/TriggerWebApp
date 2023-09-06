@@ -1,0 +1,34 @@
+<!-- widget section start here -->
+<section class="row mx-0">
+  <section class="col-xl-3 col-md-6 col-sm-6 px-2" *ngIf="isRequestForTrigger">
+    <div class="rounded white-bg shadow-sm p-3 non-manager-widgets-box d-flex flex-column flex-grow-1">
+      <div class="d-flex flex-nowrap justify-content-end align-items-center xs-d-none">
+        <trigger-tooltip [pageTitle]="56"></trigger-tooltip>
+      </div>
+      <div class="d-flex flex-column text-center py-4 flex-grow-1 cursor-pointer" (click)="onClickOpenRequestModal(1)">
+        <div class="icons">
+          <div class="icon icon-trigger-an-employee mx-auto mb-3"></div>
+        </div>
+        <div class="dark-text font-semibold font-md text-center mt-auto">
+          Request for Evaluation
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="col-xl-3 col-md-6 col-sm-6 px-2" *ngIf="isRequestForSpark">
+    <div class="rounded white-bg shadow-sm p-3 non-manager-widgets-box d-flex flex-column flex-grow-1">
+      <div class="d-flex flex-nowrap justify-content-end align-items-center xs-d-none">
+        <trigger-tooltip [pageTitle]="57"></trigger-tooltip>
+      </div>
+      <div class="d-flex flex-column text-center py-4 flex-grow-1 cursor-pointer" (click)="onClickOpenRequestModal(2)">
+        <div class="icons">
+          <div class="icon icon-spark-an-employee mx-auto mb-3"></div>
+        </div>
+        <div class="dark-text font-semibold font-md text-center mt-auto">
+          Request for Spark
+        </div>
+      </div>
+    </div>
+  </section>
+</section>
+<!-- widget section end here -->

@@ -1,0 +1,42 @@
+@import "~assets/scss/base/variables";
+@import "~assets/scss/base/colors";
+@import "~assets/scss/base/mixins";
+.upload-btn-wrapper {
+    overflow: visible;
+    top: 0;
+    line-height: normal;
+    @include size(30px, 22px);
+    margin: 0;
+    right: 0;
+    & input[type="file"] {
+        width: 22px;
+    }
+}
+
+.icon-paper-clip {
+    padding: 0;
+}
+
+.form-select {
+    &:after {
+        display: none;
+    }
+}
+
+.form-textarea {
+    padding: 0 10px 10px 10px;
+    min-height: 60px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    &:focus {
+        box-shadow: none;
+    }
+}
+.comment-edit-form{
+    max-height: 500px;
+    overflow: auto;
+    margin: 0 -1rem;
+    padding: 0 1rem;
+    border-top: 1px solid #dee2e6;
+    border-bottom: 1px solid #dee2e6;
+}

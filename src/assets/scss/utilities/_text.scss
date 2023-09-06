@@ -1,0 +1,118 @@
+//for font-size
+.font-xs {
+    font-size: 12px;
+    @include media-breakpoint-down('xl') {
+        font-size: 11px;
+    }
+}
+
+.font-sm {
+    font-size: 15px;
+    @include media-breakpoint-down('xl') {
+        font-size: 14px;
+    }
+    @include media-breakpoint-down('sm-small') {
+        font-size: 13px;
+    }
+}
+
+.font-md {
+    font-size: 16px;
+    @include media-breakpoint-down('xl') {
+        font-size: 15px;
+    }
+}
+
+.font-lg {
+    font-size: 18px;
+    @include media-breakpoint-down('xl') {
+        font-size: 17px;
+    }
+}
+
+.font-xl {
+    font-size: 20px;
+    @include media-breakpoint-down('xl') {
+        font-size: 18px;
+    }
+    @include media-breakpoint-down('sm-small') {
+        font-size: 16px;
+    }
+}
+
+.display-1 {
+    font-size: $display1-size;
+    @include media-breakpoint-down('xl') {
+        font-size: 6rem;
+    }
+}
+
+.display-2 {
+    font-size: $display2-size;
+    @include media-breakpoint-down('xl') {
+        font-size: 4.2rem;
+    }
+}
+
+.display-3 {
+    font-size: $display3-size;
+    @include media-breakpoint-down('xl') {
+        font-size: 2.5rem;
+    }
+}
+
+.display-4 {
+    font-size: $display4-size;
+    @include media-breakpoint-down('xl') {
+        font-size: 1.3rem;
+    }
+}
+
+//for word break
+.word-break {
+    word-break: break-all;
+}
+
+.text-decoration {
+    text-decoration: underline !important;
+}
+
+.white-space {
+    white-space: nowrap;
+}
+
+
+/*
+    Author: Aayushi Patel
+    Desc: All loops used in Trigger declared here
+*/
+
+//for width classes
+@for $i from 1 through 100 {
+    .width-#{$i} {
+        width: percentage($i / 100);
+    }
+}
+
+//for height classes
+@for $i from 1 through 100 {
+    .height-#{$i} {
+        height: percentage($i / 100);
+    }
+}
+
+//for font weight
+@each $key,
+$value in $font-weight {
+    .#{$key} {
+        font-weight: $value;
+    }
+}
+
+//for cursors classes
+@each $key,
+$value in $cursor {
+    .#{$key} {
+        cursor: $value;
+    }
+}

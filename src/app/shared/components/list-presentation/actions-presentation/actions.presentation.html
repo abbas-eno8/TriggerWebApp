@@ -1,0 +1,21 @@
+<section class="d-flex justify-content-center align-items-center">
+    <div class="dropdown list-action-dropdown">
+        <button type="button" class="btn border-0 bg-transparent dropdown-toggle d-flex align-items-center" data-toggle="dropdown"
+            [disabled]="record.isDisabledAction">
+            <span class="icon icon-click d-flex align-items-center"></span>
+        </button>
+        <div id="action-dropdown" class="dropdown-menu toggle-dropdown-menu border-0 shadow-sm">
+            <a>
+                <button class="icon icon-edit-1 btn bg-transparent" title="Edit" *ngIf="record.isEditable" [disabled]="record.isDisabledEdit"
+                    (click)="presenter.editRecord(record)"></button>
+            </a>
+            <a>
+                <button class="icon icon-bin mr-1 btn bg-transparent" title="Delete" *ngIf="record.isDeletable" [disabled]="record.isDisabledDelete"
+                    (click)="presenter.openModalForDeleteRecord(record)"></button>
+            </a>
+            <a>
+                <button class="icon icon-info mr-1 btn bg-transparent" title="Dashboard" *ngIf="record.isRedirectedToDashboard"(click)="presenter.redirectedToCompanyDashboard(record)"></button>
+            </a>
+        </div>
+    </div>
+</section>

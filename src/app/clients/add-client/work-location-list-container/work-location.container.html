@@ -1,0 +1,3 @@
+<trigger-work-location-list-ui [isAddClient]="isAddClient" [workLocationsObs]="workLocationsObs$ | async" (add)="add($event)" (edit)="edit($event)"
+    [updatObject]="updatObject" (delete)="delete($event)" [isDeletedRecordId]="isDeletedRecordId" (getDefaultWorkLocationsEvent)="getDefaultWorkLocationsEvent($event)">
+</trigger-work-location-list-ui>

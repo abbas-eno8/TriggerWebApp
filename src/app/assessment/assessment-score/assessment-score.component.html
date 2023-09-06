@@ -1,0 +1,63 @@
+<!-- header part start here -->
+<section class="d-flex flex-column h-100">
+    <header class="d-flex justify-content-between p-3 flex-shrink-0">
+        <section class="d-flex align-items-center">
+            <div class="dark-text font-xl font-semibold">
+                Evaluation - Score
+            </div>
+        </section>
+        <trigger-tooltip [pageTitle]="pageTitle"></trigger-tooltip>
+    </header>
+    <!-- header part end here -->
+    <section class="h-100 flex-grow-1 overflow-hidden position-relative">
+        <!-- main conrainer start here -->
+        <section class="overflow-auto px-3 pb-3 h-100">
+            <section class="white-bg rounded shadow-sm p-3">
+                <div class="text-secondary font-semibold font-lg mb-3">Evaluation Results for {{ trggerScore.empName }}
+                </div>
+                <div class="mb-2 d-flex align-items-center">
+                    <div class="text-secondary font-semibold font-md">Rating Date:</div>
+                    <div class="dark-text pl-2">{{ trggerScore.ratingDate | date: 'MM/dd/yyyy' }}</div>
+                </div>
+                <div class="mb-2 d-flex font-md align-items-center">
+                    <div class="text-secondary font-semibold">{{ trggerScore.generalScoreRank }}: </div>
+                    <div class="dark-text pl-2">{{ trggerScore.scoreSummary }}</div>
+                </div>
+                <div class="mb-2 d-flex font-md align-items-center">
+                    <div class="text-secondary font-semibold">Manager Action:</div>
+                    <div class="dark-text pl-2">{{ trggerScore.managerAction }}</div>
+                </div>
+                <div class="dark-text font-sm">
+                    {{ trggerScore.scoreRemarks }}
+                </div>
+                <div class="d-flex flex-column justify-content-center align-items-center p-5">
+                    <div class="score-img-container">
+                        <div class="d-flex justify-content-center align-items-center flex-column height-95">
+                            <div class="font-bold display-1" [ngClass]="trggerScore.gradeClass">{{ trggerScore.empScoreRank }}</div>
+                            <div class="font-xl text-secondary">Evaluation Score</div>
+                        </div>
+                    </div>
+                </div>
+                <section class="d-flex justify-content-between justify-content-sm-small-center flex-wrap">
+                    <button title="Evaluate Another Team Member" type="button" (click)="goToAssessmentPage()"
+                        class="btn btn-secondary text-uppercase rounded-pill xs-mr-0 xs-mb-3 white-space">
+                        Evaluate Another Team Member
+                    </button>
+                    <div class="d-flex align-items-center flex-wrap justify-content-sm-small-center">
+                        <button title="Truvelop Dashboard" type="button" (click)="goToMainDashboard()"
+                            [disabled]="trggerScore.isDisabledBtnTruvelopDashboard"
+                            class="btn btn-secondary text-uppercase rounded-pill xs-mr-0 xs-mb-3 white-space">
+                            Truvelop Dashboard
+                        </button>
+                        <button title="Team Member Dashboard" type="button" (click)="goToEmployeeDashboard()"
+                            [disabled]="trggerScore.isDisabledBtnEmployeeDhashboard"
+                            class="btn btn-secondary text-uppercase rounded-pill white-space xs-mb-3 ml-2">
+                            Team Member Dashboard
+                        </button>
+                    </div>
+                </section>
+            </section>
+        </section>
+        <!-- main conrainer end here -->
+    </section>
+</section>

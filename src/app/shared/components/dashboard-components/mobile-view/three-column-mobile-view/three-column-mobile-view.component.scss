@@ -1,0 +1,24 @@
+@import "~assets/scss/base/variables";
+@import "~assets/scss/base/colors";
+@import "~bootstrap/scss/mixins/breakpoints";
+@import "~assets/scss/base/mixins";
+
+.icon-graph {
+    font-size: 20px;
+}
+.bottom-border {
+    border-bottom: 1px solid var(--brand-border);
+}
+.right-border {
+    border-right: 1px solid var(--brand-border);
+}
+.widget-box-height {
+    min-height: 214px;
+}
+//for font-size
+.font-xs {
+    font-size: 12px;
+    @include media-breakpoint-down('xl') {
+        font-size: 10px;
+    }
+}

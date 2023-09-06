@@ -1,0 +1,26 @@
+<section class="white-bg p-3 rounded lg-dialog-container">
+  <div class="mb-4">
+    <h1>Feedback</h1>
+  </div>
+  <div class="text-left">
+    <p>Please let us know what you feel the score should have been.</p>
+  </div>
+  <form [formGroup]="feedbackForm" novalidate>
+    <div class="form-select mb-3">
+      <select class="rounded cursor-pointer p-2" name="" id="" formControlName="scoreId"
+        [ngClass]="isDropdownValid('scoreId')" triggerFocusInit="true">
+        <option value="0" selected disabled>Select Score</option>
+        <option *ngFor="let score of scoreList" [value]="score.scoreId">{{score.scoreRank}}
+        </option>
+      </select>
+    </div>
+    <textarea class="form-textarea form-control w-100 rounded mb-3" formControlName="remark" placeholder="Remarks"
+      (keypress)="avoidBlankSpace($event)"></textarea>
+    <footer class="d-flex justify-content-end">
+      <button type="button" class="btn secondary-light-btn rounded-pill btn-sm text-uppercase mr-3"
+        (click)="cancelSelecteion()" title="Cancel">Cancel</button>
+      <button type="button" class="btn btn-secondary rounded-pill mr-2 btn-sm text-uppercase" (click)="submitScore()"
+        title="Submit">Submit</button>
+    </footer>
+  </form>
+</section>
